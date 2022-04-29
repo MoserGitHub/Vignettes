@@ -1,0 +1,180 @@
+---
+title: "Adjusted survival curves"
+site: distill::distill_website
+bibliography: adjcurves.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Background
+
+Unadjusted Kaplan-Meier curves from observational data might be biased because of confounding (@COLE200445).
+
+# Analysis steps of Cole and Hernan 2004
+
+Thanks to Marcel Zwahlen for data preparation.
+
+```{r, echo=F}
+main.path <- "/Users/am20q919/Clinical studies/Lectures/JournalClub"
+fig.path <- "/Users/am20q919/Clinical studies/Lectures/JournalClub/05_figures/"
+```
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+library(haven)
+library(Hmisc)
+library(survey)
+library(survival)
+library(kableExtra)
+library(gtsummary)
+
+data <- read_dta(paste0(paste0(main.path, "/04_prepared_data/"), "11433ColeHernanTableExample.dta"))
+```
+
+## Head of data
+
+```{r, echo=F, message=F, warning=F, results='markup'}
+head(data)
+```
+
+## Descriptive table
+
+```{r, echo=F, message=F, warning=F, results='asis'}
+data %>% select(ldh, tx) %>% tbl_summary(by=tx, label=list(tx ~ "Treatment")) %>% as_kable_extra(format = "latex") %>% kableExtra::kable_styling(position = "left", latex_options = c("striped", "repeat_header"))
+```
+
+## Kaplan-Meier curve
+
+```{r, echo=T, message=F, warning=F}
+mod <- survfit(Surv(time, event) ~ factor(tx), data = data)
+coxph(Surv(time, event) ~ factor(tx), data = data)
+
+library(survminer)
+plot(mod, col=1:2, data=data)
+ggsurvplot(mod, data=data)
+?ggsurvplot
+```
+
+### IPW modelling
+
+```{r, echo=T, message=F, warning=F, results='markup'}
+# IPW denominator
+mod <- glm(tx ~ ldh, data=data, family=binomial())
+summary(mod)
+
+# OR
+data.frame(or=exp(mod$coefficients[2]), lci=exp(confint.default(mod)[2,1]), 
+           uci=exp(confint.default(mod)[2,2]))
+
+data$ipw <- NA
+# Probabilty of treatment
+data$ipw <- predict(mod, data=data, type="response")
+# Probabilty of non-treatment
+data$ipw[data$tx==0] <- 1-predict(mod, data=data, type="response")[data$tx==0]
+
+# Unstabilized weights
+data$ipw_tmp <- 1/data$ipw
+
+library(survey)
+svy_design <- svydesign(id=~1, weights=~ipw_tmp, data=data)
+
+table(tx=data$tx, ldh=data$ldh)
+svytable(~tx+ldh, design=svy_design)
+
+# Stabilized weights
+mod0 <- glm(tx ~ 1, data=data, family=binomial())
+data$ipw0 <- predict(mod0, data=data, type="response")
+data$ipw0[data$tx==0] <- 1-predict(mod0, data=data, type="response")[data$tx==0]
+data$ipw <- data$ipw0/data$ipw
+```
+
+### Statement 3
+
+p47: Table 2, column "sw"
+
+```{r, echo=T, message=F, warning=F, results='markup'}
+describe(data$ipw)
+```
+
+### Statement 3
+
+p47: Table 2, column "Pseudo N"
+
+```{r, echo=T, message=F, warning=F, results='markup'}
+svy_design <- svydesign(id=~1, weights=~ipw, data=data)
+
+table(tx=data$tx, ldh=data$ldh)
+svytable(~tx+ldh, design=svy_design)
+```
+
+
+### Statement 3
+
+p47: In the pseudopopulation, the indicator of elevated LDH is no longer associated with treatment (odds ratio = 1.0; robust 95% confidence interval: 0.4, 2.7).
+
+```{r, echo=T, message=F, warning=F, results='markup'}
+# Robust CIs
+mod <- svyglm(tx ~ ldh, data=data, family=binomial(), design=svy_design)
+summary(mod)
+
+# OR
+data.frame(or=exp(mod$coefficients[2]), lci=exp(confint.default(mod)[2,1]), 
+           uci=exp(confint.default(mod)[2,2]))
+```
+
+
+### Statement 3
+
+p47: The estimated IPW hazard ratio comparing treatment S4 against S1—S3 was 1.1 (robust 95% confidence interval: 0.6, 2.1; robust P = 0.78), indistinguishable from the results attained from standard covariate adjustment (adjusted hazard ratio = 1.1; 95% confidence interval: 0.6, 2.1).
+
+```{r, echo=T, message=F, warning=F, results='markup'}
+# Adjusted Cox
+mod <- coxph(Surv(time, event) ~ factor(tx)+factor(ldh), data=data)
+mod
+# OR
+data.frame(or=exp(mod$coefficients), lci=exp(confint.default(mod)[,1]), 
+           uci=exp(confint.default(mod)[,2]))
+# IPW adjusted Cox
+mod <- svycoxph(Surv(time, event) ~ factor(tx),  design=svy_design)
+mod
+# OR
+data.frame(or=exp(mod$coefficients), lci=exp(confint.default(mod)[,1]), 
+           uci=exp(confint.default(mod)[,2]))
+
+# Weighted Kaplan-Meier curves
+mod_wght <- svykm(Surv(time, event) ~ factor(tx), design=svy_design)
+mod_wght[[1]][2]
+plot(mod_wght[[1]], col="black")
+lines(mod_wght[[2]], col="red")
+
+library(rsample)
+boot_data <- bootstraps(data=data, times=1000, strata=event, apparent=T)
+
+km_split <- function(split) {
+  
+  mod <- glm(tx ~ ldh, data=analysis(split), family=binomial())
+  
+  ipw <- predict(mod, data=analysis(split), type="response")
+  ipw[analysis(split)$tx==0] <- 1-predict(mod, data=analysis(split), type="response")[analysis(split)$tx==0]
+
+  svy_design <- svydesign(id=~1, weights=~ipw, data=analysis(split))
+
+   mod <- svykm(Surv(time, event) ~ factor(tx), design=svy_design)
+  data.frame(group=c(rep(1, length(mod[[1]]$time)), rep(2, length(mod[[2]]$time))), time=c(mod[[1]]$time, mod[[2]]$time), surv=c(mod[[1]]$surv, mod[[2]]$surv))
+}
+
+# boot_res <- boot_data %>% mutate(model=map(splits, km_split))
+# boot_id0 <- map(boot_res$id, function(x) x) %>% unlist()
+# boot_n <- map(boot_res$model, function(x) nrow(x)) %>% unlist()
+# boot_coef_group <- map(boot_res$model, function(x) x[,1]) %>% unlist()
+# boot_coef_time <- map(boot_res$model, function(x) x[,2]) %>% unlist()
+# boot_coef_surv <- map(boot_res$model, function(x) x[,3]) %>% unlist()
+# data_gg <- bind_cols(boot=rep(boot_id0, boot_n), group=boot_coef_group, time=boot_coef_time, surv=boot_coef_surv)
+
+# data_gg_agg <- data_gg %>% filter(boot!="Apparent") %>% group_by(group, time) %>% summarise(surv_mean=median(surv), upper=quantile(surv, prob=0.975), lower=quantile(surv, prob=0.025))
+
+
+# ggplot(data_gg_agg, aes(x=time, y=lower, colour=factor(group)))+geom_point()+geom_point(aes(x=time, y=upper, colour=factor(group)))
+```

@@ -1,0 +1,124 @@
+---
+title: "Immortal time bias"
+bibliography: immortal.bib
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r base, echo=F, warning=F, message=F}
+
+# Background
+library(rms)
+library(survival)
+library(tidyverse)
+
+n <- 1000
+
+set.seed(1)
+
+t0 <- rexp(n)
+x <- runif(n)
+t <- rweibull(n, 1, 40)
+c <- rweibull(n, 1, 20)
+fup <- pmin(t, c)
+
+death <- ifelse(t<=c, 1, 0)
+
+group <- ifelse(t0<fup & x>0.2, 1, 0)
+
+data <- data.frame(fup, death, group)
+
+# Replace: Time to end of treatment
+# fup <- pmax(dur, fup)
+
+describe(data$fup[data$group==1])
+describe(data$fup[data$group==0])
+
+data
+mod_km <- survfit(Surv(fup, event=death)~group, data=data)
+plot(mod_km)
+survdiff(Surv(fup, event=death)~group, data=data)
+
+coxph(Surv(fup, event=death)~group, data=data)
+
+
+
+table(death)
+
+# Replace: Time to end of follow-up if fup<cens
+
+
+
+
+
+set.seed(1)
+# Treatment duration: Mean duration 16 days
+dur <- rpois(n, 10)
+hist(dur)
+# Group indicator
+group <- ifelse(dur<=median(dur), 1, 0)
+
+age <- rnorm(n, sd=3)
+# Hazard of dying. Note: Not associated with treatment duration (dur)
+haz <- 0.01
+#*exp(1*age)
+# Time to death: Mean time to death=1/0.01=100 days
+time_to_death <- -log(runif(n))/haz
+
+# Censoring time (could be hospital discharge): Mean duration 20 days
+cens <- 70*runif(n)
+
+# Death
+death <- ifelse(time_to_death<=cens, 1, 0)
+table(death)
+
+# Replace: Time to end of follow-up if fup<cens
+fup <- pmin(time_to_death, cens)
+
+group <- ifelse(fup<=40, 1, 0)
+
+data <- data.frame(dur, fup, death, group, age)
+
+# Replace: Time to end of treatment
+# fup <- pmax(dur, fup)
+
+describe(data$fup[data$group==1])
+describe(data$fup[data$group==0])
+
+data
+mod_km <- survfit(Surv(fup, event=death)~group, data=data)
+plot(mod_km)
+survdiff(Surv(fup, event=death)~group, data=data)
+
+coxph(Surv(fup, event=death)~group, data=data)
+
+# Cloning populations
+data_short <- data
+data_long <- data
+
+# Censor if dur>median(dur)
+data_short$censor <- ifelse(data_short$fup>10, 1, 0)
+data_short$death[data_short$fup>10] <- 0
+data_short$group_comb <- 1
+
+data_long$censor <- ifelse(data_long$fup<=10, 1, 0)
+data_long$group_comb <- 0
+
+data_comb <- bind_rows(data_short, data_long)
+
+mod <- glm(censor~age, data=data_comb, family=binomial())
+mod_km <- survfit(Surv(fup, event=death)~group_comb, data=data_comb)
+plot(mod_km)
+coxph(Surv(fup, event=death)~group_comb, data=data_comb)
+
+# Example(s)
+
+
+# Conclusion
+
+
+# References
+```

@@ -1,0 +1,351 @@
+---
+title: "Comparison of hierachical priors in INLA and STAN"
+bibliography: hierachicalpriors.bib
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r base, echo=F, warning=F, message=F}
+library(tidyverse)
+library(INLA)
+library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+library(Hmisc)
+
+# Main path
+pp <-"/Users/am20q919/Clinical studies/Github/Vignettes/HierachicalPriors"
+```
+
+
+# Background
+
+We compare results using different hierarchical priors from INLA and STAN. Specifically, we use default priors and priors suggested by Andrew Gelman (@10.1214/06-BA117A).
+
+# Hierarchical data structure
+
+We assume a hierarchical model
+\[
+logit(y_{ij})=\alpha+\beta^\top\mathbf{X}+b_i, \quad j\leq J, i\leq n 
+\]
+with $b_i \sim N(0, \sigma^2)$.
+
+# Priors
+
+Jeffrey's prior for $\sigma^k$ is $f(\sigma^k) \propto 1/\sigma^k$, $k>0$. For, e.g., $k=2$ this is an improper prior distribution because $\int_0^\infty x^{-2}dx=-x^{-2}|_0^\infty=\infty$.
+
+By change-of-variables we get that $\theta=log(\sigma)$
+
+\[
+f_{\theta}(\theta)=f(\sigma)\{h^{-1}(\theta)\} \cdot \vert\frac{dh^{-1}(\theta)}{d\theta} \vert=(1/exp(\sigma))\cdot exp(\sigma)=1,
+\]
+
+i.e setting a $f(\sigma) \propto 1/\sigma$ is equivalent to $f(log(\sigma)) \propto 1$.
+
+## Aggregated binomial data
+
+```{r data0, echo=T, warning=F, message=F, results="markup"}
+library(lme4)
+head(cbpp)
+```
+
+### Frequentist glmer model
+
+Period as categorical variable
+
+```{r data, echo=T, warning=F, message=F, results="markup"}
+gm1 <- glmer(cbind(incidence, size - incidence) ~ factor(period) + (1 | herd), 
+             data = cbpp, family = binomial)
+summary(gm1)
+```
+
+### STAN
+
+STAN model with prior $p(\sigma)=Halfcauchy(0, 25)$.
+
+```{r stan prior1, echo=T, warning=F, message=F}
+# library(brms)
+# 
+# b12.2 <- 
+#   brm(data = cbpp, family = binomial,
+#       incidence | trials(size) ~ 1 + (1 | herd),
+#       prior = c(prior(normal(0, 1000), class = Intercept),
+#                 prior(cauchy(0, 25), class = sd)),
+#       iter = 4000, warmup = 1000, chains = 4, cores = 4,
+#       seed = 12)
+
+### Get contrasts for period
+period_factors <- model.matrix(incidence ~ factor(period), data=cbpp)
+
+stan_data <- list(N = nrow(cbpp), G=length(unique(cbpp$herd)), y = cbpp$incidence, 
+                  N_i=cbpp$size, g=as.numeric(cbpp$herd), K=ncol(period_factors[,-1]), X=period_factors[,-1])
+
+
+write("
+data {
+  int N; // number of obs
+  int G; // number of groups
+  int K; // number of predictors
+
+  int y[N];
+  int N_i[N];
+  int g[N]; // map obs to groups
+  row_vector[K] X[N];
+}
+
+parameters {
+  real a_g[G];
+  real intercept; // improper uniform prior (-inf, inf) 
+  vector[K] beta; // improper uniform prior (-inf, inf) 
+  real <lower=0> sigma;
+}
+
+model {
+    vector[N] p;
+    for (i in 1:N) {
+        p[i] = inv_logit(intercept+X[i]*beta+a_g[g[i]]);
+    }
+    y ~ binomial(N_i, p);
+    a_g ~ normal(0, sigma);
+    intercept ~ normal(0, 1000); // same as INLA
+    sigma ~ cauchy(0, 25);
+}
+"
+, file=paste0(pp, "/04_prepared_data/", "StanPrior1.stan"))
+
+
+stanfile <- paste0(pp, "/04_prepared_data/", "StanPrior1.stan")
+
+fit <- stan(file = stanfile, data = stan_data, warmup = 500, iter = 5000, chains = 4, 
+            cores = 6, thin = 1, seed=14749823)
+
+
+# Get posteriors
+posteriors <- as.data.frame(extract(fit))
+
+plot_data <- data.frame(x=density(posteriors$sigma)$x, y=density(posteriors$sigma)$y, type="posterior")
+x_prior <- seq(0,max(posteriors$sigma), 0.01)
+cauchy_scale <- 25
+plot_data <- bind_rows(plot_data, data.frame(x=x_prior, y=dcauchy(x_prior, 0, cauchy_scale), type="prior"))
+
+# Plot posterior distribution of SD of hyperparameter
+ggplot(plot_data, aes(x=x, y=y, colour=type, linetype=type))+geom_line()+theme_bw()+scale_color_brewer("", palette="Dark2")+guides(linetype="none")+ylab("Density")+xlab("Hyperparameter sigma")
+
+# 88% credible intervals
+alpha <- 0.12
+quantile(posteriors$sigma, probs=c(alpha/2, 1-alpha/2))
+# P(SD<=q)=0.12
+quantile(posteriors$sigma, probs=alpha)
+
+# Probability that hyperparameter!=0
+sum(posteriors$sigma>0)/length(posteriors$sigma)
+```
+
+
+```{r stan prior2, echo=T, warning=F, message=F}
+write("
+data {
+  int N; // number of obs
+  int G; // number of groups
+  int K; // number of predictors
+
+  int y[N];
+  int N_i[N];
+  int g[N]; // map obs to groups
+  row_vector[K] X[N];
+}
+
+parameters {
+  real a_g[G];
+  real intercept; // improper uniform prior (-inf, inf) 
+  vector[K] beta; // improper uniform prior (-inf, inf) 
+  real <lower=0> sigma; // improper uniform prior (-inf, inf) 
+}
+
+model {
+    vector[N] p;
+    for (i in 1:N) {
+        p[i] = inv_logit(intercept+X[i]*beta+a_g[g[i]]);
+    }
+    y ~ binomial(N_i, p);
+    a_g ~ normal(0, sigma);
+    intercept ~ normal(0, 1000); // same as INLA
+}
+"
+, file=paste0(pp, "/04_prepared_data/", "StanPrior2.stan"))
+
+
+stanfile <- paste0(pp, "/04_prepared_data/", "StanPrior2.stan")
+
+fit2 <- stan(file = stanfile, data = stan_data, warmup = 500, iter = 5000, chains = 4, 
+            cores = 6, thin = 1, seed=14749823)
+
+
+# Get posteriors
+posteriors2 <- as.data.frame(extract(fit2))
+```
+
+
+```{r stan prior3, echo=T, warning=F, message=F}
+write("
+data {
+  int N; // number of obs
+  int G; // number of groups
+  int K; // number of predictors
+
+  int y[N];
+  int N_i[N];
+  int g[N]; // map obs to groups
+  row_vector[K] X[N];
+}
+
+parameters {
+  real a_g[G];
+  real intercept; // improper uniform prior (-inf, inf) 
+  vector[K] beta; // improper uniform prior (-inf, inf) 
+  real <lower=0> sigma;
+}
+
+model {
+    vector[N] p;
+    for (i in 1:N) {
+        p[i] = inv_logit(intercept+X[i]*beta+a_g[g[i]]);
+    }
+    y ~ binomial(N_i, p);
+    a_g ~ normal(0, sigma);
+    intercept ~ normal(0, 1000); // same as INLA
+    sigma ~ inv_gamma(1, 0.00005);
+}
+"
+, file=paste0(pp, "/04_prepared_data/", "StanPrior3.stan"))
+
+
+stanfile <- paste0(pp, "/04_prepared_data/", "StanPrior3.stan")
+
+fit3 <- stan(file = stanfile, data = stan_data, warmup = 500, iter = 5000, chains = 4, 
+            cores = 6, thin = 1, seed=14749823)
+
+
+# Get posteriors
+posteriors3 <- as.data.frame(extract(fit3))
+```
+
+```{r stan prior4, echo=T, warning=F, message=F}
+write("
+data {
+  int N; // number of obs
+  int G; // number of groups
+  int K; // number of predictors
+
+  int y[N];
+  int N_i[N];
+  int g[N]; // map obs to groups
+  row_vector[K] X[N];
+}
+
+parameters {
+  real a_g[G];
+  real intercept; // improper uniform prior (-inf, inf) 
+  vector[K] beta; // improper uniform prior (-inf, inf) 
+  real <lower=0> sigma;
+}
+
+model {
+    vector[N] p;
+    for (i in 1:N) {
+        p[i] = inv_logit(intercept+X[i]*beta+a_g[g[i]]);
+    }
+    y ~ binomial(N_i, p);
+    a_g ~ normal(0, sigma);
+    intercept ~ normal(0, 1000); // same as INLA
+    sigma ~ cauchy(0, 0.1);
+}
+"
+, file=paste0(pp, "/04_prepared_data/", "StanPrior4.stan"))
+
+
+stanfile <- paste0(pp, "/04_prepared_data/", "StanPrior4.stan")
+
+fit4 <- stan(file = stanfile, data = stan_data, warmup = 500, iter = 5000, chains = 4, 
+            cores = 6, thin = 1, seed=14749823)
+
+
+# Get posteriors
+posteriors4 <- as.data.frame(extract(fit4))
+```
+
+
+### INLA
+
+Note: INLA is internally parametrised on the log precision. When $log(\tau)$ is logGamma(a,b) distributed then (i.e. the log precision) then $\tau$ is Gamma(a,b) distributed with density
+\[
+p(\tau)=\frac{b^a}{\Gamma(a)}\tau^{a-1}exp(-b\tau),
+\]
+where $b$ is the inverse scale parameter (see https://inla.r-inla-download.org/r-inla.org/doc/prior/prior-loggamma.pdf). When $\tau \sim Gamma(a,s)$ then $\tau^{-1} \sim InvGamma(a,s)$.
+
+Note: The base R functions (dgamma, pgamma, qgamma and rgamma) are parametrised as
+\[
+p(\tau)=\frac{1}{b^a\Gamma(a)}\tau^{a-1}exp(-s\tau),
+\]
+where $s=1/b$ is the rate parameter.
+
+```{r inla, echo=T, warning=F, message=F}
+library(INLA)
+library(brinla)
+
+HC.prior  = "expression:
+  sigma = exp(-theta/2);
+  gamma = 25;
+  log_dens = log(2) - log(pi) - log(gamma);
+  log_dens = log_dens - log(1 + (sigma / gamma)^2);
+  log_dens = log_dens - log(2) - theta / 2;
+  return(log_dens);
+"
+
+HC.prior2  = "expression:
+  sigma = exp(-theta/2);
+  gamma = 0.1;
+  log_dens = log(2) - log(pi) - log(gamma);
+  log_dens = log_dens - log(1 + (sigma / gamma)^2);
+  log_dens = log_dens - log(2) - theta / 2;
+  return(log_dens);
+"
+
+# Note: UN.prior is unrestricted!
+UN.prior = "expression:
+  log_dens = 0 - log(2) - theta / 2;
+  return(log_dens);
+"
+
+prior.list = list(
+  prior1 = list(prec = list(prior = HC.prior)),
+  prior2 = list(prec = list(prior = UN.prior)),
+  default = list(prec = list(prior = "loggamma", param = c(1, 0.00005))),
+  prior3 = list(prec = list(prior = HC.prior2))
+
+) 
+
+intercept_fixed_prio <- list(mean.intercept=0, prec.intercept=1/1000)
+
+inla_models <- lapply(prior.list, function(tau.prior) {
+  inla(incidence ~ factor(period)+f(herd, model="iid", hyper=tau.prior), data=cbpp, family="binomial", control.predictor = list(link=1, compute = TRUE), control.compute = list(dic=T, cpo=T, waic=T), control.fixed=intercept_fixed_prio, Ntrials=size)
+})
+```
+
+```{r inla res, echo=T, warning=F, message=F}
+results <- c()
+results <- bind_rows(results, data.frame(bri.hyper.sd(inla_models$prior1$marginals.hyperpar[[1]]), type="INLA: HC(0, 25)"))
+results <- bind_rows(results, data.frame(bri.hyper.sd(inla_models$prior2$marginals.hyperpar[[1]]), type="INLA: Improper uniform"))
+results <- bind_rows(results, data.frame(bri.hyper.sd(inla_models$default$marginals.hyperpar[[1]]), type="INLA: Gamma(1, 0.00005)"))
+results <- bind_rows(results, data.frame(bri.hyper.sd(inla_models$prior3$marginals.hyperpar[[1]]), type="INLA: HC(0, 0.1)"))
+results <- bind_rows(results, data.frame(x=density(posteriors$sigma)$x, y=density(posteriors$sigma)$y, type="STAN: HC(0, 25)"))
+results <- bind_rows(results, data.frame(x=density(posteriors2$sigma)$x, y=density(posteriors2$sigma)$y, type="STAN: Improper uniform"))
+results <- bind_rows(results, data.frame(x=density(posteriors3$sigma)$x, y=density(posteriors3$sigma)$y, type="STAN: Gamma(1, 0.00005)"))
+results <- bind_rows(results, data.frame(x=density(posteriors4$sigma)$x, y=density(posteriors4$sigma)$y, type="STAN: HC(0, 0.1)"))
+
+ggplot(results, aes(x=x, y=y, colour=type))+geom_line()+coord_cartesian(ylim=c(0,3))+facet_wrap(~type)+geom_vline(xintercept=sqrt(summary(gm1)$varcor[[1]]), linetype="dashed")+labs(caption="Dashed vertical line: Estimated SD of hyperparameter from GLMER")+theme_bw()+theme(legend.position = "bottom")+scale_color_brewer("", palette="Dark2")
+```
