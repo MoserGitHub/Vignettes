@@ -1,2 +1,2 @@
-# WorkExamples
- Working examples
+# Vignettes
+Collection of vignettes
