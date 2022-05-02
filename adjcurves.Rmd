@@ -17,11 +17,17 @@ Unadjusted Kaplan-Meier curves from observational data might be biased because o
 
 # Example
 
-We consider a fictive study population of 10,000 patients who receive a certain medication. 60% of the patients are women. Women have a three times higher chance of receiving the medication compared to men. Patients who received the medication have a 0.5 lower hazard of dying compared to those without medication, but jointly, women have 10 times higher hazard of death compared to men.
+We consider a study population of 10,000 patients who receive a medication. 60% of the patients are women. 30% of the patients have a specific measures enzym. Those with the enzym were more likely to receive the medication (with a probability of 75%), compared to those without the enyzm (probability of 50%).
 
+- Research question: What is the effect of the medication on death?
+- Study design: Cohort study
+- Outcome of interest: Time to death or end of follow-up
+- Predictor of interest: Medication
+- Confounders: Sex, enzym
 
+# Analysis strategy
 
-In brief, IP weighting constructs weights which are equal to the probability of an individual's treatment given observed covariates and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (@hernan_book).
+IP weighting constructs weights which are equal to the probability of an individual's treatment (here: receiving the medication) given observed covariates (here: sex and enzym) and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (@hernan_book).
 
 ```{r, echo=F}
 main.path <- "/Users/am20q919/Clinical studies/Lectures/JournalClub"
@@ -45,10 +51,13 @@ n <- 10000
 
 # 60% percent women
 female <- rbinom(n, 1, 0.6)
-# Women have a 
-medi <- ifelse(runif(n) < plogis(log(3)*female), 1, 0)
-# Hazard of dying
-haz <- 0.01*exp(log(0.5)*medi+log(10)*female)
+# Men has the enzym with a prob of 0.3; women have
+# a 5 times higher chance of having the enzym
+enzym <- ifelse(runif(n) < plogis(qlogis(0.3)+log(5)*female), 1, 0)
+# Those with enzym receive medication with prob 0.75
+medi <- ifelse(runif(n) < plogis(log(3)*enzym), 1, 0)
+# Hazard of dying: HR=10 of those with enyzm; HR of 1 for medication
+haz <- 0.01*exp(log(10)*enzym)
 # Time to death
 time_to_death <- -log(runif(n))/haz
 # Censoring time: Mean duration 20 days
@@ -58,7 +67,7 @@ fup <- pmin(time_to_death, censored)
 # Death
 death <- ifelse(time_to_death<=censored, 1, 0)
 # Data
-data <- data.frame(fup, death, medi, female)
+data <- data.frame(fup, death, medi, enzym, female)
 ```
 
 ## Descriptive table
@@ -79,15 +88,15 @@ ggsurvplot(mod, data=data, palette=c("#CC0000", "black"), censor=F)
 ```{r, echo=T, message=F, warning=F}
 coxph(Surv(fup, death) ~ medi, data = data)
 
-coxph(Surv(fup, death) ~ medi+female, data = data)
+coxph(Surv(fup, death) ~ medi+enzym, data = data)
 ```
 
 
-### IPW modelling
+## IPW modelling
 
 ```{r, echo=T, message=F, warning=F, results='markup'}
 # IPW denominator
-mod <- glm(medi ~ female, data=data, family=binomial())
+mod <- glm(medi ~ female+enzym, data=data, family=binomial())
 summary(mod)
 
 data$ipw <- NA
@@ -95,15 +104,6 @@ data$ipw <- NA
 data$ipw <- predict(mod, data=data, type="response")
 # Probabilty of non-treatment
 data$ipw[data$medi==0] <- 1-predict(mod, data=data, type="response")[data$medi==0]
-
-# Unstabilized weights
-data$ipw_tmp <- 1/data$ipw
-
-library(survey)
-svy_design <- svydesign(id=~1, weights=~ipw_tmp, data=data)
-
-table(medi=data$medi, female=data$female)
-svytable(~medi+female, design=svy_design)
 
 # Stabilized weights
 mod0 <- glm(medi ~ 1, data=data, family=binomial())
@@ -125,6 +125,10 @@ km_df <- bind_rows(km_df, data.frame(time=km_fit$`0`$time, surv=km_fit$`0`$surv,
 ggsurvplot_df(km_df, palette=c("#CC0000", "black"), censor=F)
 ```
 
+```{r, echo=T, message=F, warning=F, results='markup'}
+mod <- svycoxph(Surv(fup, death) ~ medi, design=svy_design)
+summary(mod)
+```
 
 # Data simulation
 
@@ -134,10 +138,13 @@ n <- 10000
 
 # 60% percent women
 female <- rbinom(n, 1, 0.6)
-# Women have a 
-medi <- ifelse(runif(n) < plogis(log(3)*female), 1, 0)
-# Hazard of dying
-haz <- 0.01*exp(log(0.5)*medi+log(10)*female)
+# Men has the enzym with a prob of 0.3; women have
+# a 5 times higher chance of having the enzym
+enzym <- ifelse(runif(n) < plogis(qlogis(0.3)+log(5)*female), 1, 0)
+# Those with enzym receive medication with prob 0.75
+medi <- ifelse(runif(n) < plogis(log(3)*enzym), 1, 0)
+# Hazard of dying: HR=10 of those with enyzm; HR of 1 for medication
+haz <- 0.01*exp(log(10)*enzym)
 # Time to death
 time_to_death <- -log(runif(n))/haz
 # Censoring time: Mean duration 20 days
@@ -147,6 +154,6 @@ fup <- pmin(time_to_death, censored)
 # Death
 death <- ifelse(time_to_death<=censored, 1, 0)
 # Data
-data <- data.frame(fup, death, medi, female)
+data <- data.frame(fup, death, medi, enzym, female)
 ```
 

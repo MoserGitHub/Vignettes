@@ -2126,8 +2126,16 @@ Topics
 <h1 id="background">Background</h1>
 <p>Unadjusted Kaplan-Meier curves from observational data might be biased because of confounding (<span class="citation" data-cites="COLE200445"><a href="#ref-COLE200445" role="doc-biblioref">Cole and Hernán</a> (<a href="#ref-COLE200445" role="doc-biblioref">2004</a>)</span>). This vignette introduces the concept of inverse probability (IP) weighted survival curves.</p>
 <h1 id="example">Example</h1>
-<p>We consider a fictive study population of 10,000 patients who receive a certain medication. 60% of the patients are women. Women have a three times higher chance of receiving the medication compared to men. Patients who received the medication have a 0.5 lower hazard of dying compared to those without medication, but jointly, women have 10 times higher hazard of death compared to men.</p>
-<p>In brief, IP weighting constructs weights which are equal to the probability of an individual’s treatment given observed covariates and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (<span class="citation" data-cites="hernan_book"><a href="#ref-hernan_book" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-hernan_book" role="doc-biblioref">2022</a>)</span>).</p>
+<p>We consider a study population of 10,000 patients who receive a medication. 60% of the patients are women. 30% of the patients have a specific measures enzym. Those with the enzym were more likely to receive the medication (with a probability of 75%), compared to those without the enyzm (probability of 50%).</p>
+<ul>
+<li>Research question: What is the effect of the medication on death?</li>
+<li>Study design: Cohort study</li>
+<li>Outcome of interest: Time to death or end of follow-up</li>
+<li>Predictor of interest: Medication</li>
+<li>Confounders: Sex, enzym</li>
+</ul>
+<h1 id="analysis-strategy">Analysis strategy</h1>
+<p>IP weighting constructs weights which are equal to the probability of an individual’s treatment (here: receiving the medication) given observed covariates (here: sex and enzym) and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (<span class="citation" data-cites="hernan_book"><a href="#ref-hernan_book" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-hernan_book" role="doc-biblioref">2022</a>)</span>).</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -2139,12 +2147,12 @@ Topics
 </div>
 <h2 id="descriptive-table">Descriptive table</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div id="qjbdhijbmm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="swynlxhket" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qjbdhijbmm .gt_table {
+#swynlxhket .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2169,7 +2177,7 @@ Topics
   border-left-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_heading {
+#swynlxhket .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2181,7 +2189,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_title {
+#swynlxhket .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2193,7 +2201,7 @@ Topics
   border-bottom-width: 0;
 }
 
-#qjbdhijbmm .gt_subtitle {
+#swynlxhket .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2205,13 +2213,13 @@ Topics
   border-top-width: 0;
 }
 
-#qjbdhijbmm .gt_bottom_border {
+#swynlxhket .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_col_headings {
+#swynlxhket .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2226,7 +2234,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_col_heading {
+#swynlxhket .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2246,7 +2254,7 @@ Topics
   overflow-x: hidden;
 }
 
-#qjbdhijbmm .gt_column_spanner_outer {
+#swynlxhket .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2258,15 +2266,15 @@ Topics
   padding-right: 4px;
 }
 
-#qjbdhijbmm .gt_column_spanner_outer:first-child {
+#swynlxhket .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qjbdhijbmm .gt_column_spanner_outer:last-child {
+#swynlxhket .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qjbdhijbmm .gt_column_spanner {
+#swynlxhket .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2278,7 +2286,7 @@ Topics
   width: 100%;
 }
 
-#qjbdhijbmm .gt_group_heading {
+#swynlxhket .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2303,7 +2311,7 @@ Topics
   vertical-align: middle;
 }
 
-#qjbdhijbmm .gt_empty_group_heading {
+#swynlxhket .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2318,15 +2326,15 @@ Topics
   vertical-align: middle;
 }
 
-#qjbdhijbmm .gt_from_md > :first-child {
+#swynlxhket .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qjbdhijbmm .gt_from_md > :last-child {
+#swynlxhket .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qjbdhijbmm .gt_row {
+#swynlxhket .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2345,7 +2353,7 @@ Topics
   overflow-x: hidden;
 }
 
-#qjbdhijbmm .gt_stub {
+#swynlxhket .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2358,7 +2366,7 @@ Topics
   padding-right: 5px;
 }
 
-#qjbdhijbmm .gt_stub_row_group {
+#swynlxhket .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2372,11 +2380,11 @@ Topics
   vertical-align: top;
 }
 
-#qjbdhijbmm .gt_row_group_first td {
+#swynlxhket .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qjbdhijbmm .gt_summary_row {
+#swynlxhket .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2386,16 +2394,16 @@ Topics
   padding-right: 5px;
 }
 
-#qjbdhijbmm .gt_first_summary_row {
+#swynlxhket .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_first_summary_row.thick {
+#swynlxhket .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qjbdhijbmm .gt_last_summary_row {
+#swynlxhket .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2405,7 +2413,7 @@ Topics
   border-bottom-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_grand_summary_row {
+#swynlxhket .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2415,7 +2423,7 @@ Topics
   padding-right: 5px;
 }
 
-#qjbdhijbmm .gt_first_grand_summary_row {
+#swynlxhket .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2425,11 +2433,11 @@ Topics
   border-top-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_striped {
+#swynlxhket .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qjbdhijbmm .gt_table_body {
+#swynlxhket .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2438,7 +2446,7 @@ Topics
   border-bottom-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_footnotes {
+#swynlxhket .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2452,7 +2460,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_footnote {
+#swynlxhket .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2461,7 +2469,7 @@ Topics
   padding-right: 5px;
 }
 
-#qjbdhijbmm .gt_sourcenotes {
+#swynlxhket .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2475,7 +2483,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#qjbdhijbmm .gt_sourcenote {
+#swynlxhket .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2483,60 +2491,60 @@ Topics
   padding-right: 5px;
 }
 
-#qjbdhijbmm .gt_left {
+#swynlxhket .gt_left {
   text-align: left;
 }
 
-#qjbdhijbmm .gt_center {
+#swynlxhket .gt_center {
   text-align: center;
 }
 
-#qjbdhijbmm .gt_right {
+#swynlxhket .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qjbdhijbmm .gt_font_normal {
+#swynlxhket .gt_font_normal {
   font-weight: normal;
 }
 
-#qjbdhijbmm .gt_font_bold {
+#swynlxhket .gt_font_bold {
   font-weight: bold;
 }
 
-#qjbdhijbmm .gt_font_italic {
+#swynlxhket .gt_font_italic {
   font-style: italic;
 }
 
-#qjbdhijbmm .gt_super {
+#swynlxhket .gt_super {
   font-size: 65%;
 }
 
-#qjbdhijbmm .gt_footnote_marks {
+#swynlxhket .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#qjbdhijbmm .gt_asterisk {
+#swynlxhket .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qjbdhijbmm .gt_slash_mark {
+#swynlxhket .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#qjbdhijbmm .gt_fraction_numerator {
+#swynlxhket .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#qjbdhijbmm .gt_fraction_denominator {
+#swynlxhket .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -2547,20 +2555,23 @@ Topics
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>0</strong>, N = 3,488<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>1</strong>, N = 6,512<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>0</strong>, N = 3,639<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>1</strong>, N = 6,361<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td class="gt_row gt_left">fup</td>
 <td class="gt_row gt_center">8 (3, 17)</td>
-<td class="gt_row gt_center">8 (3, 17)</td></tr>
+<td class="gt_row gt_center">6 (2, 13)</td></tr>
     <tr><td class="gt_row gt_left">death</td>
-<td class="gt_row gt_center">1,323 (38%)</td>
-<td class="gt_row gt_center">2,393 (37%)</td></tr>
+<td class="gt_row gt_center">1,225 (34%)</td>
+<td class="gt_row gt_center">3,064 (48%)</td></tr>
+    <tr><td class="gt_row gt_left">enzym</td>
+<td class="gt_row gt_center">1,321 (36%)</td>
+<td class="gt_row gt_center">3,973 (62%)</td></tr>
     <tr><td class="gt_row gt_left">female</td>
-<td class="gt_row gt_center">1,492 (43%)</td>
-<td class="gt_row gt_center">4,542 (70%)</td></tr>
+<td class="gt_row gt_center">1,972 (54%)</td>
+<td class="gt_row gt_center">4,062 (64%)</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">
@@ -2589,53 +2600,54 @@ Topics
 <pre><code>Call:
 coxph(formula = Surv(fup, death) ~ medi, data = data)
 
-          coef exp(coef)  se(coef)      z     p
-medi -0.002856  0.997148  0.034288 -0.083 0.934
+        coef exp(coef) se(coef)     z      p
+medi 0.50613   1.65887  0.03385 14.95 &lt;2e-16
 
-Likelihood ratio test=0.01  on 1 df, p=0.9336
-n= 10000, number of events= 3716 </code></pre>
+Likelihood ratio test=238.4  on 1 df, p=&lt; 2.2e-16
+n= 10000, number of events= 4289 </code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>coxph</span><span class='op'>(</span><span class='fu'>Surv</span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span><span class='op'>+</span><span class='va'>female</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>coxph</span><span class='op'>(</span><span class='fu'>Surv</span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span><span class='op'>+</span><span class='va'>enzym</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Call:
-coxph(formula = Surv(fup, death) ~ medi + female, data = data)
+coxph(formula = Surv(fup, death) ~ medi + enzym, data = data)
 
-           coef exp(coef) se(coef)      z      p
-medi   -0.69316   0.50000  0.03587 -19.33 &lt;2e-16
-female  2.35902  10.58055  0.05219  45.20 &lt;2e-16
+          coef exp(coef) se(coef)      z      p
+medi   0.01672   1.01686  0.03445  0.485  0.627
+enzym  2.39700  10.99018  0.04540 52.797 &lt;2e-16
 
-Likelihood ratio test=2995  on 2 df, p=&lt; 2.2e-16
-n= 10000, number of events= 3716 </code></pre>
+Likelihood ratio test=4217  on 2 df, p=&lt; 2.2e-16
+n= 10000, number of events= 4289 </code></pre>
 </div>
-<h3 id="ipw-modelling">IPW modelling</h3>
+<h2 id="ipw-modelling">IPW modelling</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># IPW denominator</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='va'>female</span>, data<span class='op'>=</span><span class='va'>data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='va'>female</span><span class='op'>+</span><span class='va'>enzym</span>, data<span class='op'>=</span><span class='va'>data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
 Call:
-glm(formula = medi ~ female, family = binomial(), data = data)
+glm(formula = medi ~ female + enzym, family = binomial(), data = data)
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.6717  -1.1719   0.7537   0.7537   1.1830  
+-1.6664  -1.1898   0.7576   0.7581   1.1651  
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -0.01311    0.03176  -0.413     0.68    
-female       1.12636    0.04358  25.847   &lt;2e-16 ***
+(Intercept) 0.029068   0.034868   0.834    0.404    
+female      0.001674   0.046819   0.036    0.971    
+enzym       1.070765   0.046433  23.061   &lt;2e-16 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 12934  on 9999  degrees of freedom
-Residual deviance: 12248  on 9998  degrees of freedom
-AIC: 12252
+    Null deviance: 13113  on 9999  degrees of freedom
+Residual deviance: 12471  on 9997  degrees of freedom
+AIC: 12477
 
 Number of Fisher Scoring iterations: 4</code></pre>
 <div class="sourceCode">
@@ -2645,42 +2657,20 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span class='co'># Probabilty of non-treatment</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span>
 
-<span class='co'># Unstabilized weights</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw_tmp</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>/</span><span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-survey.r-forge.r-project.org/survey/'>survey</a></span><span class='op'>)</span>
-<span class='va'>svy_design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svydesign.html'>svydesign</a></span><span class='op'>(</span>id<span class='op'>=</span><span class='op'>~</span><span class='fl'>1</span>, weights<span class='op'>=</span><span class='op'>~</span><span class='va'>ipw_tmp</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span>medi<span class='op'>=</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span>, female<span class='op'>=</span><span class='va'>data</span><span class='op'>$</span><span class='va'>female</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>    female
-medi    0    1
-   0 1996 1492
-   1 1970 4542</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/survey/man/svychisq.html'>svytable</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>medi</span><span class='op'>+</span><span class='va'>female</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>    female
-medi    0    1
-   0 3966 6034
-   1 3966 6034</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Stabilized weights</span>
+<span class='co'># Stabilized weights</span>
 <span class='va'>mod0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='fl'>1</span>, data<span class='op'>=</span><span class='va'>data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod0</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod0</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span><span class='op'>/</span><span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span>
 
-<span class='va'>svy_design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svydesign.html'>svydesign</a></span><span class='op'>(</span>id<span class='op'>=</span><span class='op'>~</span><span class='fl'>1</span>, weights<span class='op'>=</span><span class='op'>~</span><span class='va'>ipw</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
+<span class='va'>svy_design</span> <span class='op'>&lt;-</span> <span class='fu'>svydesign</span><span class='op'>(</span>id<span class='op'>=</span><span class='op'>~</span><span class='fl'>1</span>, weights<span class='op'>=</span><span class='op'>~</span><span class='va'>ipw</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># IPW adjusted Kaplan-Meier</span>
-<span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svykm.html'>svykm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
+<span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'>svykm</span><span class='op'>(</span><span class='fu'>Surv</span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
 
 <span class='va'>km_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>time<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`1`</span><span class='op'>$</span><span class='va'>time</span>, surv<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`1`</span><span class='op'>$</span><span class='va'>surv</span>, strata<span class='op'>=</span><span class='st'>"medi=1"</span><span class='op'>)</span>
 <span class='va'>km_df</span> <span class='op'>&lt;-</span> <span class='fu'>bind_rows</span><span class='op'>(</span><span class='va'>km_df</span>, <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>time<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`0`</span><span class='op'>$</span><span class='va'>time</span>, surv<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`0`</span><span class='op'>$</span><span class='va'>surv</span>, strata<span class='op'>=</span><span class='st'>"medi=0"</span><span class='op'>)</span><span class='op'>)</span>
@@ -2688,6 +2678,33 @@ medi    0    1
 </code></pre>
 </div>
 <p><img src="adjcurves_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'>svycoxph</span><span class='op'>(</span><span class='fu'>Surv</span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Independent Sampling design (with replacement)
+svydesign(id = ~1, weights = ~ipw, data = data)</code></pre>
+<pre><code>Call:
+svycoxph(formula = Surv(fup, death) ~ medi, design = svy_design)
+
+  n= 10000, number of events= 4289 
+
+        coef exp(coef) se(coef) robust se     z Pr(&gt;|z|)
+medi 0.01669   1.01683  0.03192   0.03323 0.502    0.616
+
+     exp(coef) exp(-coef) lower .95 upper .95
+medi     1.017     0.9835    0.9527     1.085
+
+Concordance= 0.502  (se = 0.004 )
+Likelihood ratio test= NA  on 1 df,   p=NA
+Wald test            = 0.25  on 1 df,   p=0.6
+Score (logrank) test = NA  on 1 df,   p=NA
+
+  (Note: the likelihood ratio and score tests assume independence of
+     observations within a cluster, the Wald and robust score tests do not).</code></pre>
 </div>
 <h1 id="data-simulation">Data simulation</h1>
 <div class="layout-chunk" data-layout="l-body">
@@ -2697,10 +2714,13 @@ medi    0    1
 
 <span class='co'># 60% percent women</span>
 <span class='va'>female</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='fl'>0.6</span><span class='op'>)</span>
-<span class='co'># Women have a </span>
-<span class='va'>medi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>*</span><span class='va'>female</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='co'># Hazard of dying</span>
-<span class='va'>haz</span> <span class='op'>&lt;-</span> <span class='fl'>0.01</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span><span class='op'>*</span><span class='va'>medi</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>*</span><span class='va'>female</span><span class='op'>)</span>
+<span class='co'># Men has the enzym with a prob of 0.3; women have</span>
+<span class='co'># a 5 times higher chance of having the enzym</span>
+<span class='va'>enzym</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>qlogis</a></span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>*</span><span class='va'>female</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='co'># Those with enzym receive medication with prob 0.75</span>
+<span class='va'>medi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>*</span><span class='va'>enzym</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='co'># Hazard of dying: HR=10 of those with enyzm; HR of 1 for medication</span>
+<span class='va'>haz</span> <span class='op'>&lt;-</span> <span class='fl'>0.01</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>*</span><span class='va'>enzym</span><span class='op'>)</span>
 <span class='co'># Time to death</span>
 <span class='va'>time_to_death</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='va'>haz</span>
 <span class='co'># Censoring time: Mean duration 20 days</span>
@@ -2710,7 +2730,7 @@ medi    0    1
 <span class='co'># Death</span>
 <span class='va'>death</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>time_to_death</span><span class='op'>&lt;=</span><span class='va'>censored</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='co'># Data</span>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span>, <span class='va'>medi</span>, <span class='va'>female</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span>, <span class='va'>medi</span>, <span class='va'>enzym</span>, <span class='va'>female</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
