@@ -47,15 +47,12 @@ Because we simulated the data, we know that medication has no effect on mortalit
 
 IP weighting constructs weights which are equal to the probability of an individual's treatment (here: receiving the medication) given observed covariates (here: sex and enzym) and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (@hernan_book).
 
-```{r, echo=F, message=F, warning=F}
+```{r, echo=T, message=F, warning=F}
+# Required packages
 library(tidyverse)
-library(haven)
-library(Hmisc)
 library(survey)
 library(survival)
-library(kableExtra)
 library(gtsummary)
-library(rms)
 library(survminer)
 ```
 
@@ -88,7 +85,7 @@ data <- data.frame(fup, death, medi, enzym, female)
 
 The table below shows a descriptive summary of the study population, by medication.
 
-```{r, echo=F, message=F, warning=F, results='asis'}
+```{r, echo=T, message=F, warning=F, results='asis'}
 data %>% tbl_summary(by=medi, label=list(medi ~ "Medication")) 
 ```
 
@@ -144,7 +141,6 @@ An IPW adjusted Kaplan-Meier curve reveals that medication has no effect on surv
 
 ```{r, echo=T, message=F, warning=F, results='markup'}
 # Set survey design
-library(survey)
 svy_design <- svydesign(id=~1, weights=~ipw, data=data)
 
 # IPW adjusted Kaplan-Meier
@@ -162,7 +158,6 @@ summary(mod_cox_ipw_adjusted)
 ```
 
 This is confirmed by an IPW adjusted Cox regression model (hazard ratio=`r round(exp(mod_cox_ipw_adjusted$coef[1]), 2)`).
-
 
 # Conclusion
 
@@ -194,4 +189,3 @@ death <- ifelse(time_to_death<=censored, 1, 0)
 # Data
 data <- data.frame(fup, death, medi, enzym, female)
 ```
-
