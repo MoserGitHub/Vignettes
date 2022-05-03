@@ -70,7 +70,7 @@ female <- rbinom(n, 1, 0.6)
 enzym <- ifelse(runif(n) < plogis(qlogis(0.3)+log(5)*female), 1, 0)
 # Those with enzym receive medication with prob 0.75
 medi <- ifelse(runif(n) < plogis(log(3)*enzym), 1, 0)
-# Hazard of dying: HR=10 of those with enyzm; HR of 1 for medication
+# Hazard of dying: HR=10 of those with enyzm; No effect for medication
 haz <- 0.01*exp(log(10)*enzym)
 # Time to death
 time_to_death <- -log(runif(n))/haz
@@ -181,7 +181,7 @@ female <- rbinom(n, 1, 0.6)
 enzym <- ifelse(runif(n) < plogis(qlogis(0.3)+log(5)*female), 1, 0)
 # Those with enzym receive medication with prob 0.75
 medi <- ifelse(runif(n) < plogis(log(3)*enzym), 1, 0)
-# Hazard of dying: HR=10 of those with enyzm; HR of 1 for medication
+# Hazard of dying: HR=10 of those with enyzm; No effect for medication
 haz <- 0.01*exp(log(10)*enzym)
 # Time to death
 time_to_death <- -log(runif(n))/haz
