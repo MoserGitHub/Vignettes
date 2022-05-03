@@ -8,6 +8,4 @@ navbar:
       menu:
       - text: "Adjusted survival curves"
         href: adjcurves.html
-      - text: "Immortal time bias"
-        href: immortal.html
 output: distill::distill_article
