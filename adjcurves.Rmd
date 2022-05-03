@@ -3,8 +3,11 @@ title: "Adjusted survival curves"
 author:
   - name: André Moser, CTU Bern, University of Bern
     orcid_id: 0000-0001-7178-6539
-toc: true
-site: distill::distill_website
+output: 
+  distill::distill_article:
+    toc: true
+    number_sections: true    
+    toc_float: true
 bibliography: adjcurves.bib
 ---
 
@@ -18,7 +21,7 @@ Unadjusted Kaplan-Meier curves from observational data might be biased because o
 
 # Example
 
-We consider a study population of 10,000 patients who received a medication. 60% of the patients were women. A specific enzym was measured in 30% of the patients. Those with the enzym were more likely to receive the medication (with a probability of 75%), compared to those without the enyzm (probability of 50%).
+We consider a study population of 10,000 patients who received a medication. 60% of the patients were women. In men, a specific enzym was measured with a probability of 30%, whereas in women have a 5 times higher chance of having the enzym. Those with the enzym were more likely to receive the medication (with a probability of 75%), compared to those without the enyzm (probability of 50%).
 
 - Research question: What is the effect of the medication on death?
 - Study design: Cohort study
@@ -103,14 +106,14 @@ mod_cox_unadjusted <- coxph(Surv(fup, death) ~ medi, data = data)
 mod_cox_unadjusted
 ```
 
-An unadjusted Cox proportional hazard model shows that patients with medication have `r round(mod_cox_unadjusted$coef[1], 1)` higher hazard of death compared to those without medication.
+An unadjusted Cox proportional hazard model shows that patients with medication have `r round(exp(mod_cox_unadjusted$coef[1]), 1)` higher hazard of death compared to those without medication.
 
 ```{r, echo=T, message=F, warning=F}
 mod_cox_adjusted <- coxph(Surv(fup, death) ~ medi+enzym+female, data = data)
 mod_cox_adjusted
 ```
 
-What happens if we adjust for enzym and sex? Then the effect of the medication on death vanish (hazard ratio: `r round(mod_cox_adjusted$coef[1], 2)`.
+What happens if we adjust for enzym and sex? Then the effect of the medication on death vanish (hazard ratio=`r round(exp(mod_cox_adjusted$coef[1]), 2)`).
 
 ## IPW modelling
 
@@ -152,12 +155,14 @@ km_df <- bind_rows(km_df, data.frame(time=km_fit$`0`$time, surv=km_fit$`0`$surv,
 ggsurvplot_df(km_df, palette=c("#CC0000", "black"), censor=F)
 ```
 
-This is confirmed by an IPW adjusted Cox regression model.
 
 ```{r, echo=T, message=F, warning=F, results='markup'}
-mod <- svycoxph(Surv(fup, death) ~ medi, design=svy_design)
-summary(mod)
+mod_cox_ipw_adjusted <- svycoxph(Surv(fup, death) ~ medi, design=svy_design)
+summary(mod_cox_ipw_adjusted)
 ```
+
+This is confirmed by an IPW adjusted Cox regression model (hazard ratio=`r round(exp(mod_cox_ipw_adjusted$coef[1]), 2)`).
+
 
 # Conclusion
 
