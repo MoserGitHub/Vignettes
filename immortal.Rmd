@@ -242,5 +242,9 @@ data_clone <- bind_rows(data_clone0, data_clone1)
 
 #mod <- survfit(Surv(fup, death)~factor(group), data=data_clone)
 #ggsurvplot(mod, data=data, palette=c("#CC0000", "black"), censor=F, pval=T)
-
 ```
+
+# Conclusion
+
+Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to @zhou we conclude that the investigated methods 1 and 2 do not adequately address immortal time bias. In contrast to @zhou we found that method 4 did not adequatly address immortal time bias, which was also highlighted in @karim.
+
