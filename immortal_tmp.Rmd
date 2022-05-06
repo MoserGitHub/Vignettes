@@ -1,0 +1,177 @@
+---
+title: "Immortal time bias"
+bibliography: immortal.bib
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r base, echo=F, warning=F, message=F}
+
+# Background
+library(rms)
+library(survival)
+library(tidyverse)
+
+n <- 1000
+
+set.seed(1)
+
+#
+time_to_exposure <- rweibull(n, 1, 10)
+group <- as.numeric(cut2(time_to_exposure, g=2))-1
+
+severity <- ifelse(runif(n)<plogis(log(1.1)*(group==1)+log(1.5)*(group==2)), 1, 0)
+mod <- glm(severity ~ factor(group), family=binomial())
+exp(mod$coefficients)
+haz <- 0.05
+time_to_death <- -log(runif(n))/haz
+censored <- rweibull(n, 1, 20)
+fup <- pmin(time_to_exposure+time_to_death, time_to_exposure+censored)
+
+data$ipw
+death <- ifelse(time_to_exposure+time_to_death<=time_to_exposure+censored, 1, 0)
+
+
+data <- data.frame(id=1:n, fup, death, group)
+
+# Replace: Time to end of treatment
+# fup <- pmax(dur, fup)
+
+mod_km <- survfit(Surv(fup, event=death)~group, data=data)
+plot(mod_km)
+survdiff(Surv(fup, event=death)~group, data=data)
+
+coxph(Surv(fup, event=death)~factor(group), data=data)
+
+
+mod <- glm(group ~ severity, data=data, family=binomial())
+
+data$ipw <- NA
+# Probabilty of treatment
+data$ipw <- predict(mod, data=data, type="response")
+# Probabilty of non-treatment
+data$ipw[data$group==0] <- 1-predict(mod, data=data, type="response")[data$group==0]
+
+
+install.packages("mlogit")
+library(mlogit)
+data("Heating", package = "mlogit")
+table(Heating$depvar)
+
+data$group <- factor(data$group)
+H <- dfidx(Heating, choice = "depvar", varying = c(3:12))
+H <- dfidx(data, choice = "group")
+library(nnet)
+mod0 <- multinom(group~1, data=data)
+pred_ipw0 <- 1/data.frame(predict(mod0, newdata=data, "probs"))
+pred_ipw0$id <- 1:n
+pred_ipw0 <- pivot_longer(pred_ipw0, 1:3, names_to = "group", values_to = "ipw")
+pred_ipw0$group <- as.numeric(str_sub(pred_ipw0$group, 2))
+
+
+
+mod <- multinom(group~severity, data=data)
+pred_ipw <- 1/data.frame(predict(mod, newdata=data, "probs"))
+pred_ipw$id <- 1:n
+pred_ipw <- pivot_longer(pred_ipw, 1:3, names_to = "group", values_to = "ipw")
+pred_ipw$group <- as.numeric(str_sub(pred_ipw$group, 2))
+pred_ipw$ipw <- pred_ipw$ipw/3
+data <- left_join(data, pred_ipw, by=c("id", "group"))
+describe(data$ipw)
+library(survey)
+library(survminer)
+svy_design <- svydesign(id=~id, weights=~ipw, data=data)
+
+table(data$group)
+svytable(~group, design=svy_design)
+# IPW adjusted Kaplan-Meier
+km_fit <- svykm(Surv(fup, death) ~ factor(group), design=svy_design)
+
+km_df <- data.frame(time=km_fit$`0`$time, surv=km_fit$`0`$surv, strata="group=0")
+km_df <- bind_rows(km_df, data.frame(time=km_fit$`1`$time, surv=km_fit$`1`$surv, strata="group=1"))
+km_df <- bind_rows(km_df, data.frame(time=km_fit$`2`$time, surv=km_fit$`2`$surv, strata="group=2"))
+ggsurvplot_df(km_df, palette=c("#CC0000", "black", "blue"), censor=F)
+
+mod_cox_ipw_adjusted <- svycoxph(Surv(fup, death) ~ factor(group), design=svy_design)
+summary(mod_cox_ipw_adjusted)
+
+# IPW denominator
+mod <- glm(medi ~ female+enzym, data=data, family=binomial())
+
+data$ipw <- NA
+# Probabilty of treatment
+data$ipw <- predict(mod, data=data, type="response")
+# Probabilty of non-treatment
+data$ipw[data$medi==0] <- 1-predict(mod, data=data, type="response")[data$medi==0]
+
+
+
+
+
+
+group <- ifelse(dur<=median(dur), 1, 0)
+
+age <- rnorm(n, sd=3)
+# Hazard of dying. Note: Not associated with treatment duration (dur)
+haz <- 0.01
+#*exp(1*age)
+# Time to death: Mean time to death=1/0.01=100 days
+time_to_death <- -log(runif(n))/haz
+
+# Censoring time (could be hospital discharge): Mean duration 20 days
+cens <- 70*runif(n)
+
+# Death
+death <- ifelse(time_to_death<=cens, 1, 0)
+table(death)
+
+# Replace: Time to end of follow-up if fup<cens
+fup <- pmin(time_to_death, cens)
+
+group <- ifelse(fup<=40, 1, 0)
+
+data <- data.frame(dur, fup, death, group, age)
+
+# Replace: Time to end of treatment
+# fup <- pmax(dur, fup)
+
+describe(data$fup[data$group==1])
+describe(data$fup[data$group==0])
+
+data
+mod_km <- survfit(Surv(fup, event=death)~group, data=data)
+plot(mod_km)
+survdiff(Surv(fup, event=death)~group, data=data)
+
+coxph(Surv(fup, event=death)~group, data=data)
+
+# Cloning populations
+data_short <- data
+data_long <- data
+
+# Censor if dur>median(dur)
+data_short$censor <- ifelse(data_short$fup>10, 1, 0)
+data_short$death[data_short$fup>10] <- 0
+data_short$group_comb <- 1
+
+data_long$censor <- ifelse(data_long$fup<=10, 1, 0)
+data_long$group_comb <- 0
+
+data_comb <- bind_rows(data_short, data_long)
+
+mod <- glm(censor~age, data=data_comb, family=binomial())
+mod_km <- survfit(Surv(fup, event=death)~group_comb, data=data_comb)
+plot(mod_km)
+coxph(Surv(fup, event=death)~group_comb, data=data_comb)
+
+# Example(s)
+
+
+# Conclusion
+
+
+# References
+```

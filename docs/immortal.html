@@ -108,30 +108,33 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Vignettes: Adjusted survival curves</title>
+  <title>Vignettes: Immortal time bias</title>
 
 
 
   <meta name="article:author" content="André Moser, CTU Bern, University of Bern"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Vignettes: Adjusted survival curves"/>
+  <meta property="og:title" content="Vignettes: Immortal time bias"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Vignettes"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Vignettes: Adjusted survival curves"/>
+  <meta property="twitter:title" content="Vignettes: Immortal time bias"/>
 
   <!--/radix_placeholder_meta_tags-->
   
-  <meta name="citation_reference" content="citation_title=Adjusted survival curves with inverse probability weights;citation_publication_date=2004;citation_volume=75;citation_doi=10.1016/j.cmpb.2003.10.004;citation_issn=0169-2607;citation_author=Stephen R. Cole;citation_author=Miguel A. Hernán"/>
-  <meta name="citation_reference" content="citation_title=Causal inference: What if;citation_publication_date=2022;citation_publisher=Chapman &amp; Hall/CRC;citation_author=MA Hernán;citation_author=JM Robins"/>
+  <meta name="citation_reference" content="citation_title=Survival Bias Associated with Time-to-Treatment Initiation in Drug Effectiveness Evaluation: A Comparison of Methods;citation_publication_date=2005;citation_volume=162;citation_doi=10.1093/aje/kwi307;citation_issn=0002-9262;citation_author=Zheng Zhou;citation_author=Elham Rahme;citation_author=Michal Abrahamowicz;citation_author=Louise Pilote"/>
+  <meta name="citation_reference" content="citation_title=Specifying a target trial prevents immortal time bias and other self-inflicted injuries in observational analyses;citation_publication_date=2016;citation_volume=79;citation_doi=https://doi.org/10.1016/j.jclinepi.2016.04.014;citation_issn=0895-4356;citation_author=Miguel A. Hernán;citation_author=Brian C. Sauer;citation_author=Sonia Hernández-Díaz;citation_author=Robert Platt;citation_author=Ian Shrier"/>
+  <meta name="citation_reference" content="citation_title=Problem of immortal time bias in cohort studies: Example using statins for preventing progression of diabetes;citation_publication_date=2010;citation_publisher=BMJ Publishing Group Ltd;citation_volume=340;citation_doi=10.1136/bmj.b5087;citation_issn=0959-8138;citation_author=Linda E Lévesque;citation_author=James A Hanley;citation_author=Abbas Kezouh;citation_author=Samy Suissa"/>
+  <meta name="citation_reference" content="citation_title=Immortal time bias in observational studies of drug effects;citation_publication_date=2007;citation_volume=16;citation_doi=https://doi.org/10.1002/pds.1357;citation_author=Samy Suissa"/>
+  <meta name="citation_reference" content="citation_title=Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available;citation_publication_date=2016;citation_volume=183;citation_doi=10.1093/aje/kwv254;citation_issn=0002-9262;citation_author=Miguel A. Hernán;citation_author=James M. Robins"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Adjusted survival curves"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["André Moser, CTU Bern, University of Bern"]},{"type":"character","attributes":{},"value":["0000-0001-7178-6539"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","number_sections","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["adjcurves.bib"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Immortal time bias"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["André Moser, CTU Bern, University of Bern"]},{"type":"character","attributes":{},"value":["0000-0001-7178-6539"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","number_sections","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["immortal.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2079,7 +2082,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Adjusted survival curves","authors":[{"author":"André Moser, CTU Bern, University of Bern","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":"0000-0001-7178-6539"}]}
+{"title":"Immortal time bias","authors":[{"author":"André Moser, CTU Bern, University of Bern","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":"0000-0001-7178-6539"}]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2110,7 +2113,7 @@ Topics
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Adjusted survival curves</h1>
+<h1>Immortal time bias</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2135,24 +2138,32 @@ Topics
 <li><a href="#analysis-strategy">Analysis strategy</a>
 <ul>
 <li><a href="#descriptive-table">Descriptive table</a></li>
-<li><a href="#unadjusted-kaplan-meier-curve-and-cox-modelling">Unadjusted Kaplan-Meier curve and Cox-modelling</a></li>
-<li><a href="#ipw-modelling">IPW modelling</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#data-simulation">Data simulation</a></li>
+<li><a href="#immortal-time-bias-wrong-approaches">Immortal time bias: Wrong approaches</a>
+<ul>
+<li><a href="#method-1-fixed-group-assignment-at-time-zero">Method 1: Fixed group assignment at time zero</a></li>
+<li><a href="#method-2-randomly-assign-time-zero-for-short-group">Method 2: Randomly assign time zero for short group</a></li>
+</ul></li>
+<li><a href="#immortal-time-bias-approaches-correcting-for-bias">Immortal time bias: Approaches correcting for bias</a>
+<ul>
+<li><a href="#method-3-time-zero-at-end-of-treatment">Method 3: Time zero at end of treatment</a></li>
+<li><a href="#method-4-matched-treatment-duration">Method 4: Matched treatment duration</a></li>
+<li><a href="#method-5-time-dependent-treatment">Method 5: Time-dependent treatment</a></li>
+<li><a href="#method-6-cloning">Method 6: Cloning</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
 <h1 id="background">Background</h1>
-<p>Unadjusted Kaplan-Meier curves from observational data might be biased because of confounding (<span class="citation" data-cites="COLE200445"><a href="#ref-COLE200445" role="doc-biblioref">Cole and Hernán</a> (<a href="#ref-COLE200445" role="doc-biblioref">2004</a>)</span>). This vignette introduces the concept of inverse probability (IP) weighted survival curves.</p>
+<p>Immortal time bias arises when individuals are assigned to a treatment or exposure group in which they inherently survive for a specific time period (they are immortal). Immortal time bias is common when analyzing observational studies (<span class="citation" data-cites="suissa"><a href="#ref-suissa" role="doc-biblioref">Suissa</a> (<a href="#ref-suissa" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="levesque"><a href="#ref-levesque" role="doc-biblioref">Lévesque et al.</a> (<a href="#ref-levesque" role="doc-biblioref">2010</a>)</span>). It might occur when, for example, treatment or exposure group assignment happens after time zero (<span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). Other terminology for immortal time bias is <em>time dependent bias</em> or <em>survival bias</em>. In this vignette we introduce several methods to address immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>).</p>
 <h1 id="example">Example</h1>
-<p>We consider a study population of 10,000 patients who received a medication. 60% of the patients were women. In men, a specific enzym was measured with a probability of 30%, whereas in women have a 5 times higher chance of having the enzym. Those with the enzym were more likely to receive the medication (with a probability of 75%), compared to those without the enyzm (probability of 50%).</p>
+<p>We consider a study population of 10,000 patients admitted to the emergency unit. Patients with a more severe admission status are treated more quickly and are grouped into two treatment groups (short and long time to treatment after emergency admission).</p>
 <ul>
-<li>Research question: What is the effect of the medication on death?</li>
+<li>Research question: <strong>What is the effect of the time to treatment group assignment on survival?</strong></li>
 <li>Study design: Cohort study</li>
 <li>Outcome of interest: Time to death or end of follow-up</li>
-<li>Predictor of interest: Medication</li>
-<li>Confounders: Sex, enzym</li>
+<li>Predictor of interest: Time to treatment after admission</li>
+<li>Confounders: Severity</li>
 </ul>
 <p>The used variables from the data are:</p>
 <table>
@@ -2165,26 +2176,21 @@ Topics
 </thead>
 <tbody>
 <tr class="odd">
-<td>female</td>
-<td>Sex</td>
-<td>1=Women, 0=Men</td>
+<td>group</td>
+<td>Group assignment</td>
+<td>0=Short, 1=Long</td>
 </tr>
 <tr class="even">
-<td>enzym</td>
-<td>Measured enzym</td>
-<td>1=Present, 0=Not present</td>
+<td>severity</td>
+<td>Severity status</td>
+<td>1=Severe, 0=Non-severe</td>
 </tr>
 <tr class="odd">
-<td>medi</td>
-<td>Medication</td>
-<td>1=Received, 0=Not received</td>
-</tr>
-<tr class="even">
 <td>death</td>
 <td>Death</td>
 <td>1=Death, 0=Alive</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>fup</td>
 <td>Follow-up time</td>
 <td>Non-negative number</td>
@@ -2192,9 +2198,8 @@ Topics
 </tbody>
 </table>
 <h2 id="knowledge-from-the-crystal-ball">Knowledge from the crystal ball</h2>
-<p>Because we simulated the data, we know that medication has no effect on mortality.</p>
+<p>Because we simulated the data, we know that group assignment has no effect on mortality.</p>
 <h1 id="analysis-strategy">Analysis strategy</h1>
-<p>IP weighting constructs weights which are equal to the probability of an individual’s treatment (here: receiving the medication) given observed covariates (here: sex and enzym) and creates pseudopopulations in which observed covariates are independent of treatment (i.e. no confounding) (<span class="citation" data-cites="hernan_book"><a href="#ref-hernan_book" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-hernan_book" role="doc-biblioref">2022</a>)</span>).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Required packages</span>
@@ -2210,18 +2215,22 @@ Topics
 
 </div>
 <h2 id="descriptive-table">Descriptive table</h2>
-<p>The table below shows a descriptive summary of the study population, by medication.</p>
+<p>The table below shows a descriptive summary of the study population, by group assignment.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>by<span class='op'>=</span><span class='va'>medi</span>, label<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='st'>"Medication"</span><span class='op'>)</span><span class='op'>)</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>censored</span>, <span class='va'>time_to_death</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>by<span class='op'>=</span><span class='va'>group_lab</span>, label<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>group</span> <span class='op'>~</span> <span class='st'>"Group assignment"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<div id="swynlxhket" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="qjbdhijbmm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#swynlxhket .gt_table {
+#qjbdhijbmm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2246,7 +2255,7 @@ Topics
   border-left-color: #D3D3D3;
 }
 
-#swynlxhket .gt_heading {
+#qjbdhijbmm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2258,7 +2267,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#swynlxhket .gt_title {
+#qjbdhijbmm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2270,7 +2279,7 @@ Topics
   border-bottom-width: 0;
 }
 
-#swynlxhket .gt_subtitle {
+#qjbdhijbmm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2282,13 +2291,13 @@ Topics
   border-top-width: 0;
 }
 
-#swynlxhket .gt_bottom_border {
+#qjbdhijbmm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#swynlxhket .gt_col_headings {
+#qjbdhijbmm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2303,7 +2312,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#swynlxhket .gt_col_heading {
+#qjbdhijbmm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2323,7 +2332,7 @@ Topics
   overflow-x: hidden;
 }
 
-#swynlxhket .gt_column_spanner_outer {
+#qjbdhijbmm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2335,15 +2344,15 @@ Topics
   padding-right: 4px;
 }
 
-#swynlxhket .gt_column_spanner_outer:first-child {
+#qjbdhijbmm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#swynlxhket .gt_column_spanner_outer:last-child {
+#qjbdhijbmm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#swynlxhket .gt_column_spanner {
+#qjbdhijbmm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2355,7 +2364,7 @@ Topics
   width: 100%;
 }
 
-#swynlxhket .gt_group_heading {
+#qjbdhijbmm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2380,7 +2389,7 @@ Topics
   vertical-align: middle;
 }
 
-#swynlxhket .gt_empty_group_heading {
+#qjbdhijbmm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2395,15 +2404,15 @@ Topics
   vertical-align: middle;
 }
 
-#swynlxhket .gt_from_md > :first-child {
+#qjbdhijbmm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#swynlxhket .gt_from_md > :last-child {
+#qjbdhijbmm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#swynlxhket .gt_row {
+#qjbdhijbmm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2422,7 +2431,7 @@ Topics
   overflow-x: hidden;
 }
 
-#swynlxhket .gt_stub {
+#qjbdhijbmm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2435,7 +2444,7 @@ Topics
   padding-right: 5px;
 }
 
-#swynlxhket .gt_stub_row_group {
+#qjbdhijbmm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2449,11 +2458,11 @@ Topics
   vertical-align: top;
 }
 
-#swynlxhket .gt_row_group_first td {
+#qjbdhijbmm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#swynlxhket .gt_summary_row {
+#qjbdhijbmm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2463,16 +2472,16 @@ Topics
   padding-right: 5px;
 }
 
-#swynlxhket .gt_first_summary_row {
+#qjbdhijbmm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#swynlxhket .gt_first_summary_row.thick {
+#qjbdhijbmm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#swynlxhket .gt_last_summary_row {
+#qjbdhijbmm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2482,7 +2491,7 @@ Topics
   border-bottom-color: #D3D3D3;
 }
 
-#swynlxhket .gt_grand_summary_row {
+#qjbdhijbmm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2492,7 +2501,7 @@ Topics
   padding-right: 5px;
 }
 
-#swynlxhket .gt_first_grand_summary_row {
+#qjbdhijbmm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2502,11 +2511,11 @@ Topics
   border-top-color: #D3D3D3;
 }
 
-#swynlxhket .gt_striped {
+#qjbdhijbmm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#swynlxhket .gt_table_body {
+#qjbdhijbmm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2515,7 +2524,7 @@ Topics
   border-bottom-color: #D3D3D3;
 }
 
-#swynlxhket .gt_footnotes {
+#qjbdhijbmm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2529,7 +2538,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#swynlxhket .gt_footnote {
+#qjbdhijbmm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2538,7 +2547,7 @@ Topics
   padding-right: 5px;
 }
 
-#swynlxhket .gt_sourcenotes {
+#qjbdhijbmm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2552,7 +2561,7 @@ Topics
   border-right-color: #D3D3D3;
 }
 
-#swynlxhket .gt_sourcenote {
+#qjbdhijbmm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2560,60 +2569,60 @@ Topics
   padding-right: 5px;
 }
 
-#swynlxhket .gt_left {
+#qjbdhijbmm .gt_left {
   text-align: left;
 }
 
-#swynlxhket .gt_center {
+#qjbdhijbmm .gt_center {
   text-align: center;
 }
 
-#swynlxhket .gt_right {
+#qjbdhijbmm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#swynlxhket .gt_font_normal {
+#qjbdhijbmm .gt_font_normal {
   font-weight: normal;
 }
 
-#swynlxhket .gt_font_bold {
+#qjbdhijbmm .gt_font_bold {
   font-weight: bold;
 }
 
-#swynlxhket .gt_font_italic {
+#qjbdhijbmm .gt_font_italic {
   font-style: italic;
 }
 
-#swynlxhket .gt_super {
+#qjbdhijbmm .gt_super {
   font-size: 65%;
 }
 
-#swynlxhket .gt_footnote_marks {
+#qjbdhijbmm .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#swynlxhket .gt_asterisk {
+#qjbdhijbmm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#swynlxhket .gt_slash_mark {
+#qjbdhijbmm .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#swynlxhket .gt_fraction_numerator {
+#qjbdhijbmm .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#swynlxhket .gt_fraction_denominator {
+#qjbdhijbmm .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -2624,23 +2633,26 @@ Topics
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>0</strong>, N = 3,639<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>1</strong>, N = 6,361<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Short</strong>, N = 5,000<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Long</strong>, N = 5,000<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td class="gt_row gt_left">fup</td>
-<td class="gt_row gt_center">8 (3, 17)</td>
-<td class="gt_row gt_center">6 (2, 13)</td></tr>
+<td class="gt_row gt_center">12 (10, 17)</td>
+<td class="gt_row gt_center">16 (13, 20)</td></tr>
+    <tr><td class="gt_row gt_left">time_to_treatment</td>
+<td class="gt_row gt_center">7.74 (6.63, 8.60)</td>
+<td class="gt_row gt_center">10.66 (9.97, 11.59)</td></tr>
     <tr><td class="gt_row gt_left">death</td>
-<td class="gt_row gt_center">1,225 (34%)</td>
-<td class="gt_row gt_center">3,064 (48%)</td></tr>
-    <tr><td class="gt_row gt_left">enzym</td>
-<td class="gt_row gt_center">1,321 (36%)</td>
-<td class="gt_row gt_center">3,973 (62%)</td></tr>
-    <tr><td class="gt_row gt_left">female</td>
-<td class="gt_row gt_center">1,972 (54%)</td>
-<td class="gt_row gt_center">4,062 (64%)</td></tr>
+<td class="gt_row gt_center">1,643 (33%)</td>
+<td class="gt_row gt_center">1,607 (32%)</td></tr>
+    <tr><td class="gt_row gt_left">Group assignment</td>
+<td class="gt_row gt_center">0 (0%)</td>
+<td class="gt_row gt_center">5,000 (100%)</td></tr>
+    <tr><td class="gt_row gt_left">severity</td>
+<td class="gt_row gt_center">3,991 (80%)</td>
+<td class="gt_row gt_center">2,221 (44%)</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">
@@ -2651,157 +2663,148 @@ Topics
 </table>
 </div>
 </div>
-<h2 id="unadjusted-kaplan-meier-curve-and-cox-modelling">Unadjusted Kaplan-Meier curve and Cox-modelling</h2>
-<p>A naive (unadjusted) survival analysis of the data reveals the following Kaplan-Meier plot. We conclude that the medication has an effect on survival.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h1 id="immortal-time-bias-wrong-approaches">Immortal time bias: Wrong approaches</h1>
+<p>This section shows two approaches which do not correct for immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>).</p>
+<h2 id="method-1-fixed-group-assignment-at-time-zero">Method 1: Fixed group assignment at time zero</h2>
+<p>Time zero is time of emergency admission. Treatment is assigned according to whether patients had a short or long time to treatment.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='va'>medi</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="adjcurves_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
+<h2 id="method-2-randomly-assign-time-zero-for-short-group">Method 2: Randomly assign time zero for short group</h2>
+<p>Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod_cox_unadjusted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/coxph.html'>coxph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
-<span class='va'>mod_cox_unadjusted</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method2</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
+<span class='co'># New time to treament for short group</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span> <span class='op'>&lt;-</span> <span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>[</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>[</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Exclusion of patients</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>exclude</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>exclude</span><span class='op'>[</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method2</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>[</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method2</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>&lt;</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>[</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method2</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>data_method2</span> <span class='op'>&lt;-</span> <span class='va'>data_method2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>exclude</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
+
+<span class='co'># Time zero: Start of treatment</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_death</span>, <span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>censored</span><span class='op'>)</span>
+<span class='co'># Replace death indicator</span>
+<span class='va'>data_method2</span><span class='op'>$</span><span class='va'>death</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_death</span><span class='op'>&lt;=</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method2</span><span class='op'>$</span><span class='va'>censored</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method2</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from start of treatment"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Call:
-coxph(formula = Surv(fup, death) ~ medi, data = data)
-
-        coef exp(coef) se(coef)     z      p
-medi 0.50613   1.65887  0.03385 14.95 &lt;2e-16
-
-Likelihood ratio test=238.4  on 1 df, p=&lt; 2.2e-16
-n= 10000, number of events= 4289 </code></pre>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
-<p>An unadjusted Cox proportional hazard model shows that patients with medication have 1.7 higher hazard of death compared to those without medication.</p>
+<h1 id="immortal-time-bias-approaches-correcting-for-bias">Immortal time bias: Approaches correcting for bias</h1>
+<p>This section shows two approaches which might correct for immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>).</p>
+<h2 id="method-3-time-zero-at-end-of-treatment">Method 3: Time zero at end of treatment</h2>
+<p>Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod_cox_adjusted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/coxph.html'>coxph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span><span class='op'>+</span><span class='va'>enzym</span><span class='op'>+</span><span class='va'>female</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
-<span class='va'>mod_cox_adjusted</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
+<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>excluded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>&lt;</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>excluded</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>
+
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method3</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from end of treatment duration"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Call:
-coxph(formula = Surv(fup, death) ~ medi + enzym + female, data = data)
-
-           coef exp(coef) se(coef)      z      p
-medi    0.01610   1.01623  0.03445  0.467  0.640
-enzym   2.37236  10.72265  0.04703 50.441 &lt;2e-16
-female  0.07087   1.07344  0.03552  1.995  0.046
-
-Likelihood ratio test=4221  on 3 df, p=&lt; 2.2e-16
-n= 10000, number of events= 4289 </code></pre>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<p>What happens if we adjust for enzym and sex? Then the effect of the medication on death vanish (hazard ratio=1.02).</p>
-<h2 id="ipw-modelling">IPW modelling</h2>
-<p>An IPW modelling approach construct treatment weights (here medication) given known covariates (here sex and enzym) using a logistic regression model.</p>
+<h2 id="method-4-matched-treatment-duration">Method 4: Matched treatment duration</h2>
+<p>Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded. This methods corrects for time to treatment imbalances (compared to method 2).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># IPW denominator</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='va'>female</span><span class='op'>+</span><span class='va'>enzym</span>, data<span class='op'>=</span><span class='va'>data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method4</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
+<span class='co'># Get time to treatment from long group</span>
+<span class='va'>sample_time</span> <span class='op'>&lt;-</span> <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span>
+<span class='co'># New time to treament for short group</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span> <span class='op'>&lt;-</span> <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>sample_time</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
-<span class='co'># Probabilty of treatment</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span>
-<span class='co'># Probabilty of non-treatment</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span>
+<span class='co'># Exclusion of patients</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>exclude</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>exclude</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>&lt;</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>[</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>0</span> <span class='op'>&amp;</span> <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>death</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>data_method4</span> <span class='op'>&lt;-</span> <span class='va'>data_method4</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>exclude</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
+
+<span class='co'># Time zero: Start of treatment</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_death</span>, <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>censored</span><span class='op'>)</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_death</span>, <span class='va'>data_method4</span><span class='op'>$</span><span class='va'>censored</span><span class='op'>)</span>
+<span class='co'># Replace death indicator</span>
+<span class='va'>data_method4</span><span class='op'>$</span><span class='va'>death</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_death</span><span class='op'>&lt;=</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment_new</span><span class='op'>-</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>data_method4</span><span class='op'>$</span><span class='va'>censored</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method4</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method4</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from start of treatment"</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div>
-<p>We construct stabilized weights, since they can provide narrower confidence intervals (<span class="citation" data-cites="hernan_book"><a href="#ref-hernan_book" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-hernan_book" role="doc-biblioref">2022</a>)</span>).</p>
+<h2 id="method-5-time-dependent-treatment">Method 5: Time-dependent treatment</h2>
+<p>Treatment assignment is 0 (“short”) as long as a patient has a time to treatment smaller than the median time to treatment, and 1 (“long”) otherwise.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Stabilized weights</span>
-<span class='va'>mod0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>medi</span> <span class='op'>~</span> <span class='fl'>1</span>, data<span class='op'>=</span><span class='va'>data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod0</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod0</span>, data<span class='op'>=</span><span class='va'>data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span><span class='op'>[</span><span class='va'>data</span><span class='op'>$</span><span class='va'>medi</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>]</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>ipw0</span><span class='op'>/</span><span class='va'>data</span><span class='op'>$</span><span class='va'>ipw</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://github.com/mrdwab/splitstackshape'>splitstackshape</a></span><span class='op'>)</span>
+<span class='co'># For "smoother" curves: Fup*10</span>
+<span class='va'>multiplier</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+<span class='va'>data</span><span class='op'>$</span><span class='va'>fup2</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>*</span><span class='va'>multiplier</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/splitstackshape/man/expandRows.html'>expandRows</a></span><span class='op'>(</span><span class='va'>data</span>, count<span class='op'>=</span><span class='st'>"fup2"</span>, drop<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='co'># Count indicator: How many follow-up days per individuals</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>ind<span class='op'>=</span><span class='fl'>1</span>, time<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='va'>ind</span><span class='op'>)</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='co'># Maximal follow-up day</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>max_time<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Correct death</span>
+<span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>death</span><span class='op'>[</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time</span> <span class='op'>&lt;</span> <span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>max_time</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='co'># Shift days</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>time2<span class='op'>=</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/lead-lag.html'>lead</a></span><span class='op'>(</span><span class='va'>time</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Fill last day</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html'>fill</a></span><span class='op'>(</span><span class='va'>time2</span><span class='op'>)</span>
+<span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time2</span><span class='op'>[</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time</span><span class='op'>==</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>max_time</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time2</span><span class='op'>[</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time</span><span class='op'>==</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>max_time</span><span class='op'>]</span><span class='op'>+</span><span class='fl'>1</span>
+
+<span class='co'># Create time-dependent treatment</span>
+<span class='va'>data_discrete_surv</span> <span class='op'>&lt;-</span> <span class='va'>data_discrete_surv</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>group_timedependent<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>group_timedependent</span><span class='op'>[</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time</span><span class='op'>&gt;=</span><span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>time_to_treatment</span><span class='op'>*</span><span class='va'>multiplier</span> <span class='op'>&amp;</span> <span class='va'>data_discrete_surv</span><span class='op'>$</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+
+<span class='va'>mod_km</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span>time<span class='op'>=</span><span class='va'>time</span><span class='op'>/</span><span class='va'>multiplier</span>, time2<span class='op'>=</span><span class='va'>time2</span><span class='op'>/</span><span class='va'>multiplier</span>, event<span class='op'>=</span><span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='va'>group_timedependent</span>, data<span class='op'>=</span><span class='va'>data_discrete_surv</span>, cluster <span class='op'>=</span> <span class='va'>id</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod_km</span>, data<span class='op'>=</span><span class='va'>data_discrete_surv</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>F</span>, xlab<span class='op'>=</span><span class='st'>"Time from emergency admission"</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div>
-<p>An IPW adjusted Kaplan-Meier curve reveals that medication has no effect on survival:</p>
+<h2 id="method-6-cloning">Method 6: Cloning</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Set survey design</span>
-<span class='va'>svy_design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svydesign.html'>svydesign</a></span><span class='op'>(</span>id<span class='op'>=</span><span class='op'>~</span><span class='fl'>1</span>, weights<span class='op'>=</span><span class='op'>~</span><span class='va'>ipw</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
 
-<span class='co'># IPW adjusted Kaplan-Meier</span>
-<span class='va'>km_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svykm.html'>svykm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
-
-<span class='va'>km_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>time<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`1`</span><span class='op'>$</span><span class='va'>time</span>, surv<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`1`</span><span class='op'>$</span><span class='va'>surv</span>, strata<span class='op'>=</span><span class='st'>"medi=1"</span><span class='op'>)</span>
-<span class='va'>km_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>km_df</span>, <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>time<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`0`</span><span class='op'>$</span><span class='va'>time</span>, surv<span class='op'>=</span><span class='va'>km_fit</span><span class='op'>$</span><span class='va'>`0`</span><span class='op'>$</span><span class='va'>surv</span>, strata<span class='op'>=</span><span class='st'>"medi=0"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot_df.html'>ggsurvplot_df</a></span><span class='op'>(</span><span class='va'>km_df</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
-</code></pre>
 </div>
-<p><img src="adjcurves_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod_cox_ipw_adjusted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survey/man/svycoxph.html'>svycoxph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>medi</span>, design<span class='op'>=</span><span class='va'>svy_design</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod_cox_ipw_adjusted</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>Independent Sampling design (with replacement)
-svydesign(id = ~1, weights = ~ipw, data = data)</code></pre>
-<pre><code>Call:
-svycoxph(formula = Surv(fup, death) ~ medi, design = svy_design)
-
-  n= 10000, number of events= 4289 
-
-        coef exp(coef) se(coef) robust se     z Pr(&gt;|z|)
-medi 0.01669   1.01683  0.03192   0.03323 0.502    0.616
-
-     exp(coef) exp(-coef) lower .95 upper .95
-medi     1.017     0.9835    0.9527     1.085
-
-Concordance= 0.502  (se = 0.004 )
-Likelihood ratio test= NA  on 1 df,   p=NA
-Wald test            = 0.25  on 1 df,   p=0.6
-Score (logrank) test = NA  on 1 df,   p=NA
-
-  (Note: the likelihood ratio and score tests assume independence of
-     observations within a cluster, the Wald and robust score tests do not).</code></pre>
-</div>
-<p>This is confirmed by an IPW adjusted Cox regression model (hazard ratio=1.02).</p>
-<h1 id="conclusion">Conclusion</h1>
-<p>Unadjusted Kaplan-Meier curves from observational data might be biased because of confounding. IPW adjusted survival curves account for confounding by constructing weights which are proportional to the probability of treatment given known covariates. An advantage of IPW adjusted Kaplan-Meier curves is that they provide marginal survival estimates, in contrast to stratified plots (<span class="citation" data-cites="COLE200445"><a href="#ref-COLE200445" role="doc-biblioref">Cole and Hernán</a> (<a href="#ref-COLE200445" role="doc-biblioref">2004</a>)</span>).</p>
-<h1 id="data-simulation">Data simulation</h1>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>10000</span>
-
-<span class='co'># 60% percent women</span>
-<span class='va'>female</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='fl'>0.6</span><span class='op'>)</span>
-<span class='co'># Men has the enzym with a prob of 0.3; women have</span>
-<span class='co'># a 5 times higher chance of having the enzym</span>
-<span class='va'>enzym</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>qlogis</a></span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>*</span><span class='va'>female</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='co'># Those with enzym receive medication with prob 0.75</span>
-<span class='va'>medi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>*</span><span class='va'>enzym</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='co'># Hazard of dying: HR=10 of those with enyzm; No effect for medication</span>
-<span class='va'>haz</span> <span class='op'>&lt;-</span> <span class='fl'>0.01</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>*</span><span class='va'>enzym</span><span class='op'>)</span>
-<span class='co'># Time to death</span>
-<span class='va'>time_to_death</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='va'>haz</span>
-<span class='co'># Censoring time: Mean duration 20 days</span>
-<span class='va'>censored</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Weibull.html'>rweibull</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span>
-<span class='co'># Follow-up time</span>
-<span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>time_to_death</span>, <span class='va'>censored</span><span class='op'>)</span>
-<span class='co'># Death</span>
-<span class='va'>death</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>time_to_death</span><span class='op'>&lt;=</span><span class='va'>censored</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='co'># Data</span>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span>, <span class='va'>medi</span>, <span class='va'>enzym</span>, <span class='va'>female</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-COLE200445" class="csl-entry" role="doc-biblioentry">
-Cole, Stephen R., and Miguel A. Hernán. 2004. <span>“Adjusted Survival Curves with Inverse Probability Weights.”</span> <em>Computer Methods and Programs in Biomedicine</em> 75 (1): 45–49. <a href="https://doi.org/10.1016/j.cmpb.2003.10.004">https://doi.org/10.1016/j.cmpb.2003.10.004</a>.
+<div id="ref-robins" class="csl-entry" role="doc-biblioentry">
+Hernán, Miguel A., and James M. Robins. 2016. <span>“<span class="nocase">Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available</span>.”</span> <em>American Journal of Epidemiology</em> 183 (8): 758–64. <a href="https://doi.org/10.1093/aje/kwv254">https://doi.org/10.1093/aje/kwv254</a>.
 </div>
-<div id="ref-hernan_book" class="csl-entry" role="doc-biblioentry">
-Hernán, MA, and JM Robins. 2022. <em>Causal Inference: What If</em>. Boca Raton: Chapman &amp; Hall/CRC.
+<div id="ref-hernan" class="csl-entry" role="doc-biblioentry">
+Hernán, Miguel A., Brian C. Sauer, Sonia Hernández-Díaz, Robert Platt, and Ian Shrier. 2016. <span>“Specifying a Target Trial Prevents Immortal Time Bias and Other Self-Inflicted Injuries in Observational Analyses.”</span> <em>Journal of Clinical Epidemiology</em> 79: 70–75. https://doi.org/<a href="https://doi.org/10.1016/j.jclinepi.2016.04.014">https://doi.org/10.1016/j.jclinepi.2016.04.014</a>.
+</div>
+<div id="ref-levesque" class="csl-entry" role="doc-biblioentry">
+Lévesque, Linda E, James A Hanley, Abbas Kezouh, and Samy Suissa. 2010. <span>“Problem of Immortal Time Bias in Cohort Studies: Example Using Statins for Preventing Progression of Diabetes.”</span> <em>BMJ</em> 340. <a href="https://doi.org/10.1136/bmj.b5087">https://doi.org/10.1136/bmj.b5087</a>.
+</div>
+<div id="ref-suissa" class="csl-entry" role="doc-biblioentry">
+Suissa, Samy. 2007. <span>“Immortal Time Bias in Observational Studies of Drug Effects.”</span> <em>Pharmacoepidemiology and Drug Safety</em> 16 (3): 241–49. https://doi.org/<a href="https://doi.org/10.1002/pds.1357">https://doi.org/10.1002/pds.1357</a>.
+</div>
+<div id="ref-zhou" class="csl-entry" role="doc-biblioentry">
+Zhou, Zheng, Elham Rahme, Michal Abrahamowicz, and Louise Pilote. 2005. <span>“<span class="nocase">Survival Bias Associated with Time-to-Treatment Initiation in Drug Effectiveness Evaluation: A Comparison of Methods</span>.”</span> <em>American Journal of Epidemiology</em> 162 (10): 1016–23. <a href="https://doi.org/10.1093/aje/kwi307">https://doi.org/10.1093/aje/kwi307</a>.
 </div>
 </div>
 <!--radix_placeholder_article_footer-->

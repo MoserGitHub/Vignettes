@@ -1,124 +1,246 @@
 ---
 title: "Immortal time bias"
+author:
+  - name: André Moser, CTU Bern, University of Bern
+    orcid_id: 0000-0001-7178-6539
+output: 
+  distill::distill_article:
+    toc: true
+    number_sections: true    
+    toc_float: true
 bibliography: immortal.bib
-site: distill::distill_website
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r base, echo=F, warning=F, message=F}
-
 # Background
-library(rms)
-library(survival)
+
+Immortal time bias arises when individuals are assigned to a treatment or exposure group in which they inherently survive for a specific time period (they are immortal). Immortal time bias is common when analyzing observational studies (@suissa, @levesque). It might occur when, for example, treatment or exposure group assignment happens after time zero (@hernan).  Other terminology for immortal time bias is *time dependent bias* or *survival bias*. In this vignette we introduce several methods to address immortal time bias (@zhou, @robins).
+
+# Example
+
+We consider a study population of 10,000 patients admitted to the emergency unit. Patients with a more severe admission status are treated more quickly and are grouped into two treatment groups (short and long time to treatment after emergency admission).
+
+- Research question: **What is the effect of the time to treatment group assignment on survival?**
+- Study design: Cohort study
+- Outcome of interest: Time to death or end of follow-up
+- Predictor of interest: Time to treatment after admission
+- Confounders: Severity
+
+The used variables from the data are:
+
+| Variable | Definition | Coding |
+| --- | --- | --- |
+| group | Group assignment | 0=Short, 1=Long |
+| severity | Severity status | 1=Severe, 0=Non-severe |
+| death | Death | 1=Death, 0=Alive |
+| fup | Follow-up time | Non-negative number |
+
+## Knowledge from the crystal ball
+
+Because we simulated the data, we know that group assignment has no effect on mortality.
+
+# Analysis strategy
+
+
+
+```{r, echo=T, message=F, warning=F}
+# Required packages
 library(tidyverse)
+library(survey)
+library(survival)
+library(gtsummary)
+library(survminer)
+```
 
-n <- 1000
-
-set.seed(1)
-
-t0 <- rexp(n)
-x <- runif(n)
-t <- rweibull(n, 1, 40)
-c <- rweibull(n, 1, 20)
-fup <- pmin(t, c)
-
-death <- ifelse(t<=c, 1, 0)
-
-group <- ifelse(t0<fup & x>0.2, 1, 0)
-
-data <- data.frame(fup, death, group)
-
-# Replace: Time to end of treatment
-# fup <- pmax(dur, fup)
-
-describe(data$fup[data$group==1])
-describe(data$fup[data$group==0])
-
-data
-mod_km <- survfit(Surv(fup, event=death)~group, data=data)
-plot(mod_km)
-survdiff(Surv(fup, event=death)~group, data=data)
-
-coxph(Surv(fup, event=death)~group, data=data)
-
-
-
-table(death)
-
-# Replace: Time to end of follow-up if fup<cens
-
-
-
-
+```{r, echo=F, message=F, warning=F, results='asis'}
+n <- 10000
 
 set.seed(1)
-# Treatment duration: Mean duration 16 days
-dur <- rpois(n, 10)
-hist(dur)
-# Group indicator
-group <- ifelse(dur<=median(dur), 1, 0)
 
-age <- rnorm(n, sd=3)
-# Hazard of dying. Note: Not associated with treatment duration (dur)
-haz <- 0.01
-#*exp(1*age)
-# Time to death: Mean time to death=1/0.01=100 days
+# Time to treatment: Mean 10 days
+time_to_treatment <- rweibull(n, 5, 10)
+# Two equal groups based on time to treatment
+quantile_info <- median(time_to_treatment)
+group <- ifelse(time_to_treatment>median(time_to_treatment), 1, 0)
+# More severe patients are treated more quickly
+severity <- ifelse(runif(n)<plogis(qlogis(0.8)+log(0.2)*(group==1)), 1, 0)
+# Hazard of dying: Independent of time to treatment and severity
+haz <- 0.05
+# Time to death: Exponential with rate=haz
 time_to_death <- -log(runif(n))/haz
+# Censoring: Mean 10 days
+censored <- rweibull(n, 1, 10)
+# Follow-up time: Patients do not die until they are treated
+fup <- pmin(time_to_treatment+time_to_death, time_to_treatment+censored)
+# Death indicator: Patients do not die until they are treated
+death <- ifelse(time_to_treatment+time_to_death<=time_to_treatment+censored, 1, 0)
+# Data
+data <- data.frame(id=1:n, fup, time_to_treatment, censored, time_to_death, death, group, severity)
+```
 
-# Censoring time (could be hospital discharge): Mean duration 20 days
-cens <- 70*runif(n)
+## Descriptive table
 
-# Death
-death <- ifelse(time_to_death<=cens, 1, 0)
-table(death)
+The table below shows a descriptive summary of the study population, by group assignment.
 
-# Replace: Time to end of follow-up if fup<cens
-fup <- pmin(time_to_death, cens)
+```{r, echo=F, message=F, warning=F, results='asis'}
+data$group_lab <- factor(data$group, levels=0:1, labels=c("Short", "Long"))
+```
 
-group <- ifelse(fup<=40, 1, 0)
+```{r, echo=T, message=F, warning=F, results='asis'}
+data %>% select(!c(id, censored, time_to_death)) %>% 
+  tbl_summary(by=group_lab, label=list(group ~ "Group assignment"))
+```
 
-data <- data.frame(dur, fup, death, group, age)
+```{r, echo=F, message=F, warning=F, results='asis'}
+data$group_lab <- NULL
+```
 
-# Replace: Time to end of treatment
-# fup <- pmax(dur, fup)
+# Immortal time bias: Wrong approaches
 
-describe(data$fup[data$group==1])
-describe(data$fup[data$group==0])
+This section shows two approaches which do not correct for immortal time bias (@zhou).
 
-data
-mod_km <- survfit(Surv(fup, event=death)~group, data=data)
-plot(mod_km)
-survdiff(Surv(fup, event=death)~group, data=data)
+## Method 1: Fixed group assignment at time zero
 
-coxph(Surv(fup, event=death)~group, data=data)
+Time zero is time of emergency admission. Treatment is assigned according to whether 
+patients had a short or long time to treatment.
 
-# Cloning populations
-data_short <- data
-data_long <- data
+```{r, echo=T, message=F, warning=F}
+mod <- survfit(Surv(fup, death)~factor(group), data=data)
+ggsurvplot(mod, data=data, palette=c("#CC0000", "black"), censor=F, pval=T)
+```
 
-# Censor if dur>median(dur)
-data_short$censor <- ifelse(data_short$fup>10, 1, 0)
-data_short$death[data_short$fup>10] <- 0
-data_short$group_comb <- 1
+## Method 2: Randomly assign time zero for short group
 
-data_long$censor <- ifelse(data_long$fup<=10, 1, 0)
-data_long$group_comb <- 0
+Treatment is assigned according to whether patients had a short or long time to treatment. 
+Time zero is set at start of treatment, but time to treatment for the short group is 
+randomly replaced by a time to treatment from the time to treatment range of the long group. 
+Individuals from the short group who die before time zero are excluded.
 
-data_comb <- bind_rows(data_short, data_long)
+```{r, echo=T, message=F, warning=F}
+data_method2 <- data
+# New time to treament for short group
+data_method2$time_to_treatment_new <- data_method2$time_to_treatment
+data_method2$time_to_treatment_new[data_method2$group==0] <- 
+  runif(length(data_method2$time_to_treatment_new[data_method2$group==0]), median(time_to_treatment), max(time_to_treatment))
 
-mod <- glm(censor~age, data=data_comb, family=binomial())
-mod_km <- survfit(Surv(fup, event=death)~group_comb, data=data_comb)
-plot(mod_km)
-coxph(Surv(fup, event=death)~group_comb, data=data_comb)
+# Exclusion of patients
+data_method2$exclude <- 0
+data_method2$exclude[data_method2$group==0 & data_method2$death==1] <- 
+  ifelse(data_method2$fup[data_method2$group==0 & data_method2$death==1]<data_method2$time_to_treatment_new[data_method2$group==0 & data_method2$death==1], 1, 0)
 
-# Example(s)
+data_method2 <- data_method2 %>% filter(exclude==0)
 
+# Time zero: Start of treatment
+data_method2$fup <- pmin(data_method2$time_to_treatment_new-data_method2$time_to_treatment+data_method2$time_to_death, data_method2$time_to_treatment_new-data_method2$time_to_treatment+data_method2$censored)
+# Replace death indicator
+data_method2$death <- ifelse(data_method2$time_to_treatment_new-data_method2$time_to_treatment+data_method2$time_to_death<=data_method2$time_to_treatment_new-data_method2$time_to_treatment+data_method2$censored, 1, 0)
 
-# Conclusion
+mod <- survfit(Surv(fup, death)~factor(group), data=data_method2)
+ggsurvplot(mod, data=data_method2, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from start of treatment")
+```
 
+# Immortal time bias: Approaches correcting for bias
 
-# References
+This section shows two approaches which might correct for immortal time bias (@zhou, @robins).
+
+## Method 3: Time zero at end of treatment
+
+Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.
+
+```{r, echo=T, message=F, warning=F}
+data_method3 <- data
+data_method3$excluded <- ifelse(data_method3$fup<max(time_to_treatment), 1, 0)
+data_method3 <- data_method3 %>% filter(excluded==0)
+
+data_method3$fup <- data_method3$fup-max(time_to_treatment)
+
+mod <- survfit(Surv(fup, death)~factor(group), data=data_method3)
+ggsurvplot(mod, data=data_method3, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from end of treatment duration")
+```
+
+## Method 4: Matched treatment duration
+
+Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded. This methods corrects for time to treatment imbalances (compared to method 2).
+
+```{r, echo=T, message=F, warning=F}
+data_method4 <- data
+# Get time to treatment from long group
+sample_time <- data_method4$time_to_treatment[data_method4$group==1]
+# New time to treament for short group
+data_method4$time_to_treatment_new <- data_method4$time_to_treatment
+data_method4$time_to_treatment_new[data_method4$group==0] <- sample(sample_time, length(data_method4$time_to_treatment[data_method4$group==0]))
+
+# Exclusion of patients
+data_method4$exclude <- 0
+data_method4$exclude[data_method4$group==0 & data_method4$death==1] <- ifelse(data_method4$fup[data_method4$group==0 & data_method4$death==1]<data_method4$time_to_treatment_new[data_method4$group==0 & data_method4$death==1], 1, 0)
+
+data_method4 <- data_method4 %>% filter(exclude==0)
+
+# Time zero: Start of treatment
+data_method4$fup <- pmin(data_method4$time_to_treatment_new-data_method4$time_to_treatment+data_method4$time_to_death, data_method4$time_to_treatment_new-data_method4$time_to_treatment+data_method4$censored)
+data_method4$fup <- pmin(data_method4$time_to_death, data_method4$censored)
+# Replace death indicator
+data_method4$death <- ifelse(data_method4$time_to_treatment_new-data_method4$time_to_treatment+data_method4$time_to_death<=data_method4$time_to_treatment_new-data_method4$time_to_treatment+data_method4$censored, 1, 0)
+
+mod <- survfit(Surv(fup, death)~factor(group), data=data_method4)
+ggsurvplot(mod, data=data_method4, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from start of treatment")
+```
+
+## Method 5: Time-dependent treatment
+
+Treatment assignment is 0 ("short") as long as a patient has a time to treatment
+smaller than the median time to treatment, and 1 ("long") otherwise.
+
+```{r, echo=T, message=F, warning=F}
+library(splitstackshape)
+# For "smoother" curves: Fup*10
+multiplier <- 10
+data$fup2 <- data$fup*multiplier
+data_discrete_surv <- expandRows(data, count="fup2", drop=F) %>% arrange(id)
+# Count indicator: How many follow-up days per individuals
+data_discrete_surv <- data_discrete_surv %>% group_by(id) %>% mutate(ind=1, time=cumsum(ind)-1)
+data_discrete_surv$ind <- NULL
+# Maximal follow-up day
+data_discrete_surv <- data_discrete_surv %>% group_by(id) %>% mutate(max_time=max(time))
+# Correct death
+data_discrete_surv$death[data_discrete_surv$time < data_discrete_surv$max_time] <- 0
+# Shift days
+data_discrete_surv <- data_discrete_surv %>% group_by(id) %>% mutate(time2=lead(time))
+# Fill last day
+data_discrete_surv <- data_discrete_surv %>% group_by(id) %>% fill(time2)
+data_discrete_surv$time2[data_discrete_surv$time==data_discrete_surv$max_time] <- data_discrete_surv$time2[data_discrete_surv$time==data_discrete_surv$max_time]+1
+
+# Create time-dependent treatment
+data_discrete_surv <- data_discrete_surv %>% group_by(id) %>% mutate(group_timedependent=0)
+data_discrete_surv$group_timedependent[data_discrete_surv$time>=data_discrete_surv$time_to_treatment*multiplier & data_discrete_surv$group==1] <- 1
+
+mod_km <- survfit(Surv(time=time/multiplier, time2=time2/multiplier, event=death)~group_timedependent, data=data_discrete_surv, cluster = id)
+ggsurvplot(mod_km, data=data_discrete_surv, palette=c("#CC0000", "black"), censor=F, pval=F, xlab="Time from emergency admission")
+```
+
+## Method 6: Cloning
+
+```{r, echo=F, message=F, warning=F}
+data_clone0 <- data
+data_clone1 <- data
+
+data_clone0$censored <- 0
+data_clone0$censored[data_clone0$fup>=median(time_to_treatment)] <- 1
+
+data_clone0$death[data_clone0$fup>=median(time_to_treatment)] <- 0
+data_clone0$fup[data_clone0$fup>=median(time_to_treatment)] <- median(time_to_treatment)
+data_clone0$group <- 0
+
+data_clone1$censored <- 0
+data_clone1$censored[data_clone0$fup<median(time_to_treatment)] <- 1
+data_clone1$group <- 1
+
+data_clone <- bind_rows(data_clone0, data_clone1)
+
+#mod <- survfit(Surv(fup, death)~factor(group), data=data_clone)
+#ggsurvplot(mod, data=data, palette=c("#CC0000", "black"), censor=F, pval=T)
+
 ```
