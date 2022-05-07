@@ -34,7 +34,7 @@ The used variables from the data are:
 
 | Variable | Definition | Coding |
 | --- | --- | --- |
-| group | Group assignment | 0=Short, 1=Long |
+| group | Group assignment | 0=Short (unexposed), 1=Long (exposed) |
 | severity | Severity status | 1=Severe, 0=Non-severe |
 | death | Death | 1=Death, 0=Alive |
 | fup | Follow-up time | Non-negative number |
