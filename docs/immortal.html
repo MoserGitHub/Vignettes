@@ -2140,15 +2140,15 @@ Topics
 <ul>
 <li><a href="#descriptive-table">Descriptive table</a></li>
 </ul></li>
-<li><a href="#immortal-time-bias-wrong-approaches">Immortal time bias: Wrong approaches</a>
+<li><a href="#methods-which-introduce-immortal-time-bias">Methods which introduce immortal time bias</a>
 <ul>
 <li><a href="#method-1-fixed-group-assignment-at-time-zero">Method 1: Fixed group assignment at time zero</a></li>
-<li><a href="#method-2-randomly-assign-time-zero-for-short-group">Method 2: Randomly assign time zero for short group</a></li>
 </ul></li>
-<li><a href="#immortal-time-bias-approaches-correcting-for-bias">Immortal time bias: Approaches correcting for bias</a>
+<li><a href="#methods-which-might-account-for-immortal-time-bias">Methods which might account for immortal time bias</a>
 <ul>
-<li><a href="#method-3-time-zero-at-end-of-treatment">Method 3: Time zero at end of treatment</a></li>
-<li><a href="#method-4-matched-treatment-duration">Method 4: Matched treatment duration</a></li>
+<li><a href="#method-2-randomly-assign-time-zero-for-short-group">Method 2: Randomly assign time zero for short group</a></li>
+<li><a href="#method-3-matched-treatment-duration">Method 3: Matched treatment duration</a></li>
+<li><a href="#method-4-time-zero-at-end-of-treatment">Method 4: Time zero at end of treatment</a></li>
 <li><a href="#method-5-time-dependent-treatment">Method 5: Time-dependent treatment</a></li>
 <li><a href="#method-6-cloning">Method 6: Cloning</a></li>
 </ul></li>
@@ -2157,13 +2157,14 @@ Topics
 </nav>
 </div>
 <h1 id="background">Background</h1>
-<p>Immortal time bias arises when individuals are assigned to a treatment or exposure group in which they inherently survive for a specific time period (they are immortal). Immortal time bias is common when analyzing observational studies (<span class="citation" data-cites="suissa"><a href="#ref-suissa" role="doc-biblioref">Suissa</a> (<a href="#ref-suissa" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="levesque"><a href="#ref-levesque" role="doc-biblioref">Lévesque et al.</a> (<a href="#ref-levesque" role="doc-biblioref">2010</a>)</span>). It might occur when, for example, treatment or exposure group assignment happens after time zero (<span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). Other terminology for immortal time bias is <em>time dependent bias</em> or <em>survival bias</em>. In this vignette we introduce several methods to address immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>).</p>
+<p>Immortal time bias might arise, if - for example - individuals are assigned to an exposure or treatment group (and on information) after time zero (<span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). Consequently, group assignment is not aligned with time zero and individuals inherently experience no outcome event for a specific time period (they are immortal when the outcome of interest is time to death). Immortal time bias is common when analyzing observational studies (<span class="citation" data-cites="suissa"><a href="#ref-suissa" role="doc-biblioref">Suissa</a> (<a href="#ref-suissa" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="levesque"><a href="#ref-levesque" role="doc-biblioref">Lévesque et al.</a> (<a href="#ref-levesque" role="doc-biblioref">2010</a>)</span>). Other terminology for immortal time bias is <em>time dependent bias</em> or <em>survival bias</em>. In this vignette we introduce several methods to address immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>).</p>
 <h1 id="example">Example</h1>
-<p>We consider a study population of 10,000 patients admitted to the emergency unit. Patients with a more severe admission status are treated more quickly and are grouped into two treatment groups (short and long time to treatment after emergency admission).</p>
+<p>We consider a study population of 10,000 patients admitted to an emergency unit. Patients with a more severe admission status are treated more quickly. Clinicians are interested whether the time from admission to time to treatment affect survival and group patients into two treatment groups: Short and long time to treatment after emergency admission.</p>
 <ul>
 <li>Research question: <strong>What is the effect of the time to treatment group assignment on survival?</strong></li>
 <li>Study design: Cohort study</li>
 <li>Outcome of interest: Time to death or end of follow-up</li>
+<li>Observation time: Admission to end of follow-up</li>
 <li>Predictor of interest: Time to treatment after admission</li>
 <li>Confounders: Severity</li>
 </ul>
@@ -2180,7 +2181,7 @@ Topics
 <tr class="odd">
 <td>group</td>
 <td>Group assignment</td>
-<td>0=Short, 1=Long</td>
+<td>0=Short (unexposed), 1=Long (exposed)</td>
 </tr>
 <tr class="even">
 <td>severity</td>
@@ -2202,6 +2203,41 @@ Topics
 <h2 id="knowledge-from-the-crystal-ball">Knowledge from the crystal ball</h2>
 <p>Because we simulated the data, we know that group assignment has no effect on mortality.</p>
 <h1 id="analysis-strategy">Analysis strategy</h1>
+<p><span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="karim"><a href="#ref-karim" role="doc-biblioref">Karim et al.</a> (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span> and <span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span> discuss different analysis strategies for addressing (or not adressing) immortal time bias. IN this vignette we summarise the investigated methods from the above mentioned articles:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Group assignment at time zero</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Random time assignment unexposed group</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Matched time assignment unexposed group</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Time zero at end of treatment</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Time dependent treatment</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Cloning</td>
+</tr>
+</tbody>
+</table>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Required packages</span>
@@ -2668,7 +2704,7 @@ Topics
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<h1 id="immortal-time-bias-wrong-approaches">Immortal time bias: Wrong approaches</h1>
+<h1 id="methods-which-introduce-immortal-time-bias">Methods which introduce immortal time bias</h1>
 <p>This section shows two approaches which do not correct for immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>).</p>
 <h2 id="method-1-fixed-group-assignment-at-time-zero">Method 1: Fixed group assignment at time zero</h2>
 <p>Time zero is time of emergency admission. Treatment is assigned according to whether patients had a short or long time to treatment.</p>
@@ -2680,6 +2716,7 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
+<h1 id="methods-which-might-account-for-immortal-time-bias">Methods which might account for immortal time bias</h1>
 <h2 id="method-2-randomly-assign-time-zero-for-short-group">Method 2: Randomly assign time zero for short group</h2>
 <p>Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2708,25 +2745,7 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
-<h1 id="immortal-time-bias-approaches-correcting-for-bias">Immortal time bias: Approaches correcting for bias</h1>
-<p>This section shows two approaches which might correct for immortal time bias (<span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>).</p>
-<h2 id="method-3-time-zero-at-end-of-treatment">Method 3: Time zero at end of treatment</h2>
-<p>Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
-<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>excluded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>&lt;</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
-<span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>excluded</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
-
-<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>
-
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method3</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method3</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from end of treatment duration"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="immortal_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
-</div>
-<h2 id="method-4-matched-treatment-duration">Method 4: Matched treatment duration</h2>
+<h2 id="method-3-matched-treatment-duration">Method 3: Matched treatment duration</h2>
 <p>Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded. This methods corrects for time to treatment imbalances (compared to method 2).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2751,6 +2770,22 @@ Topics
 
 <span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method4</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method4</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from start of treatment"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="immortal_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<h2 id="method-4-time-zero-at-end-of-treatment">Method 4: Time zero at end of treatment</h2>
+<p>Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
+<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>excluded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>&lt;</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>excluded</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
+
+<span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span><span class='op'>$</span><span class='va'>fup</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>
+
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>fup</span>, <span class='va'>death</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data_method3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/survminer/man/ggsurvplot.html'>ggsurvplot</a></span><span class='op'>(</span><span class='va'>mod</span>, data<span class='op'>=</span><span class='va'>data_method3</span>, palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#CC0000"</span>, <span class='st'>"black"</span><span class='op'>)</span>, censor<span class='op'>=</span><span class='cn'>F</span>, pval<span class='op'>=</span><span class='cn'>T</span>, xlab<span class='op'>=</span><span class='st'>"Time from end of treatment duration"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
@@ -2792,7 +2827,7 @@ Topics
 
 </div>
 <h1 id="conclusion">Conclusion</h1>
-<p>Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we conclude that our investigated methods 1 and 2 do not adequately address immortal time bias. In contrast to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we found that method 4 did not adequatly address immortal time bias, which was also highlighted in <span class="citation" data-cites="karim"><a href="#ref-karim" role="doc-biblioref">Karim et al.</a> (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>.</p>
+<p>Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we conclude that the investigated methods 1 and 2 do not adequately address immortal time bias. In contrast to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we found that method 3 did not adequatly address immortal time bias, which was also highlighted in <span class="citation" data-cites="karim"><a href="#ref-karim" role="doc-biblioref">Karim et al.</a> (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-robins" class="csl-entry" role="doc-biblioentry">
