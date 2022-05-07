@@ -45,8 +45,16 @@ Because we simulated the data, we know that group assignment has no effect on mo
 
 # Analysis strategy
 
-@zhou, @karim, @robins and @hernan discuss different analysis strategies for addressing (or not adressing) immortal time bias. IN this vignette we summarise the investigated methods of the mentioned authors:
+@zhou, @karim, @robins and @hernan discuss different analysis strategies for addressing (or not adressing) immortal time bias. IN this vignette we summarise the investigated methods from the above mentioned articles:
 
+| Method | Definition |
+| --- | --- |
+| 1 | Group assignment at time zero |
+| 2 | Random time assignment unexposed group |
+| 3 | Matched time assignment unexposed group |
+| 4 | Time zero at end of treatment |
+| 5 | Time dependent treatment |
+| 6 | Cloning |
 
 ```{r, echo=T, message=F, warning=F}
 # Required packages
