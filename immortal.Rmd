@@ -17,15 +17,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Background
 
-Immortal time bias arises when individuals are assigned to a treatment or exposure group in which they inherently survive for a specific time period (they are immortal). Immortal time bias is common when analyzing observational studies (@suissa, @levesque). It might occur when, for example, treatment or exposure group assignment happens after time zero (@hernan).  Other terminology for immortal time bias is *time dependent bias* or *survival bias*. In this vignette we introduce several methods to address immortal time bias (@zhou, @robins).
+Immortal time bias might arise, if - for example - individuals are assigned to an exposure or treatment group (and on information) after time zero (@hernan). Consequently, group assignment is not aligned with time zero and individuals inherently experience no outcome event for a specific time period (they are immortal when the outcome of interest is time to death). Immortal time bias is common when analyzing observational studies (@suissa, @levesque). Other terminology for immortal time bias is *time dependent bias* or *survival bias*. In this vignette we introduce several methods to address immortal time bias (@zhou, @robins).
 
 # Example
 
-We consider a study population of 10,000 patients admitted to the emergency unit. Patients with a more severe admission status are treated more quickly and are grouped into two treatment groups (short and long time to treatment after emergency admission).
+We consider a study population of 10,000 patients admitted to an emergency unit. Patients with a more severe admission status are treated more quickly. Clinicians are interested whether the time from admission to time to treatment affect survival and group patients into two treatment groups: Short and long time to treatment after emergency admission.
 
 - Research question: **What is the effect of the time to treatment group assignment on survival?**
 - Study design: Cohort study
 - Outcome of interest: Time to death or end of follow-up
+- Observation time: Admission to end of follow-up
 - Predictor of interest: Time to treatment after admission
 - Confounders: Severity
 
@@ -44,6 +45,7 @@ Because we simulated the data, we know that group assignment has no effect on mo
 
 # Analysis strategy
 
+@zhou, @karim, @robins and @hernan discuss different analysis strategies for addressing (or not adressing) immortal time bias. IN this vignette we summarise the investigated methods of the mentioned authors:
 
 
 ```{r, echo=T, message=F, warning=F}
