@@ -108,7 +108,7 @@ data %>% select(!c(id, censored, time_to_death)) %>%
 data$group_lab <- NULL
 ```
 
-# Immortal time bias: Wrong approaches
+# Methods which introduce immortal time bias
 
 This section shows two approaches which do not correct for immortal time bias (@zhou).
 
@@ -121,6 +121,8 @@ patients had a short or long time to treatment.
 mod <- survfit(Surv(fup, death)~factor(group), data=data)
 ggsurvplot(mod, data=data, palette=c("#CC0000", "black"), censor=F, pval=T)
 ```
+
+# Methods which might account for immortal time bias
 
 ## Method 2: Randomly assign time zero for short group
 
@@ -152,26 +154,7 @@ mod <- survfit(Surv(fup, death)~factor(group), data=data_method2)
 ggsurvplot(mod, data=data_method2, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from start of treatment")
 ```
 
-# Immortal time bias: Approaches correcting for bias
-
-This section shows two approaches which might correct for immortal time bias (@zhou, @robins).
-
-## Method 3: Time zero at end of treatment
-
-Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.
-
-```{r, echo=T, message=F, warning=F}
-data_method3 <- data
-data_method3$excluded <- ifelse(data_method3$fup<max(time_to_treatment), 1, 0)
-data_method3 <- data_method3 %>% filter(excluded==0)
-
-data_method3$fup <- data_method3$fup-max(time_to_treatment)
-
-mod <- survfit(Surv(fup, death)~factor(group), data=data_method3)
-ggsurvplot(mod, data=data_method3, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from end of treatment duration")
-```
-
-## Method 4: Matched treatment duration
+## Method 3: Matched treatment duration
 
 Treatment is assigned according to whether patients had a short or long time to treatment. Time zero is set at start of treatment, but time to treatment for the short group is randomly replaced by a time to treatment from the time to treatment range of the long group. Individuals from the short group who die before time zero are excluded. This methods corrects for time to treatment imbalances (compared to method 2).
 
@@ -197,6 +180,21 @@ data_method4$death <- ifelse(data_method4$time_to_treatment_new-data_method4$tim
 
 mod <- survfit(Surv(fup, death)~factor(group), data=data_method4)
 ggsurvplot(mod, data=data_method4, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from start of treatment")
+```
+
+## Method 4: Time zero at end of treatment
+
+Treatment is assigned according to whether patients had a short or long time to treatment. Individuals are followed-up from the end of treatment duration.
+
+```{r, echo=T, message=F, warning=F}
+data_method3 <- data
+data_method3$excluded <- ifelse(data_method3$fup<max(time_to_treatment), 1, 0)
+data_method3 <- data_method3 %>% filter(excluded==0)
+
+data_method3$fup <- data_method3$fup-max(time_to_treatment)
+
+mod <- survfit(Surv(fup, death)~factor(group), data=data_method3)
+ggsurvplot(mod, data=data_method3, palette=c("#CC0000", "black"), censor=F, pval=T, xlab="Time from end of treatment duration")
 ```
 
 ## Method 5: Time-dependent treatment
@@ -256,5 +254,5 @@ data_clone <- bind_rows(data_clone0, data_clone1)
 
 # Conclusion
 
-Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to @zhou we conclude that the investigated methods 1 and 2 do not adequately address immortal time bias. In contrast to @zhou we found that method 4 did not adequatly address immortal time bias, which was also highlighted in @karim.
+Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to @zhou we conclude that the investigated methods 1 and 2 do not adequately address immortal time bias. In contrast to @zhou we found that method 3 did not adequatly address immortal time bias, which was also highlighted in @karim.
 
