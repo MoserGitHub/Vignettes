@@ -150,7 +150,7 @@ data_method2$exclude[data_method2$group==0 & data_method2$death==1] <-
   ifelse(data_method2$fup[id_short]<data_method2$time_to_treatment_new[id_short], 1, 0)
 ```
 
-`r sum(data_method2$exclude)` (`r round(sum(data_method2$exclude)/nrow(data_method2)*100, 1)`) individuals from the short group who died before time zero were excluded.
+`r sum(data_method2$exclude)` (`r paste0(round(sum(data_method2$exclude)/nrow(data_method2)*100, 1), "%")`) individuals from the short group who died before time zero were excluded.
 
 ```{r, echo=T, message=F, warning=F}
 data_method2 <- data_method2 %>% filter(exclude==0)
@@ -188,7 +188,7 @@ data_method3$exclude[data_method3$group==0 & data_method3$death==1] <-
            data_method3$time_to_treatment_new[data_method3$group==0 & data_method3$death==1], 1, 0)
 ```
 
-`r sum(data_method3$exclude)` (`r round(sum(data_method3$exclude)/nrow(data_method3)*100, 1)`) individuals from the short group who die before time zero were excluded.
+`r sum(data_method3$exclude)` (`r paste0(round(sum(data_method3$exclude)/nrow(data_method3)*100, 1), "%")`) individuals from the short group who die before time zero were excluded.
 
 ```{r, echo=T, message=F, warning=F}
 data_method3 <- data_method3 %>% filter(exclude==0)
@@ -217,7 +217,7 @@ data_method4 <- data
 data_method4$exclude <- ifelse(data_method4$fup<max(time_to_treatment), 1, 0)
 ```
 
-`r sum(data_method4$exclude)` (`r round(sum(data_method4$exclude)/nrow(data_method4)*100, 1)`) individuals from both groups with a follow-uo time smaller than end of treatment duration were excluded.
+`r sum(data_method4$exclude)` (`r paste0(round(sum(data_method4$exclude)/nrow(data_method4)*100, 1), "%")`) individuals from both groups with a follow-uo time smaller than end of treatment duration were excluded.
 
 ```{r, echo=T, message=F, warning=F}
 data_method4 <- data_method4 %>% filter(exclude==0)
