@@ -15,6 +15,10 @@ bibliography: adjcurves.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Review
+
+This vignette has not been reviewed (yet) by other statisticians `r emo::ji("face screaming in fear")`. `r emo::ji("skull")` You read it on your own risk `r emo::ji("skull")`.
+
 # Background
 
 Unadjusted Kaplan-Meier curves from observational data might be biased because of confounding (@COLE200445). This vignette introduces the concept of inverse probability (IP) weighted survival curves.

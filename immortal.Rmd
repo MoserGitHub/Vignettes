@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Review
 
-This vignette has not been (yet) reviewed by other statisticians `r emo::ji("face screaming in fear")`. `r emo::ji("skull")` You read it on your own risk `r emo::ji("skull")`.
+This vignette has not been reviewed (yet) by other statisticians `r emo::ji("face screaming in fear")`. `r emo::ji("skull")` You read it on your own risk `r emo::ji("skull")`.
 
 # Background
 
