@@ -15,6 +15,10 @@ bibliography: immortal.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Review
+
+This vignette has not been (yet) reviewed by other statisticians `r emo::ji("face screaming in fear")`. `r emo::ji("skull")` You read it on your own risk `r emo::ji("skull")`.
+
 # Background
 
 Immortal time bias might arise, if - for example - individuals are assigned to an exposure or treatment group based on covariate information after time zero (@hernan). Consequently, group assignment is not aligned with time zero and individuals inherently experience no outcome event for a specific time period (they are immortal when the outcome of interest is time to death). Immortal time bias is common when analyzing observational studies (@suissa, @levesque). Other terminology for immortal time bias is *time dependent bias* or *survival bias*. In this vignette we introduce several methods to address immortal time bias discussed in the articles by @zhou and @robins.
@@ -85,7 +89,7 @@ severity <- ifelse(runif(n)<plogis(qlogis(0.8)+log(0.2)*(group==1)), 1, 0)
 haz <- 0.05
 # Time to death: Exponential with rate=haz
 time_to_death <- -log(runif(n))/haz
-# Censoring: Mean 10 days
+# Censoring: Mean 20 days
 censored <- rweibull(n, 1, 20)
 # Follow-up time: Patients do not die until they are treated
 fup <- pmin(time_to_treatment+time_to_death, time_to_treatment+censored)
@@ -346,7 +350,7 @@ severity <- ifelse(runif(n)<plogis(qlogis(0.8)+log(0.2)*(group==1)), 1, 0)
 haz <- 0.05
 # Time to death: Exponential with rate=haz
 time_to_death <- -log(runif(n))/haz
-# Censoring: Mean 10 days
+# Censoring: Mean 20 days
 censored <- rweibull(n, 1, 20)
 # Follow-up time: Patients do not die until they are treated
 fup <- pmin(time_to_treatment+time_to_death, time_to_treatment+censored)

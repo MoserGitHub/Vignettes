@@ -2132,6 +2132,7 @@ Topics
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#review">Review</a></li>
 <li><a href="#background">Background</a></li>
 <li><a href="#example">Example</a>
 <ul>
@@ -2152,6 +2153,8 @@ Topics
 </ul>
 </nav>
 </div>
+<h1 id="review">Review</h1>
+<p>This vignette has not been (yet) reviewed by other statisticans. You read it on your own risk 💀.</p>
 <h1 id="background">Background</h1>
 <p>Immortal time bias might arise, if - for example - individuals are assigned to an exposure or treatment group based on covariate information after time zero (<span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). Consequently, group assignment is not aligned with time zero and individuals inherently experience no outcome event for a specific time period (they are immortal when the outcome of interest is time to death). Immortal time bias is common when analyzing observational studies (<span class="citation" data-cites="suissa"><a href="#ref-suissa" role="doc-biblioref">Suissa</a> (<a href="#ref-suissa" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="levesque"><a href="#ref-levesque" role="doc-biblioref">Lévesque et al.</a> (<a href="#ref-levesque" role="doc-biblioref">2010</a>)</span>). Other terminology for immortal time bias is <em>time dependent bias</em> or <em>survival bias</em>. In this vignette we introduce several methods to address immortal time bias discussed in the articles by <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>.</p>
 <h1 id="example">Example</h1>
@@ -2889,7 +2892,7 @@ Topics
 <span class='va'>haz</span> <span class='op'>&lt;-</span> <span class='fl'>0.05</span>
 <span class='co'># Time to death: Exponential with rate=haz</span>
 <span class='va'>time_to_death</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='va'>haz</span>
-<span class='co'># Censoring: Mean 10 days</span>
+<span class='co'># Censoring: Mean 20 days</span>
 <span class='va'>censored</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Weibull.html'>rweibull</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span>
 <span class='co'># Follow-up time: Patients do not die until they are treated</span>
 <span class='va'>fup</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>time_to_death</span>, <span class='va'>time_to_treatment</span><span class='op'>+</span><span class='va'>censored</span><span class='op'>)</span>
