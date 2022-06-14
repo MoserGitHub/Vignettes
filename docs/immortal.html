@@ -2133,19 +2133,26 @@ Topics
 <h3>Contents</h3>
 <ul>
 <li><a href="#review">Review</a></li>
+<li><a href="#open-tasks">Open tasks</a></li>
 <li><a href="#background">Background</a></li>
 <li><a href="#example">Example</a>
 <ul>
-<li><a href="#knowledge-from-the-crystal-ball">Knowledge from the crystal ball</a></li>
+<li><a href="#knowledge-from-the-crystal-ball">Knowledge from the
+crystal ball</a></li>
 </ul></li>
 <li><a href="#analysis-strategy">Analysis strategy</a>
 <ul>
 <li><a href="#descriptive-table">Descriptive table</a></li>
-<li><a href="#method-1-group-assignment-at-time-zero">Method 1: Group assignment at time zero</a></li>
-<li><a href="#method-2-random-time-to-treatment-assignment">Method 2: Random time to treatment assignment</a></li>
-<li><a href="#method-3-matched-time-to-treatment-assignment">Method 3: Matched time to treatment assignment</a></li>
-<li><a href="#method-4-time-zero-at-end-of-treatment">Method 4: Time zero at end of treatment</a></li>
-<li><a href="#method-5-time-dependent-treatment">Method 5: Time-dependent treatment</a></li>
+<li><a href="#method-1-group-assignment-at-time-zero">Method 1: Group
+assignment at time zero</a></li>
+<li><a href="#method-2-random-time-to-treatment-assignment">Method 2:
+Random time to treatment assignment</a></li>
+<li><a href="#method-3-matched-time-to-treatment-assignment">Method 3:
+Matched time to treatment assignment</a></li>
+<li><a href="#method-4-time-zero-at-end-of-treatment">Method 4: Time
+zero at end of treatment</a></li>
+<li><a href="#method-5-time-dependent-treatment">Method 5:
+Time-dependent treatment</a></li>
 <li><a href="#method-6-cloning">Method 6: Cloning</a></li>
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
@@ -2154,13 +2161,46 @@ Topics
 </nav>
 </div>
 <h1 id="review">Review</h1>
-<p>This vignette has not been reviewed (yet) by other statisticians 😱. 💀 You read it on your own risk 💀.</p>
-<h1 id="background">Background</h1>
-<p>Immortal time bias might arise, if - for example - individuals are assigned to an exposure or treatment group based on covariate information after time zero (<span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). Consequently, group assignment is not aligned with time zero and individuals inherently experience no outcome event for a specific time period (they are immortal when the outcome of interest is time to death). Immortal time bias is common when analyzing observational studies (<span class="citation" data-cites="suissa"><a href="#ref-suissa" role="doc-biblioref">Suissa</a> (<a href="#ref-suissa" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="levesque"><a href="#ref-levesque" role="doc-biblioref">Lévesque et al.</a> (<a href="#ref-levesque" role="doc-biblioref">2010</a>)</span>). Other terminology for immortal time bias is <em>time dependent bias</em> or <em>survival bias</em>. In this vignette we introduce several methods to address immortal time bias discussed in the articles by <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>.</p>
-<h1 id="example">Example</h1>
-<p>We consider a study population of 10,000 patients admitted to an emergency unit. Patients with a more severe admission status are treated more quickly. Clinicians are interested whether the time from admission to time to treatment affect survival and group patients into two treatment groups: Short and long time to treatment after emergency admission. Group assignment is based on the median time to treatment.</p>
+<p>This vignette has not been reviewed (yet) by other statisticians 😱.
+💀 You read it on your own risk 💀.</p>
+<h1 id="open-tasks">Open tasks</h1>
 <ul>
-<li>Research question: <strong>What is the effect of the time to treatment group assignment on survival?</strong></li>
+<li>More realistic assumptions: People can die in treatment period.
+Start of time zero possible hospital admission? Other examples?</li>
+<li>Decrease sample size</li>
+</ul>
+<h1 id="background">Background</h1>
+<p>Immortal time bias might arise, if - for example - individuals are
+assigned to an exposure or treatment group based on covariate
+information after time zero (<span class="citation"
+data-cites="hernan">Hernán et al. (<a href="#ref-hernan"
+role="doc-biblioref">2016</a>)</span>). Consequently, group assignment
+is not aligned with time zero and individuals inherently experience no
+outcome event for a specific time period (they are immortal when the
+outcome of interest is time to death). Immortal time bias is common when
+analyzing observational studies (<span class="citation"
+data-cites="suissa">Suissa (<a href="#ref-suissa"
+role="doc-biblioref">2007</a>)</span>, <span class="citation"
+data-cites="levesque">Lévesque et al. (<a href="#ref-levesque"
+role="doc-biblioref">2010</a>)</span>). Other terminology for immortal
+time bias is <em>time dependent bias</em> or <em>survival bias</em>. In
+this vignette we introduce several methods to address immortal time bias
+discussed in the articles by <span class="citation"
+data-cites="zhou">Zhou et al. (<a href="#ref-zhou"
+role="doc-biblioref">2005</a>)</span> and <span class="citation"
+data-cites="robins">Hernán and Robins (<a href="#ref-robins"
+role="doc-biblioref">2016</a>)</span>.</p>
+<h1 id="example">Example</h1>
+<p>We consider a study population of 10,000 patients admitted to an
+emergency unit. Patients with a more severe admission status are treated
+more quickly. Clinicians are interested whether the time from admission
+to time to treatment affect survival and group patients into two
+treatment groups: Short and long time to treatment after emergency
+admission. Group assignment is based on the median time to
+treatment.</p>
+<ul>
+<li>Research question: <strong>What is the effect of the time to
+treatment group assignment on survival?</strong></li>
 <li>Study design: Cohort study</li>
 <li>Outcome of interest: Time to death or end of follow-up</li>
 <li>Observation time: Admission to end of follow-up</li>
@@ -2204,10 +2244,24 @@ Topics
 </tr>
 </tbody>
 </table>
-<h2 id="knowledge-from-the-crystal-ball">Knowledge from the crystal ball</h2>
-<p>Because we simulated the data, we know that group assignment has no effect on mortality.</p>
+<h2 id="knowledge-from-the-crystal-ball">Knowledge from the crystal
+ball</h2>
+<p>Because we simulated the data, we know that group assignment has no
+effect on mortality.</p>
 <h1 id="analysis-strategy">Analysis strategy</h1>
-<p><span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="karim"><a href="#ref-karim" role="doc-biblioref">Karim et al.</a> (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="maringe"><a href="#ref-maringe" role="doc-biblioref">Maringe et al.</a> (<a href="#ref-maringe" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span> and <span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span> discuss different analysis strategies for addressing (or not addressing) immortal time bias. In this vignette we summarize the investigated methods from the above mentioned articles:</p>
+<p><span class="citation" data-cites="zhou">Zhou et al. (<a
+href="#ref-zhou" role="doc-biblioref">2005</a>)</span>, <span
+class="citation" data-cites="karim">Karim et al. (<a href="#ref-karim"
+role="doc-biblioref">2016</a>)</span>, <span class="citation"
+data-cites="maringe">Maringe et al. (<a href="#ref-maringe"
+role="doc-biblioref">2020</a>)</span>, <span class="citation"
+data-cites="robins">Hernán and Robins (<a href="#ref-robins"
+role="doc-biblioref">2016</a>)</span> and <span class="citation"
+data-cites="hernan">Hernán et al. (<a href="#ref-hernan"
+role="doc-biblioref">2016</a>)</span> discuss different analysis
+strategies for addressing (or not addressing) immortal time bias. In
+this vignette we summarize the investigated methods from the above
+mentioned articles:</p>
 <table>
 <thead>
 <tr class="header">
@@ -2259,7 +2313,8 @@ Topics
 
 </div>
 <h2 id="descriptive-table">Descriptive table</h2>
-<p>The table below shows a descriptive summary of the study population, by group assignment.</p>
+<p>The table below shows a descriptive summary of the study population,
+by group assignment.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -2705,8 +2760,11 @@ Topics
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<h2 id="method-1-group-assignment-at-time-zero">Method 1: Group assignment at time zero</h2>
-<p>Time zero was time of emergency admission. Treatment was assigned according to whether patients had a short or long time to treatment. No patients were excluded from the analysis.</p>
+<h2 id="method-1-group-assignment-at-time-zero">Method 1: Group
+assignment at time zero</h2>
+<p>Time zero was time of emergency admission. Treatment was assigned
+according to whether patients had a short or long time to treatment. No
+patients were excluded from the analysis.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Kaplan-Meier survival curves</span>
@@ -2716,8 +2774,12 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<h2 id="method-2-random-time-to-treatment-assignment">Method 2: Random time to treatment assignment</h2>
-<p>Treatment was assigned according to whether patients had a short or long time to treatment. Time zero was set at start of treatment, but time to treatment for the short group was randomly replaced by a time to treatment from the time to treatment range of the long group.</p>
+<h2 id="method-2-random-time-to-treatment-assignment">Method 2: Random
+time to treatment assignment</h2>
+<p>Treatment was assigned according to whether patients had a short or
+long time to treatment. Time zero was set at start of treatment, but
+time to treatment for the short group was randomly replaced by a time to
+treatment from the time to treatment range of the long group.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method2</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
@@ -2737,7 +2799,8 @@ Topics
 </code></pre>
 </div>
 </div>
-<p>930 (9.3%) individuals from the short group who died before time zero were excluded.</p>
+<p>930 (9.3%) individuals from the short group who died before time zero
+were excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method2</span> <span class='op'>&lt;-</span> <span class='va'>data_method2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>exclude</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
@@ -2757,8 +2820,14 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div>
-<h2 id="method-3-matched-time-to-treatment-assignment">Method 3: Matched time to treatment assignment</h2>
-<p>Treatment was assigned according to whether patients had a short or long time to treatment. Time zero was set at start of treatment, but time to treatment for the short group was randomly replaced by a time to treatment from the time to treatment range of the long group. This methods corrects for time to treatment imbalances between the two groups (in contrast to method 2).</p>
+<h2 id="method-3-matched-time-to-treatment-assignment">Method 3: Matched
+time to treatment assignment</h2>
+<p>Treatment was assigned according to whether patients had a short or
+long time to treatment. Time zero was set at start of treatment, but
+time to treatment for the short group was randomly replaced by a time to
+treatment from the time to treatment range of the long group. This
+methods corrects for time to treatment imbalances between the two groups
+(in contrast to method 2).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
@@ -2777,7 +2846,8 @@ Topics
 </code></pre>
 </div>
 </div>
-<p>686 (6.9%) individuals from the short group who die before time zero were excluded.</p>
+<p>686 (6.9%) individuals from the short group who die before time zero
+were excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method3</span> <span class='op'>&lt;-</span> <span class='va'>data_method3</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>exclude</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
@@ -2799,8 +2869,12 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
 </div>
-<h2 id="method-4-time-zero-at-end-of-treatment">Method 4: Time zero at end of treatment</h2>
-<p>Treatment was assigned according to whether patients had a short or long time to treatment. End of treatment was defined at the last observed time to treatment (15.6 days). Individuals were followed-up from the end of treatment duration (time zero).</p>
+<h2 id="method-4-time-zero-at-end-of-treatment">Method 4: Time zero at
+end of treatment</h2>
+<p>Treatment was assigned according to whether patients had a short or
+long time to treatment. End of treatment was defined at the last
+observed time to treatment (15.6 days). Individuals were followed-up
+from the end of treatment duration (time zero).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method4</span> <span class='op'>&lt;-</span> <span class='va'>data</span>
@@ -2808,7 +2882,8 @@ Topics
 </code></pre>
 </div>
 </div>
-<p>4517 (45.2%) individuals from both groups with a follow-uo time smaller than end of treatment duration were excluded.</p>
+<p>4517 (45.2%) individuals from both groups with a follow-uo time
+smaller than end of treatment duration were excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data_method4</span> <span class='op'>&lt;-</span> <span class='va'>data_method4</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>exclude</span><span class='op'>==</span><span class='fl'>0</span><span class='op'>)</span>
@@ -2823,8 +2898,11 @@ Topics
 </div>
 <p><img src="immortal_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
 </div>
-<h2 id="method-5-time-dependent-treatment">Method 5: Time-dependent treatment</h2>
-<p>Treatment assignment was 0 (“short”) as long as a patient had a time to treatment smaller than the median time to treatment, and 1 (“long”) otherwise. No individuals were excluded.</p>
+<h2 id="method-5-time-dependent-treatment">Method 5: Time-dependent
+treatment</h2>
+<p>Treatment assignment was 0 (“short”) as long as a patient had a time
+to treatment smaller than the median time to treatment, and 1 (“long”)
+otherwise. No individuals were excluded.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://github.com/mrdwab/splitstackshape'>splitstackshape</a></span><span class='op'>)</span>
@@ -2865,15 +2943,47 @@ Topics
 </code></pre>
 </div>
 </div>
-<p>The p-value from a Cox proportional hazard model comparing the two survival curves was p=0.022 (p-value from Schoenfeld test p=0.003).</p>
+<p>The p-value from a Cox proportional hazard model comparing the two
+survival curves was p=0.022 (p-value from Schoenfeld test p=0.003).</p>
 <h2 id="method-6-cloning">Method 6: Cloning</h2>
-<p>Each patient received the actual observed exposure or treatment and was cloned, receiving the not observed exposure or treatment. This led to two pseudopopulations, each with a size of 10^{4}` patients. Patients in one pseudopopulation (those having a short time to treatment duration) were censored if the time to treatment is longer than the median time to treatment. Patients in the pseudopopulation with a long time to treatment duration were censored if patients were alive and had a time to treatment shorter than the median time to treatment. Censoring can be seen as a protocol deviation (<span class="citation" data-cites="maringe"><a href="#ref-maringe" role="doc-biblioref">Maringe et al.</a> (<a href="#ref-maringe" role="doc-biblioref">2020</a>)</span>). Artificial censoring is addressed by inverse probability weighting (<span class="citation" data-cites="robins"><a href="#ref-robins" role="doc-biblioref">Hernán and Robins</a> (<a href="#ref-robins" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="hernan"><a href="#ref-hernan" role="doc-biblioref">Hernán et al.</a> (<a href="#ref-hernan" role="doc-biblioref">2016</a>)</span>). No patients were excluded from the analysis.</p>
+<p>Each patient received the actual observed exposure or treatment and
+was cloned, receiving the not observed exposure or treatment. This led
+to two pseudopopulations, each with a size of 10^{4}` patients. Patients
+in one pseudopopulation (those having a short time to treatment
+duration) were censored if the time to treatment is longer than the
+median time to treatment. Patients in the pseudopopulation with a long
+time to treatment duration were censored if patients were alive and had
+a time to treatment shorter than the median time to treatment. Censoring
+can be seen as a protocol deviation (<span class="citation"
+data-cites="maringe">Maringe et al. (<a href="#ref-maringe"
+role="doc-biblioref">2020</a>)</span>). Artificial censoring is
+addressed by inverse probability weighting (<span class="citation"
+data-cites="robins">Hernán and Robins (<a href="#ref-robins"
+role="doc-biblioref">2016</a>)</span>, <span class="citation"
+data-cites="hernan">Hernán et al. (<a href="#ref-hernan"
+role="doc-biblioref">2016</a>)</span>). No patients were excluded from
+the analysis.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="immortal_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
-<p>The p-value from a Cox proportional hazard model comparing the two survival curves was p=0.017 (p-value from Schoenfeld test p=0.986).</p>
+<p>The p-value from a Cox proportional hazard model comparing the two
+survival curves was p=0.017 (p-value from Schoenfeld test p=0.986).</p>
 <h1 id="conclusion">Conclusion</h1>
-<p>Immortal time bias is common in time to event analysis of observational data. In the present vignette we presented several methods for addressing immortal time bias. Similar to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we conclude that the investigated methods 1 and 2 did not adequately address immortal time bias. In contrast to <span class="citation" data-cites="zhou"><a href="#ref-zhou" role="doc-biblioref">Zhou et al.</a> (<a href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we found that method 3 did not adequately address immortal time bias too, which was also highlighted in <span class="citation" data-cites="karim"><a href="#ref-karim" role="doc-biblioref">Karim et al.</a> (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>. Methods 4 to 6 were able to address immortal time bias. We recommend to compare some of the suggested methods in a real world analysis in sensitivity analyses and to be aware of their limitations (for example, exclusion of patients which leads to selection bias).</p>
+<p>Immortal time bias is common in time to event analysis of
+observational data. In the present vignette we presented several methods
+for addressing immortal time bias. Similar to <span class="citation"
+data-cites="zhou">Zhou et al. (<a href="#ref-zhou"
+role="doc-biblioref">2005</a>)</span> we conclude that the investigated
+methods 1 and 2 did not adequately address immortal time bias. In
+contrast to <span class="citation" data-cites="zhou">Zhou et al. (<a
+href="#ref-zhou" role="doc-biblioref">2005</a>)</span> we found that
+method 3 did not adequately address immortal time bias too, which was
+also highlighted in <span class="citation" data-cites="karim">Karim et
+al. (<a href="#ref-karim" role="doc-biblioref">2016</a>)</span>. Methods
+4 to 6 were able to address immortal time bias. We recommend to compare
+some of the suggested methods in a real world analysis in sensitivity
+analyses and to be aware of their limitations (for example, exclusion of
+patients which leads to selection bias).</p>
 <h1 id="data-simulation">Data simulation</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2884,7 +2994,6 @@ Topics
 <span class='co'># Time to treatment: Mean 10 days</span>
 <span class='va'>time_to_treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Weibull.html'>rweibull</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>
 <span class='co'># Two equal groups based on time to treatment</span>
-<span class='va'>quantile_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>
 <span class='va'>group</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>&gt;</span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>time_to_treatment</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='co'># More severe patients are treated more quickly</span>
 <span class='va'>severity</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>&lt;</span><span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>qlogis</a></span><span class='op'>(</span><span class='fl'>0.8</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.2</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='va'>group</span><span class='op'>==</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>
@@ -2903,28 +3012,65 @@ Topics
 </code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
 <div id="ref-robins" class="csl-entry" role="doc-biblioentry">
-Hernán, Miguel A., and James M. Robins. 2016. <span>“<span class="nocase">Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available</span>.”</span> <em>American Journal of Epidemiology</em> 183 (8): 758–64. <a href="https://doi.org/10.1093/aje/kwv254">https://doi.org/10.1093/aje/kwv254</a>.
+Hernán, Miguel A., and James M. Robins. 2016. <span>“<span
+class="nocase">Using Big Data to Emulate a Target Trial When a
+Randomized Trial Is Not Available</span>.”</span> <em>American Journal
+of Epidemiology</em> 183 (8): 758–64. <a
+href="https://doi.org/10.1093/aje/kwv254">https://doi.org/10.1093/aje/kwv254</a>.
 </div>
 <div id="ref-hernan" class="csl-entry" role="doc-biblioentry">
-Hernán, Miguel A., Brian C. Sauer, Sonia Hernández-Díaz, Robert Platt, and Ian Shrier. 2016. <span>“Specifying a Target Trial Prevents Immortal Time Bias and Other Self-Inflicted Injuries in Observational Analyses.”</span> <em>Journal of Clinical Epidemiology</em> 79: 70–75. https://doi.org/<a href="https://doi.org/10.1016/j.jclinepi.2016.04.014">https://doi.org/10.1016/j.jclinepi.2016.04.014</a>.
+Hernán, Miguel A., Brian C. Sauer, Sonia Hernández-Díaz, Robert Platt,
+and Ian Shrier. 2016. <span>“Specifying a Target Trial Prevents Immortal
+Time Bias and Other Self-Inflicted Injuries in Observational
+Analyses.”</span> <em>Journal of Clinical Epidemiology</em> 79: 70–75.
+https://doi.org/<a
+href="https://doi.org/10.1016/j.jclinepi.2016.04.014">https://doi.org/10.1016/j.jclinepi.2016.04.014</a>.
 </div>
 <div id="ref-karim" class="csl-entry" role="doc-biblioentry">
-Karim, Mohammad Ehsanul, Paul Gustafson, John Petkau, Helen Tremlett, the Long-Term Benefits, Adverse Effects of Beta-Interferon for Multiple Sclerosis (BeAMS) Study Group, Mohammad Ehsanul Karim, et al. 2016. <span>“<span class="nocase">Comparison of Statistical Approaches for Dealing With Immortal Time Bias in Drug Effectiveness Studies</span>.”</span> <em>American Journal of Epidemiology</em> 184 (4): 325–35. <a href="https://doi.org/10.1093/aje/kwv445">https://doi.org/10.1093/aje/kwv445</a>.
+Karim, Mohammad Ehsanul, Paul Gustafson, John Petkau, Helen Tremlett,
+the Long-Term Benefits, Adverse Effects of Beta-Interferon for Multiple
+Sclerosis (BeAMS) Study Group, Mohammad Ehsanul Karim, et al. 2016.
+<span>“<span class="nocase">Comparison of Statistical Approaches for
+Dealing With Immortal Time Bias in Drug Effectiveness
+Studies</span>.”</span> <em>American Journal of Epidemiology</em> 184
+(4): 325–35. <a
+href="https://doi.org/10.1093/aje/kwv445">https://doi.org/10.1093/aje/kwv445</a>.
 </div>
 <div id="ref-levesque" class="csl-entry" role="doc-biblioentry">
-Lévesque, Linda E, James A Hanley, Abbas Kezouh, and Samy Suissa. 2010. <span>“Problem of Immortal Time Bias in Cohort Studies: Example Using Statins for Preventing Progression of Diabetes.”</span> <em>BMJ</em> 340. <a href="https://doi.org/10.1136/bmj.b5087">https://doi.org/10.1136/bmj.b5087</a>.
+Lévesque, Linda E, James A Hanley, Abbas Kezouh, and Samy Suissa. 2010.
+<span>“Problem of Immortal Time Bias in Cohort Studies: Example Using
+Statins for Preventing Progression of Diabetes.”</span> <em>BMJ</em>
+340. <a
+href="https://doi.org/10.1136/bmj.b5087">https://doi.org/10.1136/bmj.b5087</a>.
 </div>
 <div id="ref-maringe" class="csl-entry" role="doc-biblioentry">
-Maringe, Camille, Sara Benitez Majano, Aimilia Exarchakou, Matthew Smith, Bernard Rachet, Aurélien Belot, and Clémence Leyrat. 2020. <span>“<span class="nocase">Reflection on modern methods: trial emulation in the presence of immortal-time bias. Assessing the benefit of major surgery for elderly lung cancer patients using observational data</span>.”</span> <em>International Journal of Epidemiology</em> 49 (5): 1719–29. <a href="https://doi.org/10.1093/ije/dyaa057">https://doi.org/10.1093/ije/dyaa057</a>.
+Maringe, Camille, Sara Benitez Majano, Aimilia Exarchakou, Matthew
+Smith, Bernard Rachet, Aurélien Belot, and Clémence Leyrat. 2020.
+<span>“<span class="nocase">Reflection on modern methods: trial
+emulation in the presence of immortal-time bias. Assessing the benefit
+of major surgery for elderly lung cancer patients using observational
+data</span>.”</span> <em>International Journal of Epidemiology</em> 49
+(5): 1719–29. <a
+href="https://doi.org/10.1093/ije/dyaa057">https://doi.org/10.1093/ije/dyaa057</a>.
 </div>
 <div id="ref-suissa" class="csl-entry" role="doc-biblioentry">
-Suissa, Samy. 2007. <span>“Immortal Time Bias in Observational Studies of Drug Effects.”</span> <em>Pharmacoepidemiology and Drug Safety</em> 16 (3): 241–49. https://doi.org/<a href="https://doi.org/10.1002/pds.1357">https://doi.org/10.1002/pds.1357</a>.
+Suissa, Samy. 2007. <span>“Immortal Time Bias in Observational Studies
+of Drug Effects.”</span> <em>Pharmacoepidemiology and Drug Safety</em>
+16 (3): 241–49. https://doi.org/<a
+href="https://doi.org/10.1002/pds.1357">https://doi.org/10.1002/pds.1357</a>.
 </div>
 <div id="ref-zhou" class="csl-entry" role="doc-biblioentry">
-Zhou, Zheng, Elham Rahme, Michal Abrahamowicz, and Louise Pilote. 2005. <span>“<span class="nocase">Survival Bias Associated with Time-to-Treatment Initiation in Drug Effectiveness Evaluation: A Comparison of Methods</span>.”</span> <em>American Journal of Epidemiology</em> 162 (10): 1016–23. <a href="https://doi.org/10.1093/aje/kwi307">https://doi.org/10.1093/aje/kwi307</a>.
+Zhou, Zheng, Elham Rahme, Michal Abrahamowicz, and Louise Pilote. 2005.
+<span>“<span class="nocase">Survival Bias Associated with
+Time-to-Treatment Initiation in Drug Effectiveness Evaluation: A
+Comparison of Methods</span>.”</span> <em>American Journal of
+Epidemiology</em> 162 (10): 1016–23. <a
+href="https://doi.org/10.1093/aje/kwi307">https://doi.org/10.1093/aje/kwi307</a>.
 </div>
 </div>
 <!--radix_placeholder_article_footer-->
