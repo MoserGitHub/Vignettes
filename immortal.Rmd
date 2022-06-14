@@ -22,6 +22,7 @@ This vignette has not been reviewed (yet) by other statisticians `r emo::ji("fac
 # Open tasks
 
 - More realistic assumptions: People can die in treatment period. Start of time zero possible hospital admission? Other examples?
+- Define specific time at end of treatment and not median time
 - Decrease sample size
 
 # Background
