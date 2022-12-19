@@ -1,5 +1,5 @@
 ---
-title: "Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints"
+title: "Bayes factor driven sequential trial design for Gaussian pre-post study endpoints"
 author:
   - name: André Moser, CTU Bern, University of Bern
     orcid_id: 0000-0001-7178-6539
@@ -17,4 +17,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Motivation
 
-The article of @Gajewski2022
+The article of @Gajewski2022 discusses a two-stage adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. The authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly. One limitation of the study from @Gajewski2022 is the definition of the study endpoints as the difference between the post-intervention measurement and the pre-intervention measurement. Because of the correlation between both measurements there exists a regression to the mean effect @Vickers1123. 
+
+In the current simulation study we investigate operational characteristics of simulated trials.

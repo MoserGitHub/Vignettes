@@ -14,15 +14,15 @@
     },
     {
       "path": "BFSeqPrePost.html",
-      "title": "Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints",
+      "title": "Bayes factor driven sequential trial design for Gaussian pre-post study endpoints",
       "author": [
         {
           "name": "André Moser, CTU Bern, University of Bern",
           "url": {}
         }
       ],
-      "contents": "\n\nContents\nMotivation\n\nMotivation\nThe article of Gajewski et al. (2022)\n\n\n\nGajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. “A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer.” Trials 23 (1): 981. https://doi.org/10.1186/s13063-022-06930-5.\n\n\n\n\n",
-      "last_modified": "2022-12-19T11:33:12+01:00"
+      "contents": "\n\nContents\nMotivation\n\nMotivation\nThe article of Gajewski et al. (2022) discusses a two-stage adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. The authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly. One limitation of the study from Gajewski et al. (2022) is the definition of the study endpoints as the difference between the post-intervention measurement and the pre-intervention measurement. Because of the correlation between both measurements there exists a regression to the mean effect Vickers and Altman (2001).\nIn the current simulation study we investigate operational characteristics of simulated trials.\n\n\n\nGajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. “A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer.” Trials 23 (1): 981. https://doi.org/10.1186/s13063-022-06930-5.\n\n\nVickers, Andrew J, and Douglas G Altman. 2001. “Analysing Controlled Trials with Baseline and Follow up Measurements.” BMJ 323 (7321): 1123–24. https://doi.org/10.1136/bmj.323.7321.1123.\n\n\n\n\n",
+      "last_modified": "2022-12-19T12:12:40+01:00"
     },
     {
       "path": "immortal.html",
