@@ -86,30 +86,52 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Vignettes: Bayes factor driven sequential trial design simulation for pre-post study endpoints</title>
+  <title>Vignettes: Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints</title>
 
 
 
   <meta name="article:author" content="André Moser, CTU Bern, University of Bern"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Vignettes: Bayes factor driven sequential trial design simulation for pre-post study endpoints"/>
+  <meta property="og:title" content="Vignettes: Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Vignettes"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Vignettes: Bayes factor driven sequential trial design simulation for pre-post study endpoints"/>
+  <meta property="twitter:title" content="Vignettes: Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints"/>
 
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer;citation_volume=23;citation_doi=10.1186/s13063-022-06930-5;citation_issn=1745-6215;citation_author=Byron J Gajewski;citation_author=Bruce F Kimler;citation_author=Devin C Koestler;citation_author=Dinesh Pal Mudaranthakam;citation_author=Kate Young;citation_author=Carol J Fabian"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Bayes factor driven sequential trial design simulation for pre-post study endpoints"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["André Moser, CTU Bern, University of Bern"]},{"type":"character","attributes":{},"value":["0000-0001-7178-6539"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","number_sections","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["immortal.bib"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["André Moser, CTU Bern, University of Bern"]},{"type":"character","attributes":{},"value":["0000-0001-7178-6539"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","number_sections","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["BFSeqPrePost.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2093,7 +2115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Bayes factor driven sequential trial design simulation for pre-post study endpoints","authors":[{"author":"André Moser, CTU Bern, University of Bern","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":"0000-0001-7178-6539"}]}
+{"title":"Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints","authors":[{"author":"André Moser, CTU Bern, University of Bern","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":"0000-0001-7178-6539"}]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2113,7 +2135,7 @@ Topics
 <div class="nav-dropdown-content">
 <a href="adjcurves.html">Adjusted survival curves</a>
 <a href="immortal.html">Immortal time bias</a>
-<a href="BayesPower.html">Bayes factor sequential trial</a>
+<a href="BFSeqPrePost.html">Bayes factor driven sequential trial for Gaussian pre-post outcomes</a>
 </div>
 </div>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2125,7 +2147,7 @@ Topics
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Bayes factor driven sequential trial design simulation for pre-post study endpoints</h1>
+<h1>Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2147,8 +2169,13 @@ Topics
 </nav>
 </div>
 <h1 id="motivation">Motivation</h1>
-<p>Resr</p>
+<p>The article of <span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Gajewski2022" class="csl-entry" role="doc-biblioentry">
+Gajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. <span>“<span class="nocase">A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer</span>.”</span> <em>Trials</em> 23 (1): 981. <a href="https://doi.org/10.1186/s13063-022-06930-5">https://doi.org/10.1186/s13063-022-06930-5</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

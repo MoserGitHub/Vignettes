@@ -1,5 +1,5 @@
 ---
-title: "Bayes factor driven sequential trial design simulation for pre-post study endpoints"
+title: "Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints"
 author:
   - name: André Moser, CTU Bern, University of Bern
     orcid_id: 0000-0001-7178-6539
@@ -8,7 +8,7 @@ output:
     toc: true
     number_sections: true    
     toc_float: true
-bibliography: immortal.bib
+bibliography: BFSeqPrePost.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -17,4 +17,4 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Motivation
 
-Resr
+The article of @Gajewski2022

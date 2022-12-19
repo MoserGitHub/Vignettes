@@ -13,16 +13,16 @@
       "last_modified": "2022-05-10T15:59:34+02:00"
     },
     {
-      "path": "BayesPower.html",
-      "title": "Bayes factor driven sequential trial design simulation for pre-post study endpoints",
+      "path": "BFSeqPrePost.html",
+      "title": "Bayes factor driven sequential trial design simulation for Gaussian pre-post study endpoints",
       "author": [
         {
           "name": "André Moser, CTU Bern, University of Bern",
           "url": {}
         }
       ],
-      "contents": "\n\nContents\nMotivation\n\nMotivation\nResr\n\n\n\n",
-      "last_modified": "2022-12-19T09:51:14+01:00"
+      "contents": "\n\nContents\nMotivation\n\nMotivation\nThe article of Gajewski et al. (2022)\n\n\n\nGajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. “A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer.” Trials 23 (1): 981. https://doi.org/10.1186/s13063-022-06930-5.\n\n\n\n\n",
+      "last_modified": "2022-12-19T11:33:12+01:00"
     },
     {
       "path": "immortal.html",
@@ -42,7 +42,7 @@
       "description": "",
       "author": [],
       "contents": "\nClick on the upper right button for topic selection.\n\n\n\n",
-      "last_modified": "2022-12-19T09:46:02+01:00"
+      "last_modified": "2022-12-19T11:28:34+01:00"
     }
   ],
   "collections": []
