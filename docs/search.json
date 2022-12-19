@@ -14,15 +14,15 @@
     },
     {
       "path": "BFSeqPrePost.html",
-      "title": "Bayes factor driven sequential trial design for Gaussian pre-post study endpoints",
+      "title": "Sequential Bayes factor trial design for Gaussian pre-post outcomes",
       "author": [
         {
           "name": "André Moser, CTU Bern, University of Bern",
           "url": {}
         }
       ],
-      "contents": "\n\nContents\nMotivation\n\nMotivation\nThe article of Gajewski et al. (2022) discusses a two-stage adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. The authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly. One limitation of the study from Gajewski et al. (2022) is the definition of the study endpoints as the difference between the post-intervention measurement and the pre-intervention measurement. Because of the correlation between both measurements there exists a regression to the mean effect Vickers and Altman (2001).\nIn the current simulation study we investigate operational characteristics of simulated trials.\n\n\n\nGajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. “A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer.” Trials 23 (1): 981. https://doi.org/10.1186/s13063-022-06930-5.\n\n\nVickers, Andrew J, and Douglas G Altman. 2001. “Analysing Controlled Trials with Baseline and Follow up Measurements.” BMJ 323 (7321): 1123–24. https://doi.org/10.1136/bmj.323.7321.1123.\n\n\n\n\n",
-      "last_modified": "2022-12-19T12:12:40+01:00"
+      "contents": "\n\nContents\nMotivation\n\nMotivation\nThe article of Gajewski et al. (2022) discusses a two-stage two-endpoint adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The novelty of the presented study is that the authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly with the aim that the analysis for the secondary endpoint has enough information: “Specifically, we are interested in a trial design that tests success of a single primary endpoint (rank) but with the desire to stop the trial only if the single, key secondary endpoint also has adequate information” (Gajewski et al. (2022)). One limitation of the study from Gajewski et al. (2022) is that the endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. Because of the potential correlation between both measurements there might exist a regression to the mean effect, see for example Vickers and Altman (2001).\nFelix D. Schönbrodt and Wagenmakers (2018) proposed sequential Bayes factor designs as an alternative to the classic power analysis (Bayesian or Frequentist), which rely on prior guesses of effect sizes and decision cut-offs (for example, cut-offs for posterior predictive distributions or type-I error). The Bayes factor is a compelling alternative to the above mentioned design parameters and allows for sequential update in a trial design. Felix D. Schönbrodt et al. (2017) defined a sequential Bayes factor (SBF) as a Bayes factor which is computed in a sequential setting until an a priori defined level of evidence is reached.\nIn the current study we use a sequential Bayes factor design for bivariate Gaussian endpoints to investigate operation characteristics of the implemented trial design and compare it to a Bayesian fixed-n Bayes factor design, a Bayesian design with early stopping rules for efficacy/futility based on posterior predictive distributions and frequentist approaches.\n\n\n\nGajewski, Byron J, Bruce F Kimler, Devin C Koestler, Dinesh Pal Mudaranthakam, Kate Young, and Carol J Fabian. 2022. “A novel Bayesian adaptive design incorporating both primary and secondary endpoints for randomized IIB chemoprevention study of women at increased risk for breast cancer.” Trials 23 (1): 981. https://doi.org/10.1186/s13063-022-06930-5.\n\n\nSchönbrodt, Felix D., Eric-Jan Wagenmakers, Michael Zehetleitner, and Marco Perugini. 2017. “Sequential hypothesis testing with Bayes factors: Efficiently testing mean differences.” Psychological Methods 22 (2): 322–39. https://doi.org/10.1037/met0000061.\n\n\nSchönbrodt, Felix D, and Eric-Jan Wagenmakers. 2018. “Bayes factor design analysis: Planning for compelling evidence.” Psychonomic Bulletin & Review 25 (1): 128–42. https://doi.org/10.3758/s13423-017-1230-y.\n\n\nVickers, Andrew J, and Douglas G Altman. 2001. “Analysing Controlled Trials with Baseline and Follow up Measurements.” BMJ 323 (7321): 1123–24. https://doi.org/10.1136/bmj.323.7321.1123.\n\n\n\n\n",
+      "last_modified": "2022-12-19T13:32:09+01:00"
     },
     {
       "path": "immortal.html",
@@ -42,7 +42,7 @@
       "description": "",
       "author": [],
       "contents": "\nClick on the upper right button for topic selection.\n\n\n\n",
-      "last_modified": "2022-12-19T11:28:34+01:00"
+      "last_modified": "2022-12-19T13:18:12+01:00"
     }
   ],
   "collections": []
