@@ -2099,6 +2099,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2168,6 +2170,18 @@ Topics
 <h3>Contents</h3>
 <ul>
 <li><a href="#background" id="toc-background">Background</a></li>
+<li><a href="#model-assumptions" id="toc-model-assumptions">Model assumptions</a></li>
+<li><a href="#simulation-assumptions" id="toc-simulation-assumptions">Simulation assumptions</a>
+<ul>
+<li><a href="#general-assumptions" id="toc-general-assumptions">General assumptions</a></li>
+<li><a href="#frequentist-assumptions" id="toc-frequentist-assumptions">Frequentist assumptions</a></li>
+<li><a href="#bayes-assumptions" id="toc-bayes-assumptions">Bayes assumptions</a></li>
+</ul></li>
+<li><a href="#results" id="toc-results">Results</a>
+<ul>
+<li><a href="#frequentist-non-sequential-fixed-n-design" id="toc-frequentist-non-sequential-fixed-n-design">Frequentist: Non-sequential fixed-n design</a></li>
+<li><a href="#sequential-bayes-factor-design" id="toc-sequential-bayes-factor-design">Sequential Bayes factor design</a></li>
+</ul></li>
 <li><a href="#supplement" id="toc-supplement">Supplement</a>
 <ul>
 <li><a href="#ancova-example-analysis" id="toc-ancova-example-analysis">ANCOVA example analysis</a></li>
@@ -2175,20 +2189,282 @@ Topics
 </ul>
 </nav>
 </div>
+<p>WORK IN PROGRESS</p>
 <h1 id="background">Background</h1>
-<p>The article of <span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span> discusses a two-stage two-endpoint adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The novelty of the presented study is that the authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly with the aim that the analysis for the secondary endpoint has enough information: <em>“Specifically, we are interested in a trial design that tests success of a single primary endpoint (rank) but with the desire to stop the trial only if the single, key secondary endpoint also has adequate information”</em> (<span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span>). One limitation of the study from <span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span> is that the endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. Because of the potential correlation between both measurements there might exist a regression to the mean effect, see for example <span class="citation" data-cites="Vickers1123">Vickers and Altman (<a href="#ref-Vickers1123" role="doc-biblioref">2001</a>)</span>.</p>
-<p><span class="citation" data-cites="Schonbrodt2018">Felix D. Schönbrodt and Wagenmakers (<a href="#ref-Schonbrodt2018" role="doc-biblioref">2018</a>)</span> proposed sequential Bayes factor designs as an alternative to the classic power analysis (Bayesian or Frequentist), which rely on prior guesses of effect sizes and decision cut-offs (for example, cut-offs for posterior predictive distributions or type-I error). The Bayes factor is a compelling alternative to the above mentioned design parameters and allows for sequential update in a trial design. <span class="citation" data-cites="Schonbrodt2017">Felix D. Schönbrodt et al. (<a href="#ref-Schonbrodt2017" role="doc-biblioref">2017</a>)</span> defined a sequential Bayes factor (SBF) as a Bayes factor which is computed in a sequential setting until an a priori defined level of evidence is reached. SNF designs As discussed in <span class="citation" data-cites="Schonbrodt2018">Felix D. Schönbrodt and Wagenmakers (<a href="#ref-Schonbrodt2018" role="doc-biblioref">2018</a>)</span>, also SBF designs have its limitations but extends common guidelines for power calculations with an index of evidence which is appealing for prospective design analysis.</p>
+<p>The article of <span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span> discusses a two-stage two-endpoint adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The novelty of the presented study is that the authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly with the aim that the analysis for the secondary endpoint has enough information: <em>“Specifically, we are interested in a trial design that tests success of a single primary endpoint (rank) but with the desire to stop the trial only if the single, key secondary endpoint also has adequate information”</em> (<span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span>). One limitation of the study from <span class="citation" data-cites="Gajewski2022">Gajewski et al. (<a href="#ref-Gajewski2022" role="doc-biblioref">2022</a>)</span> is that the endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. Change scores do not account for baseline differences due to regression to the mean (see for example <span class="citation" data-cites="Vickers1123">Vickers and Altman (<a href="#ref-Vickers1123" role="doc-biblioref">2001</a>)</span>).</p>
+<p><span class="citation" data-cites="Schonbrodt2018">Felix D. Schönbrodt and Wagenmakers (<a href="#ref-Schonbrodt2018" role="doc-biblioref">2018</a>)</span> proposed sequential Bayes factor designs as an alternative to classical power analyses (Bayesian, Frequentist or hybrid), which rely on prior guesses of effect sizes (and their uncertainty) and decision cut-offs (for example, cut-offs for posterior predictive distributions or type-I error). The Bayes factor is a compelling alternative to the above mentioned design parameters and allows for sequential update in a trial design. <span class="citation" data-cites="Schonbrodt2017">Felix D. Schönbrodt et al. (<a href="#ref-Schonbrodt2017" role="doc-biblioref">2017</a>)</span> defined a sequential Bayes factor (SBF) as <em>a Bayes factor which is computed in a sequential setting until an a priori defined level of evidence is reached</em>. SBF designs extend the available tools for power and sample size calculation with the Bayes factor as an index of evidence which is appealing for prospective design analysis.</p>
 <p>In the current study we use a sequential Bayes factor design for bivariate Gaussian endpoints to investigate operation characteristics of the implemented trial design and compare it to a fixed-n Bayes factor design, a Bayesian design with early stopping rules for efficacy/futility based on posterior predictive distributions and frequentist operation characteristics.</p>
+<h1 id="model-assumptions">Model assumptions</h1>
+<p>We assume that measurements for the intervention group (1) and the control group (0) are bivariate Gaussian distributed <span class="math inline">\(\mathbf{Y}_i=(\mathbf{Y}_{i,0}, \mathbf{Y}_{i,1})^{\top} \sim MV_2(\mu_i, \Sigma_i)\)</span>, <span class="math inline">\(i=\{0, 1\}\)</span>, with parameters</p>
+<p><span class="math display">\[
+\mu_i=(\mu_{i,0}, \mu_{i,1})^{\top}, \quad \Sigma_0=\begin{pmatrix} \sigma_{i,0}^2 &amp; \sigma_{i,0}\cdot\sigma_{i,1}\cdot\rho_{i,01} \\ \sigma_{i,0}\cdot\sigma_{i,1}\cdot\rho_{i,01} &amp; \sigma_{i,1}^2\end{pmatrix},
+\]</span></p>
+<p>where <span class="math inline">\(\mu_{i,0}\)</span> is the location parameter for the pre-intervention measurement for group <span class="math inline">\(i\)</span>, <span class="math inline">\(i=\{0, 1\}\)</span>, and <span class="math inline">\(\mu_{i,1}\)</span> is the location parameter for the post-intervention measurement for group <span class="math inline">\(i\)</span>, <span class="math inline">\(i=\{0, 1\}\)</span>. We assume that iid samples of size <span class="math inline">\(n_i\)</span>, <span class="math inline">\(i=\{0, 1\}\)</span>, are drawn such that <span class="math inline">\(\mathbf{Y}_{i,t}=(Y_{i1,t}, \cdots, Y_{in_i,t})^{\top}\)</span>, <span class="math inline">\(i=\{0, 1\}\)</span>, <span class="math inline">\(t=\{0, 1\}\)</span>.</p>
+<p>To assess the intervention effect <span class="math inline">\(\beta_1\)</span> we use an ANCOVA model as follows
+<span class="math display">\[
+Y_{il,1} \sim \beta_0+\beta_1\cdot group+\beta_2\cdot Y_{il,0}+\epsilon_{il}, \quad i=\{0, 1\}, \ t=\{0, 1\},
+\]</span></p>
+<p>with <span class="math inline">\(\epsilon_{il}\)</span> iid Gaussian distributed.</p>
+<h1 id="simulation-assumptions">Simulation assumptions</h1>
+<h2 id="general-assumptions">General assumptions</h2>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Group</th>
+<th>Value</th>
+<th>Group</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Location time 0</td>
+<td>Intervention</td>
+<td>0</td>
+<td>Control</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Location time 1</td>
+<td>Intervention</td>
+<td>0, -0.1, -0.3, -0.5</td>
+<td>Control</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Standard deviation time 0</td>
+<td>Intervention</td>
+<td>1</td>
+<td>Control</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Standard deviation time 1</td>
+<td>Intervention</td>
+<td>1</td>
+<td>Control</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Correlation time 0/1</td>
+<td>Intervention</td>
+<td>-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75</td>
+<td>Control</td>
+<td>-0.5</td>
+</tr>
+<tr class="even">
+<td>Accrual rate per week</td>
+<td>-</td>
+<td>0.76 patients</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Dropout</td>
+<td>Intervention</td>
+<td>0.1</td>
+<td>Control</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hypothesis</th>
+<th>Group</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Null</td>
+<td>Location Intervention/Control</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Null</td>
+<td>Correlation time 0/1 Intervention/Control</td>
+<td>-0.5</td>
+</tr>
+<tr class="odd">
+<td>Alternative</td>
+<td>Location Intervention</td>
+<td>-0.1, -0.3, -0.5</td>
+</tr>
+<tr class="even">
+<td>Alternative</td>
+<td>Correlation time 0/1 Intervention</td>
+<td>-0.75, -0.25, 0, 0.25, 0.5, 0.75</td>
+</tr>
+</tbody>
+</table>
+<h2 id="frequentist-assumptions">Frequentist assumptions</h2>
+<ul>
+<li>Type-I error: 0.05</li>
+<li>Power: 0.9</li>
+</ul>
+<h2 id="bayes-assumptions">Bayes assumptions</h2>
+<ul>
+<li>Skeptical prior on intervention effect: <span class="math inline">\(\beta_1 \sim N(0, 1)\)</span></li>
+<li>Prior on baseline measurement effect: <span class="math inline">\(\beta_2 \sim N(0, x)\)</span></li>
+<li>Probability for any success: <span class="math inline">\(P(\beta_1&lt;0|data)\)</span></li>
+<li>Probability for moderate success: <span class="math inline">\(P(\beta_1&lt; -0.05|data)\)</span></li>
+</ul>
+<h1 id="results">Results</h1>
+<h2 id="frequentist-non-sequential-fixed-n-design">Frequentist: Non-sequential fixed-n design</h2>
+<p>We derive operation characteristics for a non-sequential fixed-n design.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_sim
+</th>
+<th style="text-align:right;">
+mean_weeks_recruiting
+</th>
+<th style="text-align:right;">
+planned_sample_size
+</th>
+<th style="text-align:right;">
+mean_observed_sample_size
+</th>
+<th style="text-align:right;">
+alpha
+</th>
+<th style="text-align:right;">
+power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+538.487
+</td>
+<td style="text-align:right;">
+410
+</td>
+<td style="text-align:right;">
+368.75
+</td>
+<td style="text-align:right;">
+0.046
+</td>
+<td style="text-align:right;">
+0.807
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Based on 1000 simulations the mean observed sample size (that is, accounting for dropouts) is 369 with an average type-I error of 0.05 and a power of 0.81. The average number of weeks of recruitment was 539.</p>
+<h2 id="sequential-bayes-factor-design">Sequential Bayes factor design</h2>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+n_sim
+</th>
+<th style="text-align:right;">
+mean_sample_size
+</th>
+<th style="text-align:right;">
+median_sample_size
+</th>
+<th style="text-align:right;">
+prop_max_sample_size
+</th>
+<th style="text-align:right;">
+mean_bf_primary
+</th>
+<th style="text-align:right;">
+mean_posterior_any_success
+</th>
+<th style="text-align:right;">
+mean_posterior_moderate_success
+</th>
+<th style="text-align:right;">
+freq_power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+216
+</td>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+11.123
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h1 id="supplement">Supplement</h1>
 <h2 id="ancova-example-analysis">ANCOVA example analysis</h2>
-<p><span class="citation" data-cites="Vickers1123">Vickers and Altman (<a href="#ref-Vickers1123" role="doc-biblioref">2001</a>)</span> provide the rationale for an ANCOVA analysis. As illustrative example we consider a situation where pre-intervention and post-intervention measurements are drawn from a bivariate normal distribution for each group separately. For group 0 we assume that before the intervention the measurements have a mean value of <span class="math inline">\(0\)</span> and after the intervention a mean value of <span class="math inline">\(0.5\)</span>. The standard deviations for both time points are equal to <span class="math inline">\(1\)</span> and the correlation between the time points is <span class="math inline">\(-0.75\)</span>, that is,
+<p><span class="citation" data-cites="Vickers1123">Vickers and Altman (<a href="#ref-Vickers1123" role="doc-biblioref">2001</a>)</span> provide the rationale for an ANCOVA analysis. As illustrative example we consider a situation where pre-intervention and post-intervention measurements are drawn from a bivariate normal distribution for each group separately (that is, the standard deviation and correlation can differ for each group). Let us assume that this is the systolic blood pressure measured in mmHg. For group 0 we assume that before the intervention the measurements have a mean value of <span class="math inline">\(120\)</span> mmHg and after the intervention a mean value of <span class="math inline">\(125\)</span> mmHg. The standard deviations for both time points are equal to <span class="math inline">\(20\)</span> and the correlation between the time points is <span class="math inline">\(-0.75\)</span>, that is,
 <span class="math display">\[
-\mu_0=(0, 0.5)^{\top}, \quad \Sigma_0=\begin{pmatrix} 1 &amp; -0.75 \\ -0.75 &amp; 1\end{pmatrix},
+\mu_0=(120, 125)^{\top}, \quad \Sigma_0=\begin{pmatrix} 20^2 &amp; -20^2\cdot0.75 \\ -20^2\cdot0.75 &amp; 20^2\end{pmatrix},
 \]</span>
 where <span class="math inline">\(\Sigma_0\)</span> denotes the covariance matrix.</p>
 <p>For group 1 we assume
 <span class="math display">\[
-\mu_1=(0, -0.5)^{\top}, \quad \Sigma_1=\begin{pmatrix} 1 &amp; 0.5 \\ 0.5 &amp; 1\end{pmatrix}.
+\mu_1=(115, 100)^{\top}, \quad \Sigma_1=\begin{pmatrix} 30^2 &amp; -30\cdot35\cdot0.5 \\ -30\cdot35\cdot0.5 &amp; 35\end{pmatrix}.
 \]</span></p>
 <p>An ANCOVA model uses a linear regression with the post-intervention measurements as outcome, group allocation as predictor and adjusts for pre-intervention measurements.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2203,10 +2479,10 @@ where <span class="math inline">\(\Sigma_0\)</span> denotes the covariance matri
 <span><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>100</span></span>
 <span></span>
 <span><span class='co'># Parameters group 0</span></span>
-<span><span class='va'>mu_t0</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
-<span><span class='va'>mu_t1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span></span>
-<span><span class='va'>sd_t0</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span><span class='va'>sd_t1</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>mu_t0</span> <span class='op'>&lt;-</span> <span class='fl'>120</span></span>
+<span><span class='va'>mu_t1</span> <span class='op'>&lt;-</span> <span class='fl'>125</span></span>
+<span><span class='va'>sd_t0</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
+<span><span class='va'>sd_t1</span> <span class='op'>&lt;-</span> <span class='fl'>20</span></span>
 <span><span class='va'>cor_t0_t1</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>0.75</span></span>
 <span></span>
 <span><span class='va'>cov_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sd_t0</span><span class='op'>^</span><span class='fl'>2</span>, <span class='va'>sd_t0</span><span class='op'>*</span><span class='va'>sd_t1</span><span class='op'>*</span><span class='va'>cor_t0_t1</span>, </span>
@@ -2214,11 +2490,11 @@ where <span class="math inline">\(\Sigma_0\)</span> denotes the covariance matri
 <span><span class='va'>y_0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html'>rmvnorm</a></span><span class='op'>(</span><span class='va'>n</span>, mean<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>mu_t0</span>, <span class='va'>mu_t1</span><span class='op'>)</span>, sigma<span class='op'>=</span><span class='va'>cov_mat</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Parameters group 1</span></span>
-<span><span class='va'>mu_t0</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
-<span><span class='va'>mu_t1</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>0.5</span></span>
-<span><span class='va'>sd_t0</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span><span class='va'>sd_t1</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
-<span><span class='va'>cor_t0_t1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span></span>
+<span><span class='va'>mu_t0</span> <span class='op'>&lt;-</span> <span class='fl'>115</span></span>
+<span><span class='va'>mu_t1</span> <span class='op'>&lt;-</span> <span class='fl'>100</span></span>
+<span><span class='va'>sd_t0</span> <span class='op'>&lt;-</span> <span class='fl'>30</span></span>
+<span><span class='va'>sd_t1</span> <span class='op'>&lt;-</span> <span class='fl'>35</span></span>
+<span><span class='va'>cor_t0_t1</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>0.5</span></span>
 <span></span>
 <span><span class='va'>cov_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sd_t0</span><span class='op'>^</span><span class='fl'>2</span>, <span class='va'>sd_t0</span><span class='op'>*</span><span class='va'>sd_t1</span><span class='op'>*</span><span class='va'>cor_t0_t1</span>, </span>
 <span>                    <span class='va'>sd_t0</span><span class='op'>*</span><span class='va'>sd_t1</span><span class='op'>*</span><span class='va'>cor_t0_t1</span>, <span class='va'>sd_t1</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span></span>
@@ -2227,19 +2503,18 @@ where <span class="math inline">\(\Sigma_0\)</span> denotes the covariance matri
 <span><span class='co'># Data preperation</span></span>
 <span><span class='va'>data0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>y_0<span class='op'>=</span><span class='va'>y_0</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, y_1<span class='op'>=</span><span class='va'>y_0</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, group<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span></span>
 <span><span class='va'>data1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>y_0<span class='op'>=</span><span class='va'>y_1</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, y_1<span class='op'>=</span><span class='va'>y_1</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, group<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span></span>
 <span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>data0</span>, <span class='va'>data1</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='co'># ANCOVA model</span></span>
-<span><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y_1</span> <span class='op'>~</span> <span class='va'>group</span><span class='op'>*</span><span class='va'>y_0</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span></span>
+<span><span class='co'># Frequentist ANCOVA model</span></span>
+<span><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y_1</span> <span class='op'>~</span> <span class='va'>group</span><span class='op'>+</span><span class='va'>y_0</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span><span class='op'>$</span><span class='va'>coeff</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span></span></code></pre>
 </div>
-<pre><code>              Estimate Std. Error
-(Intercept)  0.5199419 0.07579347
-group       -0.9140092 0.10705061
-y_0         -0.7627679 0.08270797
-group:y_0    1.2212201 0.11111081</code></pre>
+<pre><code>               Estimate Std. Error
+(Intercept) 200.6653553 8.07231036
+group       -25.3486898 3.28965492
+y_0          -0.6286902 0.06379281</code></pre>
 </div>
-<p>Since the pre-intervention and post-intervention measurements are standardized (that is, centered and expressed per 1 standard deviation increase), the <code>y_0</code> coefficient (-0.76) represents the estimated correlation in group 0, while the sum of the coefficient <code>y_0</code> (-0.76) and the interaction term <code>group:y_0</code> (1.22) is the estimated correlation in group 1 (0.46). For us of interest is only the group allocation effect represented by the coefficient <code>group</code>. Here, group 1 has an estimated 0.91 lower post-intervention measurement compared to group 0 (true value equals <span class="math inline">\(-1\)</span>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Gajewski2022" class="csl-entry" role="doc-biblioentry">

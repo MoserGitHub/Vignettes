@@ -15,27 +15,221 @@ bibliography: BFSeqPrePost.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+WORK IN PROGRESS
+
 # Background
 
-The article of @Gajewski2022 discusses a two-stage two-endpoint adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The novelty of the presented study is that the authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly with the aim that the analysis for the secondary endpoint has enough information: *"Specifically, we are interested in a trial design that tests success of a single primary endpoint (rank) but with the desire to stop the trial only if the single, key secondary endpoint also has adequate information"* (@Gajewski2022). One limitation of the study from @Gajewski2022 is that the endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. Because of the potential correlation between both measurements there might exist a regression to the mean effect, see for example @Vickers1123. 
+The article of @Gajewski2022 discusses a two-stage two-endpoint adaptive Bayesian trial design with a continuous primary endpoint and one secondary endpoint. The novelty of the presented study is that the authors specify rules for early stopping for efficacy or futility based on the posterior distribution for both endpoints jointly with the aim that the analysis for the secondary endpoint has enough information: *"Specifically, we are interested in a trial design that tests success of a single primary endpoint (rank) but with the desire to stop the trial only if the single, key secondary endpoint also has adequate information"* (@Gajewski2022). One limitation of the study from @Gajewski2022 is that the endpoints were defined as the difference between a post-intervention measurement and a pre-intervention measurement. Change scores do not account for baseline differences due to regression to the mean (see for example @Vickers1123).
 
-@Schonbrodt2018 proposed sequential Bayes factor designs as an alternative to the classic power analysis (Bayesian or Frequentist), which rely on prior guesses of effect sizes and decision cut-offs (for example, cut-offs for posterior predictive distributions or type-I error). The Bayes factor is a compelling alternative to the above mentioned design parameters and allows for sequential update in a trial design. @Schonbrodt2017 defined a sequential Bayes factor (SBF) as a Bayes factor which is computed in a sequential setting until an a priori defined level of evidence is reached. SNF designs As discussed in @Schonbrodt2018, also SBF designs have its limitations but extends common guidelines for power calculations with an index of evidence which is appealing for prospective design analysis.
+@Schonbrodt2018 proposed sequential Bayes factor designs as an alternative to classical power analyses (Bayesian, Frequentist or hybrid), which rely on prior guesses of effect sizes (and their uncertainty) and decision cut-offs (for example, cut-offs for posterior predictive distributions or type-I error). The Bayes factor is a compelling alternative to the above mentioned design parameters and allows for sequential update in a trial design. @Schonbrodt2017 defined a sequential Bayes factor (SBF) as *a Bayes factor which is computed in a sequential setting until an a priori defined level of evidence is reached*. SBF designs extend the available tools for power and sample size calculation with the Bayes factor as an index of evidence which is appealing for prospective design analysis.
 
 In the current study we use a sequential Bayes factor design for bivariate Gaussian endpoints to investigate operation characteristics of the implemented trial design and compare it to a fixed-n Bayes factor design, a Bayesian design with early stopping rules for efficacy/futility based on posterior predictive distributions and frequentist operation characteristics.
+
+# Model assumptions
+
+We assume that measurements for the intervention group (1) and the control group (0) are bivariate Gaussian distributed $\mathbf{Y}_i=(\mathbf{Y}_{i,0}, \mathbf{Y}_{i,1})^{\top} \sim MV_2(\mu_i, \Sigma_i)$, $i=\{0, 1\}$, with parameters
+
+\[
+\mu_i=(\mu_{i,0}, \mu_{i,1})^{\top}, \quad \Sigma_0=\begin{pmatrix} \sigma_{i,0}^2 & \sigma_{i,0}\cdot\sigma_{i,1}\cdot\rho_{i,01} \\ \sigma_{i,0}\cdot\sigma_{i,1}\cdot\rho_{i,01} & \sigma_{i,1}^2\end{pmatrix},
+\]
+
+where $\mu_{i,0}$ is the location parameter for the pre-intervention measurement for group $i$, $i=\{0, 1\}$, and $\mu_{i,1}$ is the location parameter for the post-intervention measurement for group $i$, $i=\{0, 1\}$. We assume that iid samples of size $n_i$, $i=\{0, 1\}$, are drawn such that $\mathbf{Y}_{i,t}=(Y_{i1,t}, \cdots, Y_{in_i,t})^{\top}$, $i=\{0, 1\}$, $t=\{0, 1\}$.
+
+To assess the intervention effect $\beta_1$ we use an ANCOVA model as follows
+\[
+Y_{il,1} \sim \beta_0+\beta_1\cdot group+\beta_2\cdot Y_{il,0}+\epsilon_{il}, \quad i=\{0, 1\}, \ t=\{0, 1\},
+\]
+
+with $\epsilon_{il}$ iid Gaussian distributed. 
+
+# Simulation assumptions
+
+## General assumptions
+
+```{r, results='hide', echo=F, fig.height=8.6, fig.width=7.4}
+accrual_lambda <- 0.76
+dropout_prop <- 0.1
+mu_primary_g1_t0_h1 <- 0
+mu_primary_g1_t1_h1 <- -0.3
+sd_primary_g1_t0_h1 <- 1
+sd_primary_g1_t1_h1 <- 1
+cor_primary_g1_t0_t1_h1 <- -0.5
+mu_primary_g0_t0_h1 <- 0
+mu_primary_g0_t1_h1 <- 0
+sd_primary_g0_t0_h1 <- 1
+sd_primary_g0_t1_h1 <- 1
+cor_primary_g0_t0_t1_h1 <- -0.5
+```
+
+| Parameter | Group | Value | Group | Value |
+| --- | --- | --- | --- | --- |
+| Location time 0 | Intervention | `r mu_primary_g1_t0_h1` | Control | `r mu_primary_g0_t0_h1` |
+| Location time 1 | Intervention | 0, -0.1, `r mu_primary_g1_t1_h1`, -0.5 | Control | `r mu_primary_g0_t1_h1` |
+| Standard deviation time 0 | Intervention | `r sd_primary_g1_t0_h1` | Control | `r sd_primary_g0_t0_h1` |
+| Standard deviation time 1 | Intervention | `r sd_primary_g1_t1_h1` | Control | `r sd_primary_g0_t1_h1` |
+| Correlation time 0/1 | Intervention | -0.75, `r cor_primary_g1_t0_t1_h1`, -0.25, 0, 0.25, 0.5, 0.75 | Control | `r cor_primary_g0_t0_t1_h1` |
+| Accrual rate per week | - | `r accrual_lambda` patients | - | - |
+| Dropout | Intervention | `r dropout_prop` | Control | `r dropout_prop` |
+
+| Hypothesis | Group | Value |
+| --- | --- | --- |
+| Null | Location Intervention/Control | 0 |
+| Null | Correlation time 0/1 Intervention/Control | -0.5 |
+| Alternative | Location Intervention | -0.1, -0.3, -0.5 |
+| Alternative | Correlation time 0/1 Intervention | -0.75, -0.25, 0, 0.25, 0.5, 0.75  |
+
+## Frequentist assumptions
+
+- Type-I error: 0.05
+- Power: 0.9
+
+## Bayes assumptions
+
+- Skeptical prior on intervention effect: $\beta_1 \sim N(0, 1)$
+- Prior on baseline measurement effect: $\beta_2 \sim N(0, x)$
+- Probability for any success: $P(\beta_1<0|data)$
+- Probability for moderate success: $P(\beta_1< -0.05|data)$
+
+
+
+# Results
+
+## Frequentist: Non-sequential fixed-n design
+
+We derive operation characteristics for a non-sequential fixed-n design.
+
+```{r, results='markup', echo=F, fig.height=8.6, fig.width=7.4}
+source("/Users/am20q919/Clinical studies/Github/TrialSimulation/sim_trial.R")
+source("/Users/am20q919/Clinical studies/Github/TrialSimulation/sample_size_sim_freq_fixed_n.R")
+source("/Users/am20q919/Clinical studies/Github/TrialSimulation/sample_size_sim_sbf.R")
+path_diagnostic <- "/Users/am20q919/Clinical studies/GitHub/TrialSimulation/Diagnostic/"
+library(mvtnorm)
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r, results='markup', echo=F, fig.height=8.6, fig.width=7.4, cache=TRUE}
+# Parameters
+set.seed(1)
+n_sim <- 1000
+initial_ss <- 410
+
+freq_fixed_n <- sample_size_sim_freq_fixed_n(
+                  n_sim=n_sim,
+                  initial_ss=initial_ss,
+                  accrual_lambda=accrual_lambda,
+                  dropout_prop=dropout_prop,
+                  mu_primary_g1_t0_h1=mu_primary_g1_t0_h1,
+                  mu_primary_g1_t1_h1=mu_primary_g1_t1_h1,
+                  sd_primary_g1_t0_h1=sd_primary_g1_t0_h1,
+                  sd_primary_g1_t1_h1=sd_primary_g1_t1_h1,
+                  cor_primary_g1_t0_t1_h1=cor_primary_g1_t0_t1_h1,
+                  mu_primary_g0_t0_h1=mu_primary_g0_t0_h1,
+                  mu_primary_g0_t1_h1=mu_primary_g0_t1_h1,
+                  sd_primary_g0_t0_h1=sd_primary_g0_t0_h1,
+                  sd_primary_g0_t1_h1=sd_primary_g0_t1_h1,
+                  cor_primary_g0_t0_t1_h1=cor_primary_g0_t0_t1_h1
+)
+
+freq_fixed_n0 <- sample_size_sim_freq_fixed_n(
+                  n_sim=n_sim,
+                  initial_ss=initial_ss,
+                  accrual_lambda=accrual_lambda,
+                  dropout_prop=dropout_prop,
+                  mu_primary_g1_t0_h1=mu_primary_g1_t0_h1,
+                  mu_primary_g1_t1_h1=0,
+                  sd_primary_g1_t0_h1=sd_primary_g1_t0_h1,
+                  sd_primary_g1_t1_h1=sd_primary_g1_t1_h1,
+                  cor_primary_g1_t0_t1_h1=cor_primary_g1_t0_t1_h1,
+                  mu_primary_g0_t0_h1=mu_primary_g0_t0_h1,
+                  mu_primary_g0_t1_h1=mu_primary_g0_t1_h1,
+                  sd_primary_g0_t0_h1=sd_primary_g0_t0_h1,
+                  sd_primary_g0_t1_h1=sd_primary_g0_t1_h1,
+                  cor_primary_g0_t0_t1_h1=cor_primary_g0_t0_t1_h1
+)
+
+
+# Calculate power
+freq_fixed_n$freq$ind <- ifelse(freq_fixed_n$freq$p_freq<=0.05, 1, 0)
+freq_fixed_n$freq$alpha <- freq_fixed_n0$freq$p_freq
+freq_fixed_n$freq$ind0 <- ifelse(freq_fixed_n$freq$alpha<=0.05, 1, 0)
+
+output <- freq_fixed_n$freq %>% 
+  summarise(n_sim=max(n_sim), mean_weeks_recruiting=mean(week), 
+            planned_sample_size=mean(planned_sample_size),
+            mean_observed_sample_size=mean(observed_sample_size),
+            alpha=sum(freq_fixed_n$freq$ind0)/nrow(freq_fixed_n$freq),
+            power=sum(freq_fixed_n$freq$ind)/nrow(freq_fixed_n$freq))
+```
+
+```{r, results='markup', echo=F, fig.height=8.6, fig.width=7.4}
+output%>% kbl(row.names = F, digits=3) %>% kable_material(c("striped", "hover"))
+```
+
+Based on `r output$n_sim` simulations the mean observed sample size (that is, accounting for dropouts) is `r ceiling(output$mean_observed_sample_size)` with an average type-I error of `r round(output$alpha,2)` and a power of `r round(output$power,2)`. The average number of weeks of recruitment was `r ceiling(output$mean_weeks_recruiting)`.
+
+## Sequential Bayes factor design
+
+```{r, results='hide', echo=F, fig.height=8.6, fig.width=7.4, cache=TRUE}
+# Parameters
+seed <- 1
+n_sim <- 100
+initial_ss <- 170
+n_max <- 410
+inrease_ss <- 20
+bf_required <- 3
+
+library(rstanarm)
+library(bridgesampling)
+sbf_sim <- sample_size_sim_sbf(n_sim=n_sim, 
+                  initial_ss=initial_ss, 
+                  inrease_ss=inrease_ss, 
+                  n_max=n_max, 
+                  bf_required=bf_required,
+                  seed=seed,
+                  mu_primary_g1_t0_h1=mu_primary_g1_t0_h1,
+                  mu_primary_g1_t1_h1=mu_primary_g1_t1_h1,
+                  sd_primary_g1_t0_h1=sd_primary_g1_t0_h1,
+                  sd_primary_g1_t1_h1=sd_primary_g1_t1_h1,
+                  cor_primary_g1_t0_t1_h1=cor_primary_g1_t0_t1_h1,
+                  mu_primary_g0_t0_h1=mu_primary_g0_t0_h1,
+                  mu_primary_g0_t1_h1=mu_primary_g0_t1_h1,
+                  sd_primary_g0_t0_h1=sd_primary_g0_t0_h1,
+                  sd_primary_g0_t1_h1=sd_primary_g0_t1_h1,
+                  cor_primary_g0_t0_t1_h1=cor_primary_g0_t0_t1_h1,
+                  analysis_mean_prior_random_alloc=0,
+                  analysis_sd_prior_random_alloc=1,
+                  analysis_mean_prior_cor=0,
+                  analysis_sd_prior_cor=1,
+                  path_diagnostic = path_diagnostic)
+
+res_bf <- lapply(sbf_sim["bf"], bind_rows)$bf
+
+res_bf <- res_bf %>% group_by(n_sim) %>% mutate(max_increase_no=max(increase_no))
+res_bf <- res_bf %>% filter(increase_no==max_increase_no)
+res_bf$max_sample_size <- ifelse(res_bf$sample_size==n_max, 1, 0)
+
+res_bf_summary <- res_bf %>% group_by(1) %>% summarise(n_sim=max(n_sim), mean_sample_size=mean(sample_size), median_sample_size=median(sample_size), prop_max_sample_size=sum(max_sample_size)/nrow(res_bf), mean_bf_primary=mean(bf_primary), mean_posterior_any_success=mean(posterior_any_success), mean_posterior_moderate_success=mean(posterior_moderate_success), freq_power=sum(ifelse(p_freq<=0.05, 1, 0))/nrow(res_bf))
+```
+
+```{r, results='markup', echo=F, fig.height=8.6, fig.width=7.4}
+res_bf_summary%>% kbl(row.names = F, digits=3) %>% kable_material(c("striped", "hover"))
+```
+
 
 # Supplement
 
 ## ANCOVA example analysis
 
-@Vickers1123 provide the rationale for an ANCOVA analysis. As illustrative example we consider a situation where pre-intervention and post-intervention measurements are drawn from a bivariate normal distribution for each group separately. For group 0 we assume that before the intervention the measurements have a mean value of $0$ and after the intervention a mean value of $0.5$. The standard deviations for both time points are equal to $1$ and the correlation between the time points is $-0.75$, that is,
+@Vickers1123 provide the rationale for an ANCOVA analysis. As illustrative example we consider a situation where pre-intervention and post-intervention measurements are drawn from a bivariate normal distribution for each group separately (that is, the standard deviation and correlation can differ for each group). Let us assume that this is the systolic blood pressure measured in mmHg. For group 0 we assume that before the intervention the measurements have a mean value of $120$ mmHg and after the intervention a mean value of $125$ mmHg. The standard deviations for both time points are equal to $20$ and the correlation between the time points is $-0.75$, that is,
 \[
-\mu_0=(0, 0.5)^{\top}, \quad \Sigma_0=\begin{pmatrix} 1 & -0.75 \\ -0.75 & 1\end{pmatrix},
+\mu_0=(120, 125)^{\top}, \quad \Sigma_0=\begin{pmatrix} 20^2 & -20^2\cdot0.75 \\ -20^2\cdot0.75 & 20^2\end{pmatrix},
 \]
 where $\Sigma_0$ denotes the covariance matrix.
 
 For group 1 we assume
 \[
-\mu_1=(0, -0.5)^{\top}, \quad \Sigma_1=\begin{pmatrix} 1 & 0.5 \\ 0.5 & 1\end{pmatrix}.
+\mu_1=(115, 100)^{\top}, \quad \Sigma_1=\begin{pmatrix} 30^2 & -30\cdot35\cdot0.5 \\ -30\cdot35\cdot0.5 & 35\end{pmatrix}.
 \]
 
 An ANCOVA model uses a linear regression with the post-intervention measurements as outcome, group allocation as predictor and adjusts for pre-intervention measurements.
@@ -51,10 +245,10 @@ set.seed(1)
 n <- 100
 
 # Parameters group 0
-mu_t0 <- 0
-mu_t1 <- 0.5
-sd_t0 <- 1
-sd_t1 <- 1
+mu_t0 <- 120
+mu_t1 <- 125
+sd_t0 <- 20
+sd_t1 <- 20
 cor_t0_t1 <- -0.75
 
 cov_mat <- matrix(c(sd_t0^2, sd_t0*sd_t1*cor_t0_t1, 
@@ -62,11 +256,11 @@ cov_mat <- matrix(c(sd_t0^2, sd_t0*sd_t1*cor_t0_t1,
 y_0 <- rmvnorm(n, mean=c(mu_t0, mu_t1), sigma=cov_mat)
 
 # Parameters group 1
-mu_t0 <- 0
-mu_t1 <- -0.5
-sd_t0 <- 1
-sd_t1 <- 1
-cor_t0_t1 <- 0.5
+mu_t0 <- 115
+mu_t1 <- 100
+sd_t0 <- 30
+sd_t1 <- 35
+cor_t0_t1 <- -0.5
 
 cov_mat <- matrix(c(sd_t0^2, sd_t0*sd_t1*cor_t0_t1, 
                     sd_t0*sd_t1*cor_t0_t1, sd_t1^2), ncol=2)
@@ -75,11 +269,10 @@ y_1 <- rmvnorm(n, mean=c(mu_t0, mu_t1), sigma=cov_mat)
 # Data preperation
 data0 <- data.frame(y_0=y_0[,1], y_1=y_0[,2], group=0)
 data1 <- data.frame(y_0=y_1[,1], y_1=y_1[,2], group=1)
+
 data <- bind_rows(data0, data1)
 
-# ANCOVA model
-mod <- lm(y_1 ~ group*y_0, data=data)
+# Frequentist ANCOVA model
+mod <- lm(y_1 ~ group+y_0, data=data)
 summary(mod)$coeff[,1:2]
 ```
-
-Since the pre-intervention and post-intervention measurements are standardized (that is, centered and expressed per 1 standard deviation increase), the ```y_0``` coefficient (`r round(summary(mod)$coeff[3,1], 2)`) represents the estimated correlation in group 0, while the sum of the coefficient ```y_0``` (`r round(summary(mod)$coeff[3,1], 2)`) and the interaction term ```group:y_0``` (`r round(summary(mod)$coeff[4,1], 2)`) is the estimated correlation in group 1 (`r round(summary(mod)$coeff[3,1]+summary(mod)$coeff[4,1], 2)`). For us of interest is only the group allocation effect represented by the coefficient ```group```. Here, group 1 has an estimated `r round(abs(summary(mod)$coeff[2,1]), 2)` lower post-intervention measurement compared to group 0 (true value equals $-1$).
